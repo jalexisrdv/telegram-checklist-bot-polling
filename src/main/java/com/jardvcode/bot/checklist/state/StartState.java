@@ -6,7 +6,7 @@ import com.jardvcode.bot.shared.domain.state.State;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StartState implements State {
+public final class StartState implements State {
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
         botContext.sendText("Hello!!!");

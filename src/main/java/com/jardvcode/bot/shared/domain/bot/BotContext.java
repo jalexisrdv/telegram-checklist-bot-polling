@@ -5,7 +5,7 @@ import com.jardvcode.bot.configuration.sender.MessageSender;
 import java.util.List;
 import java.util.Map;
 
-public class BotContext {
+public final class BotContext {
 	
 	private final String name;
 	private final String userId;

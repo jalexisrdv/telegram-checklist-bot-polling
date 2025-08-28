@@ -1,6 +1,6 @@
 package com.jardvcode.bot.shared.domain.state;
 
-public class StateUtil {
+public final class StateUtil {
 	
 	private StateUtil() {
 		

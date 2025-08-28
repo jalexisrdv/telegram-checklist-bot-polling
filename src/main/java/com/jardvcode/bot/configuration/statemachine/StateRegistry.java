@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class StateRegistry {
+public final class StateRegistry {
 	
 	private final HashMap<String, State> states = new HashMap<>();
 	

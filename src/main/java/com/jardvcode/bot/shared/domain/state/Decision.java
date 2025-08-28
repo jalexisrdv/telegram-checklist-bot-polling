@@ -1,6 +1,6 @@
 package com.jardvcode.bot.shared.domain.state;
 
-public class Decision {
+public final class Decision {
 	
 	private final Class<? extends State> state;
 

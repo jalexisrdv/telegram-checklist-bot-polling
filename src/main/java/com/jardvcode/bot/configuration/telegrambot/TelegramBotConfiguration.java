@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 @Component
-public class TelegramBotConfiguration extends TelegramLongPollingBot {
+public final class TelegramBotConfiguration extends TelegramLongPollingBot {
 	
 	private final String username;
 	private final StateMachine stateMachine;
