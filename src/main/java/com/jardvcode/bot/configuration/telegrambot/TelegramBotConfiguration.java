@@ -4,6 +4,7 @@ import com.jardvcode.bot.configuration.sender.MessageSender;
 import com.jardvcode.bot.configuration.sender.TelegramMessageSender;
 import com.jardvcode.bot.configuration.statemachine.StateMachine;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
+import com.jardvcode.bot.shared.domain.exception.BotException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
@@ -63,13 +64,23 @@ public final class TelegramBotConfiguration extends TelegramLongPollingBot {
 				
 				if (chatId == null || incomingMessage == null || username == null) return;
 				
-				BotContext message = new BotContext(TelegramBotConfiguration.this.username, chatId, incomingMessage, username, messageSender);
+				BotContext botContext = new BotContext(TelegramBotConfiguration.this.username, chatId, incomingMessage, username, messageSender);
 				
 				try {
-					stateMachine.apply(message);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+					stateMachine.apply(botContext);
+				} catch (BotException e) {
+                    try {
+                        botContext.sendText(e.getMessage());
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    try {
+                        botContext.sendText("Oops... algo no salió como esperaba");
+                    } catch (Exception ex) {
+						ex.printStackTrace();
+					}
+                }
 			}
 		}).start();
 		

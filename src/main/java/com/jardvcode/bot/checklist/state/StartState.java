@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public final class StartState implements State {
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        botContext.sendText("Hello!!!");
+        botContext.sendText("Hello " + botContext.getUsername() + "!!!");
 
         return Decision.stay();
     }
