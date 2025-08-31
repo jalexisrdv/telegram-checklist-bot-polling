@@ -1,4 +1,4 @@
-package com.jardvcode.bot.shared.domain.entity;
+package com.jardvcode.bot.user.entity;
 
 import jakarta.persistence.*;
 

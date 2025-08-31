@@ -1,6 +1,6 @@
-package com.jardvcode.bot.shared.domain.repository;
+package com.jardvcode.bot.user.repository;
 
-import com.jardvcode.bot.shared.domain.entity.UserLinkTokenEntity;
+import com.jardvcode.bot.user.entity.UserLinkTokenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

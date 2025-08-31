@@ -2,8 +2,8 @@ package com.jardvcode.bot.configuration.statemachine;
 
 import com.jardvcode.bot.checklist.state.TokenInputState;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
-import com.jardvcode.bot.shared.domain.entity.UserBotStateEntity;
-import com.jardvcode.bot.shared.domain.repository.UserBotStateRepository;
+import com.jardvcode.bot.user.entity.UserBotStateEntity;
+import com.jardvcode.bot.user.repository.UserBotStateRepository;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
 import com.jardvcode.bot.shared.domain.state.StateUtil;

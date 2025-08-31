@@ -1,6 +1,6 @@
-package com.jardvcode.bot.shared.domain.repository;
+package com.jardvcode.bot.user.repository;
 
-import com.jardvcode.bot.shared.domain.entity.UserBotStateEntity;
+import com.jardvcode.bot.user.entity.UserBotStateEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,10 +1,10 @@
-package com.jardvcode.bot.checklist.service;
+package com.jardvcode.bot.user.service;
 
-import com.jardvcode.bot.shared.domain.entity.UserBotStateEntity;
-import com.jardvcode.bot.shared.domain.entity.UserLinkTokenEntity;
+import com.jardvcode.bot.user.entity.UserBotStateEntity;
+import com.jardvcode.bot.user.entity.UserLinkTokenEntity;
 import com.jardvcode.bot.shared.domain.exception.BotException;
-import com.jardvcode.bot.shared.domain.repository.UserBotStateRepository;
-import com.jardvcode.bot.shared.domain.repository.UserLinkTokenRepository;
+import com.jardvcode.bot.user.repository.UserBotStateRepository;
+import com.jardvcode.bot.user.repository.UserLinkTokenRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

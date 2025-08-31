@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.state;
 
-import com.jardvcode.bot.checklist.service.UserLinkTokenService;
+import com.jardvcode.bot.user.service.UserLinkTokenService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.Decision;
