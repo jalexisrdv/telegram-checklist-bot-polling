@@ -18,7 +18,7 @@ public final class TokenInputState implements State {
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        botContext.sendText("¡Hola! Para conectarte con tu cuenta, necesito que me envíes el token que recibiste. \uD83D\uDE0A");
+        botContext.sendText("¡Hola! Para conectarte con tu cuenta, necesito que me envíes el token que recibiste.");
 
         return Decision.stay();
     }
@@ -35,6 +35,6 @@ public final class TokenInputState implements State {
             return Decision.go(getClass());
         }
 
-        return Decision.go(StartState.class);
+        return Decision.go(MenuState.class);
     }
 }
