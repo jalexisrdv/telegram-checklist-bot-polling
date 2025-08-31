@@ -2,7 +2,7 @@ package com.jardvcode.bot.configuration.statemachine;
 
 import com.jardvcode.bot.checklist.state.TokenInputState;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
-import com.jardvcode.bot.user.entity.UserBotStateEntity;
+import com.jardvcode.bot.user.entity.BotUserEntity;
 import com.jardvcode.bot.user.repository.UserBotStateRepository;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
@@ -26,14 +26,14 @@ public final class StateMachine {
 		String userId = botContext.getUserId();
 		String message = botContext.getMessage();
 
-		UserBotStateEntity user = repository.findByPlatformUserId(userId).orElse(null);
+		BotUserEntity user = repository.findByPlatformUserId(userId).orElse(null);
 
 		if(user == null) {
 			String initialState = StateUtil.uniqueName(TokenInputState.class);
 
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
-			user = UserBotStateEntity.create(userId, initialState);
+			user = BotUserEntity.create(userId, initialState);
 			repository.save(user);
 
 			return;

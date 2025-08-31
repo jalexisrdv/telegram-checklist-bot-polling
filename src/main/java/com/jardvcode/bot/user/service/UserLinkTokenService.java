@@ -1,6 +1,6 @@
 package com.jardvcode.bot.user.service;
 
-import com.jardvcode.bot.user.entity.UserBotStateEntity;
+import com.jardvcode.bot.user.entity.BotUserEntity;
 import com.jardvcode.bot.user.entity.UserLinkTokenEntity;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.user.repository.UserBotStateRepository;
@@ -29,7 +29,7 @@ public class UserLinkTokenService {
             throw new BotException("El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.");
         }
 
-        UserBotStateEntity userBotEntity = userBotRepository.findByPlatformUserId(platformUserId).orElseThrow(() -> new BotException("No se pudo encontrar el usuario."));
+        BotUserEntity userBotEntity = userBotRepository.findByPlatformUserId(platformUserId).orElseThrow(() -> new BotException("No se pudo encontrar el usuario."));
 
         userLinkTokenEntity.setUsed(true);
         userLinkTokenRepository.save(userLinkTokenEntity);

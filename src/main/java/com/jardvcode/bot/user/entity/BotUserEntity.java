@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user_bot_states")
-public class UserBotStateEntity {
+public class BotUserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // corresponde a SERIAL
@@ -27,8 +27,8 @@ public class UserBotStateEntity {
     @JoinTable(name = "user_permissions", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private Set<PermissionEntity> permissions = new HashSet<>();
 
-    public static UserBotStateEntity create(String platformUserId, String currentState) {
-        UserBotStateEntity entity = new UserBotStateEntity();
+    public static BotUserEntity create(String platformUserId, String currentState) {
+        BotUserEntity entity = new BotUserEntity();
         entity.setPlatformUserId(platformUserId);
         entity.setCurrentState(currentState);
         return entity;
