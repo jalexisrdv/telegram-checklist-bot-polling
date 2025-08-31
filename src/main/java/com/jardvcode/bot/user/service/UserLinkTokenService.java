@@ -29,7 +29,7 @@ public class UserLinkTokenService {
             throw new BotException("El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.");
         }
 
-        BotUserEntity userBotEntity = userBotRepository.findByPlatformUserId(platformUserId).orElseThrow(() -> new BotException("No se pudo encontrar el usuario."));
+        BotUserEntity userBotEntity = userBotRepository.findByPlatformUserId(platformUserId).orElseThrow(() -> new BotException("Usuario no encontrado."));
 
         userLinkTokenEntity.setUsed(true);
         userLinkTokenRepository.save(userLinkTokenEntity);
