@@ -43,7 +43,7 @@ class TokenInputStateTest {
     void shouldSendErrorMessageAndRetryWhenTokenIsInvalid() throws Exception {
         String expectedErrorMessage = "Token invalido o esperado";
 
-        doThrow(new BotException(expectedErrorMessage)).when(service).linkUser(any(), any());
+        doThrow(new BotException(expectedErrorMessage)).when(service).linkBotUserToSystemUser(any(), any());
 
         Decision decision = state.onUserInput(botContext);
 
@@ -53,11 +53,11 @@ class TokenInputStateTest {
 
     @Test
     void shouldLinkBotUserToSystemUserAndGoToMenuStateWhenTokenIsValid() throws Exception {
-        doNothing().when(service).linkUser(any(), any());
+        doNothing().when(service).linkBotUserToSystemUser(any(), any());
 
         Decision decision = state.onUserInput(botContext);
 
-        verify(service, times(1)).linkUser(any(), any());
+        verify(service, times(1)).linkBotUserToSystemUser(any(), any());
         assertEquals(StateUtil.uniqueName(MenuState.class), decision.nextState());
     }
 

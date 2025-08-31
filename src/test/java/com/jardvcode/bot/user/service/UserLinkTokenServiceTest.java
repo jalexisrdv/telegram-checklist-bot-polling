@@ -37,7 +37,7 @@ class UserLinkTokenServiceTest {
         when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.empty());
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkUser("token", "platformUserId");
+            service.linkBotUserToSystemUser("token", "platformUserId");
         });
 
         assertEquals( "No se pudo encontrar el token de acceso.", exception.getMessage());
@@ -48,7 +48,7 @@ class UserLinkTokenServiceTest {
         when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withUsedToken()));
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkUser("token", "platformUserId");
+            service.linkBotUserToSystemUser("token", "platformUserId");
         });
 
         assertEquals( "El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.", exception.getMessage());
@@ -59,7 +59,7 @@ class UserLinkTokenServiceTest {
         when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withExpiredToken()));
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkUser("token", "platformUserId");
+            service.linkBotUserToSystemUser("token", "platformUserId");
         });
 
         assertEquals( "El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.", exception.getMessage());
@@ -71,7 +71,7 @@ class UserLinkTokenServiceTest {
         when(userBotRepository.findByPlatformUserId(any())).thenReturn(Optional.empty());
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkUser("token", "platformUserId");
+            service.linkBotUserToSystemUser("token", "platformUserId");
         });
 
         assertEquals( "Usuario no encontrado.", exception.getMessage());
@@ -88,7 +88,7 @@ class UserLinkTokenServiceTest {
         when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(userLinkTokenEntity));
         when(userBotRepository.findByPlatformUserId(any())).thenReturn(Optional.of(botUserEntity));
 
-        service.linkUser("token", "platformUserId");
+        service.linkBotUserToSystemUser("token", "platformUserId");
 
         verify(userLinkTokenRepository, times(1)).save(userLinkTokenEntityCaptor.capture());
         verify(userBotRepository, times(1)).save(botUserEntityCaptor.capture());

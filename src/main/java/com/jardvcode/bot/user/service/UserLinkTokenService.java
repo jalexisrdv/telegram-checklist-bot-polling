@@ -22,7 +22,7 @@ public class UserLinkTokenService {
     }
 
     @Transactional
-    public void linkUser(String token, String platformUserId) {
+    public void linkBotUserToSystemUser(String token, String platformUserId) {
         UserLinkTokenEntity userLinkTokenEntity = userLinkTokenRepository.findByToken(token).orElseThrow(() -> new BotException("No se pudo encontrar el token de acceso."));
 
         if (userLinkTokenEntity.getUsed() || userLinkTokenEntity.getExpiresAt().isBefore(LocalDateTime.now())) {

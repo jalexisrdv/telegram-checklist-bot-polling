@@ -28,7 +28,7 @@ public final class TokenInputState implements State {
         String token = botContext.getMessage();
 
         try {
-            service.linkUser(token, botContext.getUserId());
+            service.linkBotUserToSystemUser(token, botContext.getUserId());
         } catch(BotException e) {
             botContext.sendText(e.getMessage());
 
