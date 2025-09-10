@@ -2,7 +2,6 @@ package com.jardvcode.bot.shared.domain.bot;
 
 import com.jardvcode.bot.configuration.sender.MessageSender;
 
-import java.util.List;
 import java.util.Map;
 
 public final class BotContext {

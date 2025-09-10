@@ -49,7 +49,7 @@ public final class TelegramBotConfiguration extends TelegramLongPollingBot {
 				String chatId = null;
 				String incomingMessage = null;
 				String username = null;
-	
+				
 				if (update.hasCallbackQuery()) {
 					chatId = update.getCallbackQuery().getMessage().getChatId().toString();
 					incomingMessage = update.getCallbackQuery().getData();
@@ -69,12 +69,14 @@ public final class TelegramBotConfiguration extends TelegramLongPollingBot {
 				try {
 					stateMachine.apply(botContext);
 				} catch (BotException e) {
-                    try {
+					e.printStackTrace();
+					try {
                         botContext.sendText(e.getMessage());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 } catch (Exception e) {
+					e.printStackTrace();
                     try {
                         botContext.sendText("Oops... algo no salió como esperaba");
                     } catch (Exception ex) {
