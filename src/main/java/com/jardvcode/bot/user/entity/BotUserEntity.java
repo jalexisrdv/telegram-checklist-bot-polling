@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class BotUserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // corresponde a SERIAL
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "user_id")
@@ -23,8 +23,12 @@ public class BotUserEntity {
     @Column(name = "current_state")
     private String currentState;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_permissions", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_permissions",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")
+    )
     private Set<PermissionEntity> permissions = new HashSet<>();
 
     public static BotUserEntity create(String platformUserId, String currentState) {
@@ -71,4 +75,13 @@ public class BotUserEntity {
     public void setCurrentState(String currentState) {
         this.currentState = currentState;
     }
+
+    public Set<PermissionEntity> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<PermissionEntity> permissions) {
+        this.permissions = permissions;
+    }
+
 }
