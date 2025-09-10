@@ -1,5 +1,7 @@
 package com.jardvcode.bot.checklist.state;
 
+import com.jardvcode.bot.checklist.state.checklist.SelectChecklistState;
+import com.jardvcode.bot.checklist.state.registration.InputTokenState;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.Decision;
@@ -26,7 +28,7 @@ class TokenInputStateTest {
     private UserLinkTokenService service;
 
     @InjectMocks
-    private TokenInputState state;
+    private InputTokenState state;
 
     @Test
     void shouldSendTokenRequestMessageAndStayInState() throws Exception {
@@ -48,7 +50,7 @@ class TokenInputStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(botContext, times(1)).sendText(expectedErrorMessage);
-        assertEquals(StateUtil.uniqueName(TokenInputState.class), decision.nextState());
+        assertEquals(StateUtil.uniqueName(InputTokenState.class), decision.nextState());
     }
 
     @Test
@@ -58,7 +60,7 @@ class TokenInputStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(service, times(1)).linkBotUserToSystemUser(any(), any());
-        assertEquals(StateUtil.uniqueName(MenuState.class), decision.nextState());
+        assertEquals(StateUtil.uniqueName(SelectChecklistState.class), decision.nextState());
     }
 
 }

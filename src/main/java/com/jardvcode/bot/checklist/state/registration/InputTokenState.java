@@ -1,5 +1,6 @@
-package com.jardvcode.bot.checklist.state;
+package com.jardvcode.bot.checklist.state.registration;
 
+import com.jardvcode.bot.checklist.state.checklist.SelectChecklistState;
 import com.jardvcode.bot.user.service.UserLinkTokenService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.BotException;
@@ -8,11 +9,11 @@ import com.jardvcode.bot.shared.domain.state.State;
 import org.springframework.stereotype.Service;
 
 @Service
-public final class TokenInputState implements State {
+public final class InputTokenState implements State {
 
     private final UserLinkTokenService service;
 
-    public TokenInputState(UserLinkTokenService service) {
+    public InputTokenState(UserLinkTokenService service) {
         this.service = service;
     }
 
@@ -35,6 +36,6 @@ public final class TokenInputState implements State {
             return Decision.go(getClass());
         }
 
-        return Decision.go(MenuState.class);
+        return Decision.go(SelectChecklistState.class);
     }
 }
