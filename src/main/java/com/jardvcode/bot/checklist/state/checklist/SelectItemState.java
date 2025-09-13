@@ -36,9 +36,7 @@ public final class SelectItemState implements State {
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        BotSessionDataEntity sessionData = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.GROUP.name());
-
-        GroupDTO groupDTO = JsonUtils.decode(sessionData.getValue(), GroupDTO.class);
+        GroupDTO groupDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.GROUP.name(), GroupDTO.class);
         ChecklistDTO checklistDTO = groupDTO.checklistDTO();
 
         List<ResponseEntity> responses = itemService.findByInstanceIdAndGroupId(checklistDTO.instanceId(), groupDTO.id());
@@ -108,12 +106,10 @@ public final class SelectItemState implements State {
         try {
             Long optionNumber = Long.valueOf(botContext.getMessage());
 
-            BotSessionDataEntity sessionData = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.GROUP.name());
+            GroupDTO groupDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.GROUP.name(), GroupDTO.class);
+            ChecklistDTO checklistDTO = groupDTO.checklistDTO();
 
-            GroupDTO groupDto = JsonUtils.decode(sessionData.getValue(), GroupDTO.class);
-            ChecklistDTO checklistDTO = groupDto.checklistDTO();
-
-            response = itemService.findByInstanceIdAndGroupIdAndOptionNumber(checklistDTO.instanceId(), groupDto.id(), optionNumber);
+            response = itemService.findByInstanceIdAndGroupIdAndOptionNumber(checklistDTO.instanceId(), groupDTO.id(), optionNumber);
         } catch(Exception e) {
             botContext.sendText("Opción no valida");
 

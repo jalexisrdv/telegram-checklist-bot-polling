@@ -29,9 +29,7 @@ public final class AnswerItemState implements State {
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        BotSessionDataEntity sessionData = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.ITEM.name());
-
-        ItemDTO itemDTO = JsonUtils.decode(sessionData.getValue(), ItemDTO.class);
+        ItemDTO itemDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.ITEM.name(), ItemDTO.class);
 
         botContext.sendText("Envía el estatus de " + itemDTO.description() + ": ");
 
@@ -57,8 +55,7 @@ public final class AnswerItemState implements State {
         String status = matcher.group(1).trim();
         String observation = Optional.ofNullable(matcher.group(2)).orElse("").trim();
 
-        BotSessionDataEntity sessionData = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.ITEM.name());
-        ItemDTO itemDTO = JsonUtils.decode(sessionData.getValue(), ItemDTO.class);
+        ItemDTO itemDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.ITEM.name(), ItemDTO.class);
 
         responseService.save(ResponseEntity.create(itemDTO.id(), status, observation));
 

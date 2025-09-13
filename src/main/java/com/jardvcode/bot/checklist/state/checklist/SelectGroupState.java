@@ -36,17 +36,15 @@ public final class SelectGroupState implements State {
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        BotSessionDataEntity sessionData = null;
+        ChecklistDTO checklistDTO = null;
 
         try {
-            sessionData = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.CHECKLIST.name());
+            checklistDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.CHECKLIST.name(), ChecklistDTO.class);
         } catch (Exception e) {
             botContext.sendText("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.CHECKLISTS.value() + " para ver las listas disponibles.");
 
             return Decision.stay();
         }
-
-        ChecklistDTO checklistDTO = JsonUtils.decode(sessionData.getValue(), ChecklistDTO.class);
 
         StringBuilder message = new StringBuilder();
 
@@ -98,8 +96,7 @@ public final class SelectGroupState implements State {
         try {
             Long optionNumber = Long.parseLong(botContext.getMessage());
 
-            BotSessionDataEntity sessionData = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.CHECKLIST.name());
-            checklistDTO = JsonUtils.decode(sessionData.getValue(), ChecklistDTO.class);
+            checklistDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.CHECKLIST.name(), ChecklistDTO.class);
 
             group = groupService.findByInstanceIdAndOptionNumber(checklistDTO.instanceId(), optionNumber).getGroup();
         } catch (Exception e) {
