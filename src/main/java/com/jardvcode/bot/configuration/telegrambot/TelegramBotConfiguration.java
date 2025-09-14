@@ -46,25 +46,22 @@ public final class TelegramBotConfiguration extends TelegramLongPollingBot {
 			
 			@Override
 			public void run() {
-				String chatId = null;
+				String providerUserId = null;
 				String incomingMessage = null;
-				String username = null;
-				
+
 				if (update.hasCallbackQuery()) {
-					chatId = update.getCallbackQuery().getMessage().getChatId().toString();
+					providerUserId = update.getCallbackQuery().getMessage().getChatId().toString();
 					incomingMessage = update.getCallbackQuery().getData();
-					username = update.getCallbackQuery().getFrom().getFirstName();
 				}
 	
 				if (update.hasMessage() && update.getMessage().hasText()) {
-					chatId = update.getMessage().getChatId().toString();
+					providerUserId = update.getMessage().getChatId().toString();
 					incomingMessage = update.getMessage().getText();
-					username = update.getMessage().getChat().getFirstName();
 				}
 				
-				if (chatId == null || incomingMessage == null || username == null) return;
+				if (providerUserId == null || incomingMessage == null) return;
 				
-				BotContext botContext = new BotContext(TelegramBotConfiguration.this.username, chatId, incomingMessage, username, messageSender);
+				BotContext botContext = new BotContext(providerUserId, incomingMessage, messageSender);
 				
 				try {
 					stateMachine.apply(botContext);

@@ -27,24 +27,26 @@ public final class StateMachine {
     }
 
 	public void apply(BotContext botContext) throws Exception {
-		String userId = botContext.getUserId();
+		String providerUserId = botContext.getProviderUserId();
 		String message = botContext.getMessage();
 
-		BotUserEntity user = repository.findByPlatformUserId(userId).orElse(null);
+		BotUserEntity user = repository.findByProviderUserId(providerUserId).orElse(null);
 
 		if(user == null) {
 			String initialState = StateUtil.uniqueName(InputTokenState.class);
 
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
-			user = BotUserEntity.create(userId, initialState);
+			user = BotUserEntity.create(providerUserId, initialState);
 			repository.save(user);
 
 			return;
 		}
 
+		botContext.setSystemUserId(user.getUserId());
+
 		if(message.contains(BotCommand.CHECKLISTS.value())) {
-			botSessionDataService.deleteByPlatformUserId(botContext.getUserId());
+			botSessionDataService.deleteByUserId(user.getUserId());
 		}
 
 		if(user.getUserId() != null && message.contains("/") && commandRegistry.canExecute(message, user.permissions())) {
@@ -79,6 +81,6 @@ public final class StateMachine {
 		stateRegistry.find(nextState).onBotMessage(botContext);
 
 		user.setCurrentState(nextState);
-		repository.updateCurrentStateByPlatformUserId(userId, nextState);
+		repository.updateCurrentStateByUserId(user.getUserId(), nextState);
 	}
 }
