@@ -1,14 +1,10 @@
 package com.jardvcode.bot.checklist.state.checklist;
 
-import com.jardvcode.bot.checklist.domain.BotSessionData;
 import com.jardvcode.bot.checklist.dto.ItemDTO;
-import com.jardvcode.bot.checklist.entity.instance.ResponseEntity;
 import com.jardvcode.bot.checklist.service.ItemResponseService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
-import com.jardvcode.bot.shared.util.JsonUtils;
-import com.jardvcode.bot.user.entity.BotSessionDataEntity;
 import com.jardvcode.bot.user.service.BotSessionDataService;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +25,7 @@ public final class AnswerItemState implements State {
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        ItemDTO itemDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.ITEM.name(), ItemDTO.class);
+        ItemDTO itemDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), ItemDTO.class);
 
         botContext.sendText("Envía el estatus de " + itemDTO.description() + ": ");
 
@@ -55,9 +51,9 @@ public final class AnswerItemState implements State {
         String status = matcher.group(1).trim();
         String observation = Optional.ofNullable(matcher.group(2)).orElse("").trim();
 
-        ItemDTO itemDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.ITEM.name(), ItemDTO.class);
+        ItemDTO itemDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), ItemDTO.class);
 
-        responseService.save(ResponseEntity.create(itemDTO.id(), status, observation));
+        responseService.save(itemDTO.id(), status, observation);
 
         return Decision.go(SelectItemState.class);
     }

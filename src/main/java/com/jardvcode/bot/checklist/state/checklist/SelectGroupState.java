@@ -1,7 +1,6 @@
 package com.jardvcode.bot.checklist.state.checklist;
 
 import com.jardvcode.bot.checklist.domain.BotCommand;
-import com.jardvcode.bot.checklist.domain.BotSessionData;
 import com.jardvcode.bot.checklist.domain.ChecklistStatus;
 import com.jardvcode.bot.checklist.domain.Emojis;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
@@ -14,8 +13,6 @@ import com.jardvcode.bot.checklist.service.InstanceGroupService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
-import com.jardvcode.bot.shared.util.JsonUtils;
-import com.jardvcode.bot.user.entity.BotSessionDataEntity;
 import com.jardvcode.bot.user.service.BotSessionDataService;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +36,7 @@ public final class SelectGroupState implements State {
         ChecklistDTO checklistDTO = null;
 
         try {
-            checklistDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.CHECKLIST.name(), ChecklistDTO.class);
+            checklistDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), ChecklistDTO.class);
         } catch (Exception e) {
             botContext.sendText("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.CHECKLISTS.value() + " para ver las listas disponibles.");
 
@@ -96,7 +93,7 @@ public final class SelectGroupState implements State {
         try {
             Long optionNumber = Long.parseLong(botContext.getMessage());
 
-            checklistDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.CHECKLIST.name(), ChecklistDTO.class);
+            checklistDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), ChecklistDTO.class);
 
             group = groupService.findByInstanceIdAndOptionNumber(checklistDTO.instanceId(), optionNumber).getGroup();
         } catch (Exception e) {
@@ -107,14 +104,7 @@ public final class SelectGroupState implements State {
 
         GroupDTO groupDTO = new GroupDTO(group.getId(), group.getName(), checklistDTO);
 
-        BotSessionDataEntity sessionData = BotSessionDataEntity.create(
-                botContext.getUserId(),
-                getClass(),
-                BotSessionData.GROUP,
-                JsonUtils.encode(groupDTO)
-        );
-
-        sessionDataService.save(sessionData);
+        sessionDataService.save(botContext.getSystemUserId(), groupDTO, getClass());
 
         return Decision.go(SelectItemState.class);
     }

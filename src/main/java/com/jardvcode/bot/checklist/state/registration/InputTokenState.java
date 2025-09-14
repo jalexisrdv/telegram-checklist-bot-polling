@@ -29,7 +29,7 @@ public final class InputTokenState implements State {
         String token = botContext.getMessage();
 
         try {
-            service.linkBotUserToSystemUser(token, botContext.getUserId());
+            service.linkBotUserToSystemUser(token, botContext.getProviderUserId());
         } catch(BotException e) {
             botContext.sendText(e.getMessage());
 

@@ -1,6 +1,5 @@
 package com.jardvcode.bot.checklist.state.checklist;
 
-import com.jardvcode.bot.checklist.domain.BotSessionData;
 import com.jardvcode.bot.checklist.domain.ChecklistStatus;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.entity.instance.InstanceEntity;
@@ -8,8 +7,6 @@ import com.jardvcode.bot.checklist.service.InstanceService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
-import com.jardvcode.bot.shared.util.JsonUtils;
-import com.jardvcode.bot.user.entity.BotSessionDataEntity;
 import com.jardvcode.bot.user.service.BotSessionDataService;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +25,7 @@ public final class SelectChecklistState implements State {
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        List<InstanceEntity> instances = instanceService.findUnconfirmedByUserId(1L);
+        List<InstanceEntity> instances = instanceService.findUnconfirmedByUserId(botContext.getSystemUserId());
 
         if(instances.isEmpty()) {
             botContext.sendText("¡Genial! No hay listas de inspección pendientes por responder.");
@@ -69,7 +66,7 @@ public final class SelectChecklistState implements State {
         InstanceEntity instance = null;
 
         try {
-            Long userId = 1L;
+            Long userId = botContext.getSystemUserId();
             Long optionNumber = Long.parseLong(botContext.getMessage());
 
             instance = instanceService.findByUserIdAndOptionNumber(userId, optionNumber);
@@ -85,14 +82,7 @@ public final class SelectChecklistState implements State {
                 instance.getOperatorName(), instance.getMileage(), instance.getNextService()
         );
 
-        BotSessionDataEntity sessionData = BotSessionDataEntity.create(
-                botContext.getUserId(),
-                getClass(),
-                BotSessionData.CHECKLIST,
-                JsonUtils.encode(checklistDTO)
-        );
-
-        sessionDataService.save(sessionData);
+        sessionDataService.save(botContext.getSystemUserId(), checklistDTO, getClass());
 
         return Decision.go(SelectGroupState.class);
     }

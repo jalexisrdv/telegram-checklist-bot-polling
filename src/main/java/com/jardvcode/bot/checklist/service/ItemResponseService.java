@@ -23,12 +23,12 @@ public final class ItemResponseService {
         return repository.findByInstanceIdAndGroupIdAndOptionNumber(instanceId, groupId, userItemNumber).orElseThrow();
     }
 
-    public void save(ResponseEntity entity) {
-        ResponseEntity entityFound = repository.findById(entity.getId()).orElseThrow();
+    public void save(Long id, String status, String observation) {
+        ResponseEntity entityFound = repository.findById(id).orElseThrow();
 
-        entityFound.setId(entity.getId());
-        entityFound.setStatus(entity.getStatus());
-        entityFound.setObservation(entity.getObservation());
+        entityFound.setId(id);
+        entityFound.setStatus(status);
+        entityFound.setObservation(observation);
 
         repository.save(entityFound);
     }

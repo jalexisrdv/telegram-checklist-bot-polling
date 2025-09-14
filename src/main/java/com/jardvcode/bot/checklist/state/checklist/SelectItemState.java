@@ -1,6 +1,5 @@
 package com.jardvcode.bot.checklist.state.checklist;
 
-import com.jardvcode.bot.checklist.domain.BotSessionData;
 import com.jardvcode.bot.checklist.domain.ChecklistStatus;
 import com.jardvcode.bot.checklist.domain.Emojis;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
@@ -14,8 +13,6 @@ import com.jardvcode.bot.checklist.service.ItemResponseService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
-import com.jardvcode.bot.shared.util.JsonUtils;
-import com.jardvcode.bot.user.entity.BotSessionDataEntity;
 import com.jardvcode.bot.user.service.BotSessionDataService;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +33,7 @@ public final class SelectItemState implements State {
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        GroupDTO groupDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.GROUP.name(), GroupDTO.class);
+        GroupDTO groupDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), GroupDTO.class);
         ChecklistDTO checklistDTO = groupDTO.checklistDTO();
 
         List<ResponseEntity> responses = itemService.findByInstanceIdAndGroupId(checklistDTO.instanceId(), groupDTO.id());
@@ -106,7 +103,7 @@ public final class SelectItemState implements State {
         try {
             Long optionNumber = Long.valueOf(botContext.getMessage());
 
-            GroupDTO groupDTO = sessionDataService.findByPlatformUserId(botContext.getUserId(), BotSessionData.GROUP.name(), GroupDTO.class);
+            GroupDTO groupDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), GroupDTO.class);
             ChecklistDTO checklistDTO = groupDTO.checklistDTO();
 
             response = itemService.findByInstanceIdAndGroupIdAndOptionNumber(checklistDTO.instanceId(), groupDTO.id(), optionNumber);
@@ -118,14 +115,7 @@ public final class SelectItemState implements State {
 
         ItemDTO itemDTO = new ItemDTO(response.getId(), response.getItem().getDescription());
 
-        BotSessionDataEntity sessionData = BotSessionDataEntity.create(
-                botContext.getUserId(),
-                getClass(),
-                BotSessionData.ITEM,
-                JsonUtils.encode(itemDTO)
-        );
-
-        sessionDataService.save(sessionData);
+        sessionDataService.save(botContext.getSystemUserId(), itemDTO, getClass());
 
         return Decision.go(AnswerItemState.class);
     }
