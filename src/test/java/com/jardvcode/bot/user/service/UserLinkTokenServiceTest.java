@@ -68,7 +68,7 @@ class UserLinkTokenServiceTest {
     @Test
     void shouldThrowExceptionWhenUserIsNotFound() {
         when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withValidToken()));
-        when(userBotRepository.findByPlatformUserId(any())).thenReturn(Optional.empty());
+        when(userBotRepository.findByProviderUserId(any())).thenReturn(Optional.empty());
 
         BotException exception = assertThrows(BotException.class, () -> {
             service.linkBotUserToSystemUser("token", "platformUserId");
@@ -86,7 +86,7 @@ class UserLinkTokenServiceTest {
         ArgumentCaptor<BotUserEntity> botUserEntityCaptor = ArgumentCaptor.forClass(BotUserEntity.class);
 
         when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(userLinkTokenEntity));
-        when(userBotRepository.findByPlatformUserId(any())).thenReturn(Optional.of(botUserEntity));
+        when(userBotRepository.findByProviderUserId(any())).thenReturn(Optional.of(botUserEntity));
 
         service.linkBotUserToSystemUser("token", "platformUserId");
 

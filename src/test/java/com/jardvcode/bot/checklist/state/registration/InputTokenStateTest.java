@@ -1,7 +1,6 @@
-package com.jardvcode.bot.checklist.state;
+package com.jardvcode.bot.checklist.state.registration;
 
 import com.jardvcode.bot.checklist.state.checklist.SelectChecklistState;
-import com.jardvcode.bot.checklist.state.registration.InputTokenState;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.Decision;

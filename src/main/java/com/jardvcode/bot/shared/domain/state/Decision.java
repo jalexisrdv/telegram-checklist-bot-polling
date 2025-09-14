@@ -12,6 +12,10 @@ public final class Decision {
 		return StateUtil.uniqueName(state);
 	}
 
+	public static String state(Class<? extends State> state) {
+		return StateUtil.uniqueName(state);
+	}
+
 	public static Decision stay() {
 		return new Decision(null);
 	}
