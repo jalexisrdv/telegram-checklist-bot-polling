@@ -17,8 +17,8 @@ public class BotUserEntity {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "platform_user_id")
-    private String platformUserId;
+    @Column(name = "provider_user_id")
+    private String providerUserId;
 
     @Column(name = "current_state")
     private String currentState;
@@ -31,9 +31,9 @@ public class BotUserEntity {
     )
     private Set<PermissionEntity> permissions = new HashSet<>();
 
-    public static BotUserEntity create(String platformUserId, String currentState) {
+    public static BotUserEntity create(String providerUserId, String currentState) {
         BotUserEntity entity = new BotUserEntity();
-        entity.setPlatformUserId(platformUserId);
+        entity.setProviderUserId(providerUserId);
         entity.setCurrentState(currentState);
         return entity;
     }
@@ -60,12 +60,12 @@ public class BotUserEntity {
         this.userId = userId;
     }
 
-    public String getPlatformUserId() {
-        return platformUserId;
+    public String getProviderUserId() {
+        return providerUserId;
     }
 
-    public void setPlatformUserId(String platformUserId) {
-        this.platformUserId = platformUserId;
+    public void setProviderUserId(String providerUserId) {
+        this.providerUserId = providerUserId;
     }
 
     public String getCurrentState() {

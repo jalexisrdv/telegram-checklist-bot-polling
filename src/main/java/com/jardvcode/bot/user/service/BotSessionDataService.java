@@ -3,6 +3,8 @@ package com.jardvcode.bot.user.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jardvcode.bot.shared.domain.exception.DataNotFoundException;
 import com.jardvcode.bot.shared.domain.exception.UnexpectedException;
+import com.jardvcode.bot.shared.domain.state.State;
+import com.jardvcode.bot.shared.domain.state.StateUtil;
 import com.jardvcode.bot.shared.util.JsonUtils;
 import com.jardvcode.bot.user.entity.BotSessionDataEntity;
 import com.jardvcode.bot.user.repository.BotSessionDataRepository;
@@ -24,26 +26,37 @@ public class BotSessionDataService {
         this.repository = repository;
     }
 
-    public <T> T findByPlatformUserId(String platformUserId, String key, Class<T> toClass) {
-        try {
-            BotSessionDataEntity data = repository.findByPlatformUserIdAndKey(platformUserId, key).orElseThrow(() -> new DataNotFoundException());
+    public <T extends Record> T findByUserId(Long userId, Class<T> dto) {
+        String key = dto.getCanonicalName();
 
-            return JsonUtils.decode(data.getValue(), toClass);
+        try {
+            BotSessionDataEntity data = repository.findByUserIdAndKey(userId, key).orElseThrow(() -> new DataNotFoundException());
+
+            return JsonUtils.decode(data.getValue(), dto);
         } catch (DataNotFoundException e) {
-            LOGGER.error("Session data not found for userId={} key={}", platformUserId, key, e);
+            LOGGER.error("Session data not found for userId={} key={}", userId, key, e);
             throw e;
         } catch (JsonProcessingException e) {
-            LOGGER.error("Failed to deserialize session data for userId={} key={}", platformUserId, key, e);
+            LOGGER.error("Failed to deserialize session data for userId={} key={}", userId, key, e);
             throw new UnexpectedException();
         } catch (Exception e) {
-            LOGGER.error("Unexpected error processing session data for userId={} key={}", platformUserId, key, e);
+            LOGGER.error("Unexpected error processing session data for userId={} key={}", userId, key, e);
             throw new UnexpectedException();
         }
     }
 
-    public void save(BotSessionDataEntity entity) {
+    public <T extends Record> void save(Long userId, T dto, Class<? extends State> state) {
+        String key = dto.getClass().getSimpleName();
+
         try {
-            Optional<BotSessionDataEntity> optional = repository.findByPlatformUserIdAndKey(entity.getPlatformUserId(), entity.getKey());
+            BotSessionDataEntity entity = BotSessionDataEntity.create(
+                    userId,
+                    StateUtil.uniqueName(state),
+                    key,
+                    JsonUtils.encode(dto)
+            );
+
+            Optional<BotSessionDataEntity> optional = repository.findByUserIdAndKey(userId, key);
 
             if(optional.isEmpty()) {
                 repository.save(entity);
@@ -55,17 +68,17 @@ public class BotSessionDataService {
 
             repository.save(entity);
         } catch (Exception e) {
-            LOGGER.error("Failed to save session data for userId={} key={}", entity.getPlatformUserId(), entity.getKey(), e);
+            LOGGER.error("Failed to save session data for userId={} key={}", userId, key, e);
             throw new UnexpectedException();
         }
     }
 
     @Transactional
-    public void deleteByPlatformUserId(String platformUserId) {
+    public void deleteByUserId(Long userId) {
         try {
-            repository.deleteByPlatformUserId(platformUserId);
+            repository.deleteByUserId(userId);
         } catch (Exception e) {
-            LOGGER.error("Failed to delete session data for userId={}", platformUserId, e);
+            LOGGER.error("Failed to delete session data for userId={}", userId, e);
             throw new UnexpectedException();
         }
     }

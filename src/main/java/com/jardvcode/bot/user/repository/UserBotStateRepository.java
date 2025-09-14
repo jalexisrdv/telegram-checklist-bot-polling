@@ -10,11 +10,11 @@ import java.util.Optional;
 
 public interface UserBotStateRepository extends JpaRepository<BotUserEntity, Long> {
 
-    Optional<BotUserEntity> findByPlatformUserId(String userId);
+    Optional<BotUserEntity> findByProviderUserId(String providerUserId);
 
     @Modifying
     @Transactional
-    @Query("UPDATE BotUserEntity u SET u.currentState = :currentState WHERE u.platformUserId = :platformUserId")
-    void updateCurrentStateByPlatformUserId(String platformUserId, String currentState);
+    @Query("UPDATE BotUserEntity u SET u.currentState = :currentState WHERE u.userId = :userId")
+    void updateCurrentStateByUserId(Long userId, String currentState);
 
 }

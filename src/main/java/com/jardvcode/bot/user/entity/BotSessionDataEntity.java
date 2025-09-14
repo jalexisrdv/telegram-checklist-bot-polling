@@ -1,7 +1,5 @@
 package com.jardvcode.bot.user.entity;
 
-import com.jardvcode.bot.shared.domain.state.State;
-import com.jardvcode.bot.shared.domain.state.StateUtil;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +11,7 @@ public final class BotSessionDataEntity {
     private Long id;
 
     @Column
-    private String platformUserId;
+    private Long userId;
 
     @Column
     private String state;
@@ -24,12 +22,12 @@ public final class BotSessionDataEntity {
     @Column
     private String value;
 
-    public static BotSessionDataEntity create(String platformUserId, Class<? extends State> state, Enum<?> key, String value) {
+    public static BotSessionDataEntity create(Long userId, String state, String key, String value) {
         BotSessionDataEntity entity = new BotSessionDataEntity();
 
-        entity.setPlatformUserId(platformUserId);
-        entity.setState(StateUtil.uniqueName(state));
-        entity.setKey(key.name());
+        entity.setUserId(userId);
+        entity.setState(state);
+        entity.setKey(key);
         entity.setValue(value);
 
         return entity;
@@ -43,12 +41,12 @@ public final class BotSessionDataEntity {
         this.id = id;
     }
 
-    public String getPlatformUserId() {
-        return platformUserId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setPlatformUserId(String platformUserId) {
-        this.platformUserId = platformUserId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getState() {
