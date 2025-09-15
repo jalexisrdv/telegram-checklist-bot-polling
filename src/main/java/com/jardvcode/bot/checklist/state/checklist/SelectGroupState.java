@@ -104,6 +104,6 @@ public final class SelectGroupState implements State {
 
         sessionDataService.save(botContext.getSystemUserId(), groupDTO, getClass());
 
-        return Decision.go(SelectItemState.class);
+        return Decision.moveTo(SelectItemState.class);
     }
 }

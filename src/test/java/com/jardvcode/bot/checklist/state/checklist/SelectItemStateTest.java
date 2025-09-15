@@ -1,8 +1,6 @@
 package com.jardvcode.bot.checklist.state.checklist;
 
 import com.jardvcode.bot.checklist.dto.*;
-import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntity;
-import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntityMother;
 import com.jardvcode.bot.checklist.entity.instance.ResponseEntity;
 import com.jardvcode.bot.checklist.entity.instance.ResponseEntityMother;
 import com.jardvcode.bot.checklist.service.InstanceGroupService;

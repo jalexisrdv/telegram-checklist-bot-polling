@@ -26,6 +26,6 @@ public final class WelcomeState implements State {
 
     @Override
     public Decision onUserInput(BotContext botContext) throws Exception {
-        return Decision.go(getClass());
+        return Decision.moveTo(getClass());
     }
 }

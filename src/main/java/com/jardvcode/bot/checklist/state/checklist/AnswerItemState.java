@@ -45,7 +45,7 @@ public final class AnswerItemState implements State {
                     """;
             botContext.sendText(message);
 
-            return Decision.go(getClass());
+            return Decision.moveTo(getClass());
         }
 
         String status = matcher.group(1).trim();
@@ -55,6 +55,6 @@ public final class AnswerItemState implements State {
 
         responseService.save(itemDTO.id(), status, observation);
 
-        return Decision.go(SelectItemState.class);
+        return Decision.moveTo(SelectItemState.class);
     }
 }

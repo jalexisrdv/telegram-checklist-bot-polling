@@ -5,7 +5,6 @@ import com.jardvcode.bot.checklist.domain.Emoji;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.dto.GroupDTO;
 import com.jardvcode.bot.checklist.dto.ItemDTO;
-import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntity;
 import com.jardvcode.bot.checklist.entity.template.ItemEntity;
 import com.jardvcode.bot.checklist.entity.instance.ResponseEntity;
 import com.jardvcode.bot.checklist.service.InstanceGroupService;
@@ -116,6 +115,6 @@ public final class SelectItemState implements State {
 
         sessionDataService.save(botContext.getSystemUserId(), itemDTO, getClass());
 
-        return Decision.go(AnswerItemState.class);
+        return Decision.moveTo(AnswerItemState.class);
     }
 }

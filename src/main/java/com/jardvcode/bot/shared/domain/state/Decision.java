@@ -20,7 +20,7 @@ public final class Decision {
 		return new Decision(null);
 	}
 
-	public static Decision go(Class<? extends State> next) {
+	public static Decision moveTo(Class<? extends State> next) {
 		return new Decision(next);
 	}
 	

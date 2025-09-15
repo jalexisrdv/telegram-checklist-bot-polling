@@ -84,6 +84,6 @@ public final class SelectChecklistState implements State {
 
         sessionDataService.save(botContext.getSystemUserId(), checklistDTO, getClass());
 
-        return Decision.go(SelectGroupState.class);
+        return Decision.moveTo(SelectGroupState.class);
     }
 }
