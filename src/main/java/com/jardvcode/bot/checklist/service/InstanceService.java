@@ -24,9 +24,9 @@ public final class InstanceService {
         return repository.findByUserIdAndOptionNumber(userId, userInstanceNumber).orElseThrow();
     }
 
-    public void update(InstanceEntity entity) {
-        InstanceEntity entityFound = repository.findById(entity.getId()).orElseThrow();
-        entityFound.setStatus(entity.getStatus());
+    public void markAsCompleted(Long instanceId) {
+        InstanceEntity entityFound = repository.findById(instanceId).orElseThrow();
+        entityFound.setStatus(ChecklistStatus.COMPLETADO.name());
         repository.save(entityFound);
     }
 

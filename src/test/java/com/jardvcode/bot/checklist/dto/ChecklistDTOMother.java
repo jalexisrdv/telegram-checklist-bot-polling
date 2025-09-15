@@ -1,9 +1,6 @@
 package com.jardvcode.bot.checklist.dto;
 
-import com.jardvcode.bot.checklist.entity.InstanceEntityMother;
 import com.jardvcode.bot.checklist.entity.instance.InstanceEntity;
-
-import java.time.LocalDate;
 
 public final class ChecklistDTOMother {
 
@@ -16,6 +13,18 @@ public final class ChecklistDTOMother {
                 instance.getOperatorName(),
                 instance.getMileage(),
                 instance.getNextService()
+        );
+    }
+
+    public static ChecklistDTO create() {
+        return new ChecklistDTO(
+                1L,
+                1L,
+                "Formato para servicios A y C (BASICO)",
+                "2025-09-14",
+                "PEDRO OCELOT",
+                "1299961",
+                "1,300,000 BASICO"
         );
     }
 

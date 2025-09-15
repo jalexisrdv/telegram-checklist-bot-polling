@@ -5,7 +5,6 @@ import com.jardvcode.bot.checklist.domain.ChecklistStatus;
 import com.jardvcode.bot.checklist.domain.Emojis;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.dto.GroupDTO;
-import com.jardvcode.bot.checklist.entity.instance.InstanceEntity;
 import com.jardvcode.bot.checklist.entity.template.GroupEntity;
 import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntity;
 import com.jardvcode.bot.checklist.service.InstanceService;
@@ -76,8 +75,7 @@ public final class SelectGroupState implements State {
         }
 
         if(checklistGroupsDone) {
-            InstanceEntity instance = InstanceEntity.withCompletedStatus(checklistDTO.instanceId());
-            instanceService.update(instance);
+            instanceService.markAsCompleted(checklistDTO.instanceId());
         }
 
         botContext.sendText(message.toString());

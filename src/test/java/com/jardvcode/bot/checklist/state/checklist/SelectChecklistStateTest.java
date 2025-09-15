@@ -2,7 +2,7 @@ package com.jardvcode.bot.checklist.state.checklist;
 
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.dto.ChecklistDTOMother;
-import com.jardvcode.bot.checklist.entity.InstanceEntityMother;
+import com.jardvcode.bot.checklist.entity.instance.InstanceEntityMother;
 import com.jardvcode.bot.checklist.entity.instance.InstanceEntity;
 import com.jardvcode.bot.checklist.service.InstanceService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;

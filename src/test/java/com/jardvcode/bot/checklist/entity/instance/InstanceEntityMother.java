@@ -1,6 +1,5 @@
-package com.jardvcode.bot.checklist.entity;
+package com.jardvcode.bot.checklist.entity.instance;
 
-import com.jardvcode.bot.checklist.entity.instance.InstanceEntity;
 import com.jardvcode.bot.checklist.entity.template.ChecklistTemplateEntity;
 
 import java.time.LocalDate;

@@ -16,6 +16,14 @@ public final class GroupEntity {
     @Column
     private String name;
 
+    public static GroupEntity create(Long id, String name, Long templateId) {
+        GroupEntity group = new GroupEntity();
+        group.setId(id);
+        group.setName(name);
+        group.setTemplateId(templateId);
+        return group;
+    }
+
     public Long getId() {
         return id;
     }
