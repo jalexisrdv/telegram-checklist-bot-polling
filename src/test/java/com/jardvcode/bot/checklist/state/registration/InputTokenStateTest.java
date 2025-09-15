@@ -1,6 +1,5 @@
 package com.jardvcode.bot.checklist.state.registration;
 
-import com.jardvcode.bot.checklist.state.checklist.SelectChecklistState;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.Decision;
@@ -59,7 +58,7 @@ class InputTokenStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(service, times(1)).linkBotUserToSystemUser(any(), any());
-        assertEquals(StateUtil.uniqueName(SelectChecklistState.class), decision.nextState());
+        assertEquals(StateUtil.uniqueName(WelcomeState.class), decision.nextState());
     }
 
 }

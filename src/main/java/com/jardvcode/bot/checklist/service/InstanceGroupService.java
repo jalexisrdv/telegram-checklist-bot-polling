@@ -1,5 +1,6 @@
 package com.jardvcode.bot.checklist.service;
 
+import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
 import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntity;
 import com.jardvcode.bot.checklist.repository.instance.InstanceGroupRepository;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,9 @@ public final class InstanceGroupService {
         return repository.findByInstanceIdAndOptionNumber(instanceId, userGroupNumber).orElseThrow();
     }
 
-    public void update(InstanceGroupEntity entity) {
-        InstanceGroupEntity entityFound = repository.findByInstanceIdAndOptionNumber(entity.getInstanceId(), entity.getOptionNumber()).orElseThrow();
-        entityFound.setStatus(entity.getStatus());
+    public void markAsCompleted(Long instanceId, Long groupId) {
+        InstanceGroupEntity entityFound = repository.findByInstanceIdAndOptionNumber(instanceId, groupId).orElseThrow();
+        entityFound.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
         repository.save(entityFound);
     }
 

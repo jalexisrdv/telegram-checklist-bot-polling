@@ -2,6 +2,8 @@ package com.jardvcode.bot.checklist.dto;
 
 import com.jardvcode.bot.checklist.entity.instance.InstanceEntity;
 
+import java.time.LocalDate;
+
 public final class ChecklistDTOMother {
 
     public static ChecklistDTO withInstance(InstanceEntity instance) {
@@ -21,7 +23,7 @@ public final class ChecklistDTOMother {
                 1L,
                 1L,
                 "Formato para servicios A y C (BASICO)",
-                "2025-09-14",
+                LocalDate.now().toString(),
                 "PEDRO OCELOT",
                 "1299961",
                 "1,300,000 BASICO"

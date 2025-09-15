@@ -16,6 +16,14 @@ public final class ItemEntity {
     @Column
     private String description;
 
+    public static ItemEntity create(Long id, Long groupId, String description) {
+        ItemEntity entity = new ItemEntity();
+        entity.setId(id);
+        entity.setGroupId(groupId);
+        entity.setDescription(description);
+        return entity;
+    }
+
     public Long getId() {
         return id;
     }

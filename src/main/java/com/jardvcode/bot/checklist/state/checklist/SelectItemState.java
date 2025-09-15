@@ -68,8 +68,7 @@ public final class SelectItemState implements State {
         }
 
         if(groupItemsDone) {
-            InstanceGroupEntity group = InstanceGroupEntity.withCompletedStatus(checklistDTO.instanceId(), groupDTO.id());
-            groupService.update(group);
+            groupService.markAsCompleted(checklistDTO.instanceId(), groupDTO.id());
         }
 
         StringBuilder header = new StringBuilder();
