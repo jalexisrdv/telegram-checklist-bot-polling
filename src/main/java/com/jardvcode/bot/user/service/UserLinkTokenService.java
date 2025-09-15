@@ -22,7 +22,7 @@ public class UserLinkTokenService {
     }
 
     @Transactional
-    public void linkBotUserToSystemUser(String token, String providerUserId) {
+    public BotUserEntity linkBotUserToSystemUser(String token, String providerUserId) {
         UserLinkTokenEntity userLinkTokenEntity = userLinkTokenRepository.findByToken(token).orElseThrow(() -> new BotException("No se pudo encontrar el token de acceso."));
 
         if (userLinkTokenEntity.getUsed() || userLinkTokenEntity.getExpiresAt().isBefore(LocalDateTime.now())) {
@@ -35,7 +35,7 @@ public class UserLinkTokenService {
         userLinkTokenRepository.save(userLinkTokenEntity);
 
         userBotEntity.setUserId(userLinkTokenEntity.getUserId());
-        userBotRepository.save(userBotEntity);
+       return userBotRepository.save(userBotEntity);
     }
 
 }

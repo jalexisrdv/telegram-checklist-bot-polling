@@ -43,9 +43,7 @@ public final class StateMachine {
 			return;
 		}
 
-		botContext.setSystemUserId(user.getUserId());
-
-		if(message.contains(BotCommand.CHECKLISTS.value())) {
+		if(user.getUserId() != null && message.contains(BotCommand.CHECKLISTS.value())) {
 			botSessionDataService.deleteByUserId(user.getUserId());
 		}
 
@@ -58,6 +56,8 @@ public final class StateMachine {
 			
 			return;
 		}
+
+		botContext.setSystemUserId(user.getUserId());
 
 		String currentState = user.getCurrentState();
 

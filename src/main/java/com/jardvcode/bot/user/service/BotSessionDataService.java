@@ -27,7 +27,7 @@ public class BotSessionDataService {
     }
 
     public <T extends Record> T findByUserId(Long userId, Class<T> dto) {
-        String key = dto.getCanonicalName();
+        String key = dto.getSimpleName();
 
         try {
             BotSessionDataEntity data = repository.findByUserIdAndKey(userId, key).orElseThrow(() -> new DataNotFoundException());

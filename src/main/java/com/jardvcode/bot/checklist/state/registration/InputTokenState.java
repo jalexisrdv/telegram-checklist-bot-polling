@@ -1,6 +1,7 @@
 package com.jardvcode.bot.checklist.state.registration;
 
 import com.jardvcode.bot.checklist.state.checklist.SelectChecklistState;
+import com.jardvcode.bot.user.entity.BotUserEntity;
 import com.jardvcode.bot.user.service.UserLinkTokenService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.BotException;
@@ -27,14 +28,17 @@ public final class InputTokenState implements State {
     @Override
     public Decision onUserInput(BotContext botContext) throws Exception {
         String token = botContext.getMessage();
+        BotUserEntity user = null;
 
         try {
-            service.linkBotUserToSystemUser(token, botContext.getProviderUserId());
+            user = service.linkBotUserToSystemUser(token, botContext.getProviderUserId());
         } catch(BotException e) {
             botContext.sendText(e.getMessage());
 
             return Decision.go(getClass());
         }
+
+        botContext.setSystemUserId(user.getUserId());
 
         return Decision.go(SelectChecklistState.class);
     }
