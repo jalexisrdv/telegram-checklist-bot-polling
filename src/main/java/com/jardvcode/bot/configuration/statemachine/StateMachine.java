@@ -43,6 +43,8 @@ public final class StateMachine {
 			return;
 		}
 
+		botContext.setSystemUserId(user.getUserId());
+
 		if(user.getUserId() != null && message.contains(BotCommand.CHECKLISTS.value())) {
 			botSessionDataService.deleteByUserId(user.getUserId());
 		}
@@ -56,8 +58,6 @@ public final class StateMachine {
 			
 			return;
 		}
-
-		botContext.setSystemUserId(user.getUserId());
 
 		String currentState = user.getCurrentState();
 
@@ -81,6 +81,6 @@ public final class StateMachine {
 		stateRegistry.find(nextState).onBotMessage(botContext);
 
 		user.setCurrentState(nextState);
-		repository.updateCurrentStateByUserId(user.getUserId(), nextState);
+		repository.updateCurrentStateByProviderUserId(user.getProviderUserId(), nextState);
 	}
 }

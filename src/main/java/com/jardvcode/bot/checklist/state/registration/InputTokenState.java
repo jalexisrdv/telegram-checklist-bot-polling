@@ -28,18 +28,15 @@ public final class InputTokenState implements State {
     @Override
     public Decision onUserInput(BotContext botContext) throws Exception {
         String token = botContext.getMessage();
-        BotUserEntity user = null;
 
         try {
-            user = service.linkBotUserToSystemUser(token, botContext.getProviderUserId());
+            service.linkBotUserToSystemUser(token, botContext.getProviderUserId());
         } catch(BotException e) {
             botContext.sendText(e.getMessage());
 
             return Decision.go(getClass());
         }
 
-        botContext.setSystemUserId(user.getUserId());
-
-        return Decision.go(SelectChecklistState.class);
+        return Decision.go(WelcomeState.class);
     }
 }

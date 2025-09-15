@@ -14,7 +14,7 @@ public interface UserBotStateRepository extends JpaRepository<BotUserEntity, Lon
 
     @Modifying
     @Transactional
-    @Query("UPDATE BotUserEntity u SET u.currentState = :currentState WHERE u.userId = :userId")
-    void updateCurrentStateByUserId(Long userId, String currentState);
+    @Query("UPDATE BotUserEntity u SET u.currentState = :currentState WHERE u.providerUserId = :providerUserId")
+    void updateCurrentStateByProviderUserId(String providerUserId, String currentState);
 
 }
