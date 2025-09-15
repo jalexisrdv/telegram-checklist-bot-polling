@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.state.checklist;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatus;
+import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.entity.instance.InstanceEntity;
 import com.jardvcode.bot.checklist.service.InstanceService;
@@ -37,7 +37,7 @@ public final class SelectChecklistState implements State {
         message.append("Estas son tus listas de inspección pendientes, envía el número de la lista que deseas responder:\n\n");
 
         for (InstanceEntity instance : instances) {
-            String statusEmoji = ChecklistStatus.fromStatus(instance.getStatus());
+            String statusEmoji = ChecklistStatusEmoji.fromStatus(instance.getStatus());
 
             message.append(String.format(
                     "%s %d. %s%n" +

@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatus;
+import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
 import com.jardvcode.bot.checklist.entity.template.GroupEntity;
 import jakarta.persistence.*;
 
@@ -29,7 +29,7 @@ public final class InstanceGroupEntity {
         InstanceGroupEntity entity = new InstanceGroupEntity();
         entity.setInstanceId(instanceId);
         entity.setOptionNumber(groupId);
-        entity.setStatus(ChecklistStatus.COMPLETADO.name());
+        entity.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
         return entity;
     }
 

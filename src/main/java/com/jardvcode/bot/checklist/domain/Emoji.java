@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.domain;
 
-public class Emojis {
+public class Emoji {
     public static final String DATE = "\uD83D\uDCC5";
     public static final String CHECKLIST = "\uD83D\uDCCB";
     public static final String GROUP = "\uD83D\uDCC2";;

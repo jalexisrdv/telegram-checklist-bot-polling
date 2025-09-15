@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatus;
+import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
 import com.jardvcode.bot.checklist.entity.template.ChecklistTemplateEntity;
 import jakarta.persistence.*;
 
@@ -43,7 +43,7 @@ public final class InstanceEntity {
     public static InstanceEntity withCompletedStatus(Long instanceId) {
         InstanceEntity entity = new InstanceEntity();
         entity.setId(instanceId);
-        entity.setStatus(ChecklistStatus.COMPLETADO.name());
+        entity.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
         return entity;
     }
 

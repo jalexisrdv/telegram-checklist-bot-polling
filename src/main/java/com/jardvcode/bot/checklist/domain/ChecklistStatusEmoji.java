@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.domain;
 
-public enum ChecklistStatus {
+public enum ChecklistStatusEmoji {
     PENDIENTE("\u23F3"),
     TRABAJANDO("\u1F527"),
     COMPLETADO("\u2705"),
@@ -8,7 +8,7 @@ public enum ChecklistStatus {
 
     private final String emoji;
 
-    ChecklistStatus(String emoji) {
+    ChecklistStatusEmoji(String emoji) {
         this.emoji = emoji;
     }
 
@@ -19,7 +19,7 @@ public enum ChecklistStatus {
     public static String fromStatus(String status) {
         if (status == null) return "";
         try {
-            return ChecklistStatus.valueOf(status.toUpperCase()).emoji();
+            return ChecklistStatusEmoji.valueOf(status.toUpperCase()).emoji();
         } catch (IllegalArgumentException e) {
             return "";
         }

@@ -1,7 +1,7 @@
 package com.jardvcode.bot.checklist.state.checklist;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatus;
-import com.jardvcode.bot.checklist.domain.Emojis;
+import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
+import com.jardvcode.bot.checklist.domain.Emoji;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.dto.GroupDTO;
 import com.jardvcode.bot.checklist.dto.ItemDTO;
@@ -47,13 +47,13 @@ public final class SelectItemState implements State {
             String statusValue = response.getStatus();
             String userResponse = "";
 
-            ChecklistStatus status;
+            ChecklistStatusEmoji status;
 
             if (statusValue != null) {
                 userResponse = statusValue.toUpperCase() + " " + response.getObservation();
-                status = ChecklistStatus.COMPLETADO;
+                status = ChecklistStatusEmoji.COMPLETADO;
             } else {
-                status = ChecklistStatus.PENDIENTE;
+                status = ChecklistStatusEmoji.PENDIENTE;
                 groupItemsDone = false;
             }
 
@@ -79,15 +79,15 @@ public final class SelectItemState implements State {
                 "%s Fecha: %s%n" +
                 "%s Grupo: %s%n" +
                 "%s Envía el número del punto de inspección que deseas responder:%n%n",
-                Emojis.CHECKLIST,
+                Emoji.CHECKLIST,
                 checklistDTO.name(),
-                Emojis.PERSON,
+                Emoji.PERSON,
                 checklistDTO.operatorName(),
-                Emojis.DATE,
+                Emoji.DATE,
                 checklistDTO.date(),
-                Emojis.GROUP,
+                Emoji.GROUP,
                 groupDTO.name(),
-                Emojis.INSPECT
+                Emoji.INSPECT
         ));
 
         botContext.sendText(header.toString());

@@ -1,8 +1,8 @@
 package com.jardvcode.bot.checklist.state.checklist;
 
 import com.jardvcode.bot.checklist.domain.BotCommand;
-import com.jardvcode.bot.checklist.domain.ChecklistStatus;
-import com.jardvcode.bot.checklist.domain.Emojis;
+import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
+import com.jardvcode.bot.checklist.domain.Emoji;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.dto.GroupDTO;
 import com.jardvcode.bot.checklist.entity.template.GroupEntity;
@@ -49,22 +49,22 @@ public final class SelectGroupState implements State {
                 "   - Operador: %s%n" +
                 "   - Fecha: %s%n%n" +
                 "%s Envía el número del grupo para mostrar los puntos de inspección:%n%n",
-                Emojis.CHECKLIST,
+                Emoji.CHECKLIST,
                 checklistDTO.name(),
                 checklistDTO.operatorName(),
                 checklistDTO.date(),
-                Emojis.GROUP
+                Emoji.GROUP
         ));
 
         List<InstanceGroupEntity> groups = groupService.findByInstanceId(checklistDTO.instanceId());
         boolean checklistGroupsDone = true;
 
         for (InstanceGroupEntity group : groups) {
-            if(group.getStatus().equalsIgnoreCase(ChecklistStatus.PENDIENTE.name())) {
+            if(group.getStatus().equalsIgnoreCase(ChecklistStatusEmoji.PENDIENTE.name())) {
                 checklistGroupsDone = false;
             }
 
-            String statusEmoji = ChecklistStatus.fromStatus(group.getStatus());
+            String statusEmoji = ChecklistStatusEmoji.fromStatus(group.getStatus());
 
             message.append(String.format(
                     "%s %d. %s%n",

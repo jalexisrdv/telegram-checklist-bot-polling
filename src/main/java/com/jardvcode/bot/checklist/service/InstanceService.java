@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.service;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatus;
+import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
 import com.jardvcode.bot.checklist.entity.instance.InstanceEntity;
 import com.jardvcode.bot.checklist.repository.instance.InstanceRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public final class InstanceService {
     }
 
     public List<InstanceEntity> findUnconfirmedByUserId(Long userId) {
-        return repository.findByUserIdAndStatusNotOrderByDateDesc(userId, ChecklistStatus.CONFIRMADO.name());
+        return repository.findByUserIdAndStatusNotOrderByDateDesc(userId, ChecklistStatusEmoji.CONFIRMADO.name());
     }
 
     public InstanceEntity findByUserIdAndOptionNumber(Long userId, Long userInstanceNumber) {
@@ -26,7 +26,7 @@ public final class InstanceService {
 
     public void markAsCompleted(Long instanceId) {
         InstanceEntity entityFound = repository.findById(instanceId).orElseThrow();
-        entityFound.setStatus(ChecklistStatus.COMPLETADO.name());
+        entityFound.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
         repository.save(entityFound);
     }
 
