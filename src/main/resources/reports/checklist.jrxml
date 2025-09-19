@@ -1,0 +1,286 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Blank_A4_1" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a16249ab-8d16-49c9-bc9f-6aabc59eb6ab">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<dataset name="Dataset1" uuid="2522c2bc-1ba5-40cf-a17e-436c2c11f635">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+		<query language="sql"><![CDATA[]]></query>
+		<field name="group" class="java.lang.String"/>
+		<field name="item" class="java.lang.String"/>
+		<field name="status" class="java.lang.String"/>
+		<field name="observation" class="java.lang.String"/>
+		<group name="headerGroup">
+			<expression><![CDATA[$F{group}]]></expression>
+		</group>
+	</dataset>
+	<parameter name="RESPONSES" class="java.util.List">
+		<defaultValueExpression><![CDATA[java.util.Arrays.asList(
+    new java.util.HashMap(java.util.Map.of("group", "SISTEMA DE DIRECCION", "item","REVISAR NIVEL DE ACEITE","status","OK","observation","Ok")),
+    new java.util.HashMap(java.util.Map.of("group", "SUSPENCION DELANTERA", "item","REVISAR ABRAZADERAS","status","F","observation","Bajo"))
+)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HEADER" class="java.util.Map">
+		<defaultValueExpression><![CDATA[new java.util.HashMap(java.util.Map.of(
+    "unitNumber", "273",
+    "templateName", "Formato para servicios A y C (BASICO)",
+    "operatorName", "PEDRO OCELOT",
+    "mechanic", "CATARINO",
+    "mileage", "1299961",
+    "nextService", "1,300,000 BASICO",
+    "timeIn", "09:00:00",
+    "timeOut", "",
+    "date", "10/09/2025"
+))]]></defaultValueExpression>
+	</parameter>
+	<title height="41" splitType="Stretch">
+		<element kind="image" uuid="2276b4af-b938-448b-a0de-7c9a5781dff8" x="0" y="0" width="90" height="30">
+			<expression><![CDATA["/home/jalexisrdv/workspace/frontend/erp/public/logo.png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="e7698893-3600-4889-9001-68cd5c6939ff" x="130" y="0" width="425" height="30" fontSize="7.0" vTextAlign="Middle">
+			<text><![CDATA[]]></text>
+		</element>
+		<element kind="textField" uuid="9d363bbc-6ffd-4fbb-a0f8-0b9bbe016757" x="130" y="0" width="424" height="30" fontSize="8.0">
+			<expression><![CDATA[$P{HEADER}.get( "templateName" )]]></expression>
+		</element>
+		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+	</title>
+	<pageHeader height="41" splitType="Stretch">
+		<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+		<element kind="frame" uuid="2bfca8f4-5356-4032-99d5-af5d87df7284" x="0" y="0" width="555" height="41">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<element kind="frame" uuid="7947e696-34b7-4dc1-8e05-74725444c2b2" x="0" y="0" width="278" height="41">
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<element kind="frame" uuid="e1af0f44-99fd-436c-adcf-76adce80fd23" x="0" y="0" width="278" height="11">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<element kind="staticText" uuid="04d175e7-a11e-4790-b7bc-5bd460011676" x="0" y="0" width="139" height="11" fontSize="7.0">
+						<text><![CDATA[NUM. ECO.]]></text>
+					</element>
+					<element kind="textField" uuid="9ca9e5fe-b005-45a0-8283-ef8078cffe2e" x="139" y="0" width="139" height="11" fontSize="7.0">
+						<expression><![CDATA[$P{HEADER}.get("unitNumber")]]></expression>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</element>
+				</element>
+				<element kind="frame" uuid="cfae62cf-f943-46a9-9866-a9c84cb17168" x="0" y="11" width="278" height="10">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<element kind="staticText" uuid="03ce5755-66ed-40fe-b810-266c858697d7" x="0" y="0" width="139" height="10" fontSize="7.0">
+						<text><![CDATA[OPERADOR]]></text>
+					</element>
+					<element kind="textField" uuid="22d5ae67-0c4a-4f0c-80cb-14e52ffbec21" x="139" y="0" width="139" height="10" fontSize="7.0">
+						<expression><![CDATA[$P{HEADER}.get("operatorName")]]></expression>
+					</element>
+				</element>
+				<element kind="frame" uuid="1fb3ef84-296b-4b10-abb2-e5e628551db6" x="0" y="21" width="278" height="10">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<element kind="staticText" uuid="f83d78b4-291d-424b-9eef-bcd2612cdd67" x="0" y="0" width="139" height="10" fontSize="7.0">
+						<text><![CDATA[INGRESO]]></text>
+					</element>
+					<element kind="textField" uuid="f0b1fef7-e9b7-4113-af07-fb93e0c4611b" x="139" y="0" width="139" height="10" fontSize="7.0">
+						<expression><![CDATA[$P{HEADER}.get("timeIn")]]></expression>
+					</element>
+				</element>
+				<element kind="frame" uuid="cc3747a6-5a0d-4190-8782-d1f6540e98d4" x="0" y="31" width="278" height="10">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<element kind="staticText" uuid="05c14537-25ea-43ba-aa33-35f63566000f" x="0" y="0" width="139" height="10" fontSize="7.0">
+						<text><![CDATA[SALIDA]]></text>
+					</element>
+					<element kind="textField" uuid="ad7d84fc-4664-490f-9187-e32897159e92" x="139" y="0" width="139" height="10" fontSize="7.0">
+						<expression><![CDATA[$P{HEADER}.get("timeOut")]]></expression>
+					</element>
+				</element>
+			</element>
+			<element kind="frame" uuid="2958764a-30e5-4def-95b5-f98c83aa3ba7" x="278" y="0" width="277" height="41">
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<element kind="frame" uuid="de46ebbd-0606-4119-a778-c63e4aa293d5" x="0" y="0" width="277" height="11">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<element kind="staticText" uuid="a5788a93-1032-40eb-8791-9536d97d73c0" x="0" y="0" width="139" height="11" fontSize="7.0">
+						<text><![CDATA[MECANICO]]></text>
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</element>
+					<element kind="textField" uuid="04de628d-2b04-475f-89e7-451b8083a2cb" stretchType="NoStretch" x="139" y="0" width="138" height="11" fontSize="7.0">
+						<expression><![CDATA[$P{HEADER}.get("mechanic")]]></expression>
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</element>
+				</element>
+				<element kind="frame" uuid="57dfa541-fc75-4459-8b00-aaaa9f3a0073" x="0" y="11" width="277" height="10">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<element kind="staticText" uuid="76650c51-d2e8-4070-b736-7ef6a2e4a257" x="0" y="0" width="139" height="10" fontSize="7.0">
+						<text><![CDATA[KILOMETRAJE]]></text>
+					</element>
+					<element kind="textField" uuid="aba24d74-36bc-4c56-bb76-f2093aa4fcb8" x="139" y="0" width="138" height="10" fontSize="7.0">
+						<expression><![CDATA[$P{HEADER}.get("mileage")]]></expression>
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="3"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</element>
+				</element>
+				<element kind="frame" uuid="01b4a95e-c7c8-47f4-98d1-64acc226e55c" x="0" y="21" width="277" height="10">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<element kind="staticText" uuid="fab4b851-827b-4e87-b016-a0ca3a167791" x="0" y="0" width="139" height="10" fontSize="7.0">
+						<text><![CDATA[FECHA]]></text>
+					</element>
+					<element kind="textField" uuid="71439c43-8a0d-423e-8998-2d30f98421c3" x="139" y="0" width="138" height="10" fontSize="7.0">
+						<expression><![CDATA[$P{HEADER}.get( "date" )]]></expression>
+					</element>
+				</element>
+				<element kind="frame" uuid="719b46a7-6f63-4be3-bf61-94b7a3685788" x="0" y="31" width="277" height="10">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+					<element kind="staticText" uuid="830bd3f6-ea21-4240-aaa9-6ccc9adc6ec3" x="0" y="0" width="139" height="10" fontSize="7.0">
+						<text><![CDATA[PROXIMO SERVICIO]]></text>
+					</element>
+					<element kind="textField" uuid="0926144d-4677-490a-99c3-97fa2dc154a9" x="139" y="0" width="138" height="10" fontSize="7.0" textAdjust="StretchHeight">
+						<expression><![CDATA[$P{HEADER}.get( "nextService" )]]></expression>
+					</element>
+				</element>
+			</element>
+		</element>
+		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+	</pageHeader>
+	<columnHeader height="48" splitType="Stretch">
+		<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+		<element kind="staticText" uuid="75d2c42e-e17c-4ccb-80d9-eb6b5de25c92" x="0" y="8" width="555" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[INSTRUCCIONES: MARQUE CON UNA "F SI PRESENTA FALLAS, CON "OK" SI SE ENCUENTRA EM CONDICIONES, Y CON "R" SI SE REPARO]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="87a26b9f-96b9-4f71-86dd-0363f89d31e0" x="0" y="28" width="300" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[PUNTOS DE INSPECCION]]></text>
+			<box>
+				<pen lineWidth="0.25"/>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="9542b17d-f954-46f6-aef9-818e32d2c398" x="300" y="28" width="50" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[ESTATUS]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="0bec3080-a0bf-49ba-a8eb-892074e4b612" x="350" y="28" width="205" height="15" fontSize="7.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[OBSERVACIONES]]></text>
+			<box>
+				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+			</box>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="393">
+			<element kind="component" uuid="a64c1cd6-7914-4067-aa80-fdd96b1b22cc" mode="Opaque" x="0" y="0" width="555" height="393">
+				<component kind="table" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun uuid="5c44dda3-fec6-4037-bf90-2c3bded28d94" subDataset="Dataset1">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{RESPONSES})]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="group" uuid="a73c1eb6-f1fe-44f1-a5b6-7a767513d91f" width="555">
+						<groupHeader groupName="headerGroup">
+							<cell height="15" rowSpan="1" style="Table_CH">
+								<element kind="textField" uuid="66c1cfa9-d8df-4e70-9547-12d507c507af" mode="Opaque" x="0" y="0" width="555" height="15" fontSize="7.0" textAdjust="StretchHeight" bold="true" hTextAlign="Center" vTextAlign="Middle">
+									<expression><![CDATA[$F{group}]]></expression>
+								</element>
+							</cell>
+						</groupHeader>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [3]"/>
+						<column kind="single" uuid="12e35628-7166-49dc-bc1c-95696aea3de1" width="300">
+							<detailCell height="10" style="Table_TD">
+								<element kind="textField" uuid="b109a181-fa55-44e1-89ab-d8ac2ef5093b" x="0" y="0" width="300" height="10" fontSize="7.0" textAdjust="StretchHeight" hTextAlign="Left" vTextAlign="Middle">
+									<paragraph firstLineIndent="5"/>
+									<expression><![CDATA[$F{item}]]></expression>
+									<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+									<box padding="0"/>
+								</element>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0" style="Table_TD"/>
+							</detailCell>
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						</column>
+						<column kind="single" uuid="edae926c-ea3c-4a9b-a60b-211d40605135" width="50">
+							<detailCell height="10" style="Table_TD">
+								<element kind="textField" uuid="02e1953d-a8bf-490c-b622-67754ea8ac0b" x="0" y="0" width="50" height="10" fontSize="7.0" hTextAlign="Left" vTextAlign="Middle">
+									<paragraph firstLineIndent="5"/>
+									<expression><![CDATA[$F{status}]]></expression>
+									<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+								</element>
+							</detailCell>
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						</column>
+						<column kind="single" uuid="2cdc6b67-b033-49d8-846b-8cb8b7dd0719" width="205">
+							<detailCell height="10" style="Table_TD">
+								<element kind="textField" uuid="e93908d2-0601-4d2c-8f4b-799659526204" x="0" y="0" width="205" height="10" fontSize="7.0" textAdjust="StretchHeight" hTextAlign="Left" vTextAlign="Middle">
+									<paragraph firstLineIndent="5"/>
+									<expression><![CDATA[$F{observation}]]></expression>
+									<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+								</element>
+							</detailCell>
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						</column>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			</element>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.spreadsheet.SpreadsheetLayout"/>
+		</band>
+	</detail>
+</jasperReport>

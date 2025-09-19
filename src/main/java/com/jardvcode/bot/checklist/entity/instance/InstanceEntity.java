@@ -5,6 +5,7 @@ import com.jardvcode.bot.checklist.entity.template.ChecklistTemplateEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "checklist_instances")
@@ -25,14 +26,26 @@ public final class InstanceEntity {
     @Column(name = "option_number")
     private Long optionNumber;
 
+    @Column(name = "unit_number")
+    private Integer unitNumber;
+
     @Column(name = "operator_name")
     private String operatorName;
+
+    @Column(name = "mechanic")
+    private String mechanic;
 
     @Column(name = "mileage")
     private String mileage;
 
     @Column(name = "next_service")
     private String nextService;
+
+    @Column(name = "time_in")
+    private LocalTime timeIn;
+
+    @Column(name = "time_out")
+    private LocalTime timeOut;
 
     @Column(name = "date")
     private LocalDate date;
@@ -79,12 +92,28 @@ public final class InstanceEntity {
         this.optionNumber = optionNumber;
     }
 
+    public Integer getUnitNumber() {
+        return unitNumber;
+    }
+
+    public void setUnitNumber(Integer unitNumber) {
+        this.unitNumber = unitNumber;
+    }
+
     public String getOperatorName() {
         return operatorName;
     }
 
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
+    }
+
+    public String getMechanic() {
+        return mechanic;
+    }
+
+    public void setMechanic(String mechanic) {
+        this.mechanic = mechanic;
     }
 
     public String getMileage() {
@@ -101,6 +130,22 @@ public final class InstanceEntity {
 
     public void setNextService(String nextService) {
         this.nextService = nextService;
+    }
+
+    public LocalTime getTimeIn() {
+        return timeIn;
+    }
+
+    public void setTimeIn(LocalTime timeIn) {
+        this.timeIn = timeIn;
+    }
+
+    public LocalTime getTimeOut() {
+        return timeOut;
+    }
+
+    public void setTimeOut(LocalTime timeOut) {
+        this.timeOut = timeOut;
     }
 
     public LocalDate getDate() {

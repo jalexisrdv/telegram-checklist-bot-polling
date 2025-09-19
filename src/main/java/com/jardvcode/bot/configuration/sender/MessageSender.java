@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface MessageSender {
 	void sendText(String to, String message) throws Exception;
+	void sendDocument(String to, byte[] file, String fileName) throws Exception;
 }

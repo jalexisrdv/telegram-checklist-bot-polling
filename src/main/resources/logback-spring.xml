@@ -49,8 +49,25 @@
             </rollingPolicy>
         </appender>
 
+        <appender name="REPORT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${HOME_LOG}/report.log</file>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{0} - %msg%n</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${HOME_LOG}/archived/report.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>10MB</maxFileSize>
+                <totalSizeCap>1GB</totalSizeCap>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+        </appender>
+
         <logger name="com.jardvcode.bot.checklist" level="INFO" additivity="false">
             <appender-ref ref="CHECKLIST" />
+        </logger>
+
+        <logger name="com.jardvcode.bot.report" level="INFO" additivity="false">
+            <appender-ref ref="REPORT" />
         </logger>
 
         <root level="INFO">

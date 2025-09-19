@@ -3,6 +3,7 @@ package com.jardvcode.bot.configuration.statemachine;
 import com.jardvcode.bot.checklist.domain.BotCommand;
 import com.jardvcode.bot.checklist.state.checklist.SelectChecklistState;
 import com.jardvcode.bot.checklist.state.checklist.SelectGroupState;
+import com.jardvcode.bot.report.state.SelectReportState;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.State;
 import com.jardvcode.bot.shared.domain.state.StateUtil;
@@ -41,6 +42,7 @@ public final class CommandRegistry {
 
         commands.put(BotCommand.CHECKLISTS.value(), Command.create("CHECKLIST", SelectChecklistState.class));
         commands.put(BotCommand.GROUPS.value(), Command.create("CHECKLIST", SelectGroupState.class));
+        commands.put(BotCommand.REPORTES.value(), Command.create("CHECKLIST", SelectReportState.class));
 
         return commands;
     }

@@ -1,5 +1,6 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
+import com.jardvcode.bot.checklist.entity.template.GroupEntity;
 import com.jardvcode.bot.checklist.entity.template.ItemEntity;
 import jakarta.persistence.*;
 
@@ -14,8 +15,9 @@ public final class ResponseEntity {
     @Column
     private Long instanceId;
 
-    @Column
-    private Long groupId;
+    @OneToOne
+    @JoinColumn(name = "group_id")
+    private GroupEntity group;
 
     @OneToOne
     @JoinColumn(name = "item_id")
@@ -56,12 +58,12 @@ public final class ResponseEntity {
         this.instanceId = instanceId;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public GroupEntity getGroup() {
+        return group;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setGroup(GroupEntity group) {
+        this.group = group;
     }
 
     public ItemEntity getItem() {

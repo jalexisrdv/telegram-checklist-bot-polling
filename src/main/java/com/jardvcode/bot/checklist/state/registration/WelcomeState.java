@@ -10,13 +10,14 @@ public final class WelcomeState implements State {
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
         String message = """
-                ¡Hola! 👋 \s
-                Bienvenido al bot de inspecciones. Aquí puedes gestionar tus listas y grupos: \s
+                ¡Hola! 👋\s
+                Bienvenido al bot de inspecciones. Todo lo que necesitas para tus inspecciones está aquí:\s
                 
-                📋 /listas - Ver tus listas de inspección \s
-                👥 /grupos - Ver grupos de la lista seleccionada \s
+                📋 /listas – Mira tus listas de inspección\s
+                👥 /grupos – Revisa los grupos de tu lista\s
+                📄 /reportes – Genera reportes\s
                 
-                ¡Elige una opción y comencemos! 🚀
+                ¡Elige una opción y empecemos! 🚀
                 """;
 
         botContext.sendText(message);

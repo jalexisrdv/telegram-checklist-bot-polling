@@ -19,6 +19,10 @@ public final class BotContext {
 		sender.sendText(providerUserId, message);
 	}
 
+	public void sendDocument(byte[] file, String fileName) throws Exception {
+		sender.sendDocument(providerUserId, file, fileName);
+	}
+
 	public Long getSystemUserId() {
 		return systemUserId;
 	}
