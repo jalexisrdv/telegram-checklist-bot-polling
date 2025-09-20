@@ -3,7 +3,6 @@ package com.jardvcode.bot.report.service;
 import com.jardvcode.bot.report.dto.report.ReportDTO;
 import com.jardvcode.bot.shared.domain.exception.UnexpectedException;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +32,10 @@ public final class PdfReportGenerator {
 
             return JasperExportManager.exportReportToPdf(jasperPrint);
         } catch(JRException  e) {
-            LOGGER.error("Failed to generate report for instanceId={}", report.instanceId(), e);
+            LOGGER.error("Failed to generate report for checklistId={}", report.checklistId(), e);
+            throw new UnexpectedException();
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while generating report for checklistId={}", report.checklistId(), e);
             throw new UnexpectedException();
         }
     }

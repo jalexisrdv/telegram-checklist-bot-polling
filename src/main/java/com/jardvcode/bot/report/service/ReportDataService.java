@@ -8,6 +8,7 @@ import com.jardvcode.bot.report.dto.report.HeaderDTO;
 import com.jardvcode.bot.report.dto.report.ReportDTO;
 import com.jardvcode.bot.report.dto.report.ResponseDTO;
 import com.jardvcode.bot.shared.domain.exception.DataNotFoundException;
+import com.jardvcode.bot.shared.domain.exception.UnexpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,10 +30,10 @@ public final class ReportDataService {
         this.responseRepository = responseRepository;
     }
 
-    public ReportDTO findByInstanceId(Long instanceId) {
+    public ReportDTO findByInstanceId(Long checklistId) {
         try {
-            InstanceEntity instance = instanceRepository.findById(instanceId).orElseThrow(() -> new DataNotFoundException());
-            List<ResponseEntity> responseEntities = responseRepository.findByInstanceIdOrderByGroupId(instanceId);
+            InstanceEntity instance = instanceRepository.findById(checklistId).orElseThrow(() -> new DataNotFoundException());
+            List<ResponseEntity> responseEntities = responseRepository.findByInstanceIdOrderByGroupId(checklistId);
 
             HeaderDTO header = new HeaderDTO(
                     instance.getUnitNumber().toString(),
@@ -55,10 +56,13 @@ public final class ReportDataService {
                 );
             }).collect(Collectors.toList());
 
-            return new ReportDTO(instanceId, header, responses);
+            return new ReportDTO(checklistId, header, responses);
         } catch(DataNotFoundException e) {
-            LOGGER.error("Report data not found for instanceId={}", instanceId, e);
+            LOGGER.error("Report data not found for checklistId={}", checklistId, e);
             throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while retrieving report for checklistId={}", checklistId, e);
+            throw new UnexpectedException();
         }
     }
 
