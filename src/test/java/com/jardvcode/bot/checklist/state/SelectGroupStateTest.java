@@ -1,4 +1,4 @@
-package com.jardvcode.bot.checklist.state.checklist;
+package com.jardvcode.bot.checklist.state;
 
 import com.jardvcode.bot.checklist.domain.BotCommand;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;

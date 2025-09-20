@@ -1,8 +1,8 @@
 package com.jardvcode.bot.configuration.statemachine;
 
 import com.jardvcode.bot.checklist.domain.BotCommand;
-import com.jardvcode.bot.checklist.state.checklist.SelectChecklistState;
-import com.jardvcode.bot.checklist.state.checklist.SelectGroupState;
+import com.jardvcode.bot.checklist.state.SelectChecklistState;
+import com.jardvcode.bot.checklist.state.SelectGroupState;
 import com.jardvcode.bot.report.state.SelectReportState;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.State;

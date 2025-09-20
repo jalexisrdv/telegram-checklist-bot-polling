@@ -1,4 +1,4 @@
-package com.jardvcode.bot.checklist.state.registration;
+package com.jardvcode.bot.user.state;
 
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
