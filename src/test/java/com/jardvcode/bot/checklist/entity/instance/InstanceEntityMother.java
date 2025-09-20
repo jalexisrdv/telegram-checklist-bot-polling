@@ -37,6 +37,7 @@ public final class InstanceEntityMother {
         instance.setId(1L);
         instance.setTemplate(template);
         instance.setUserId(1L);
+        instance.setUnitNumber(243);
         instance.setOperatorName("PEDRO OCELOT");
         instance.setMileage("1299961");
         instance.setNextService("1,300,000 BASICO");
