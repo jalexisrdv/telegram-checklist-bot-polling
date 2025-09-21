@@ -23,7 +23,7 @@ public final class ItemResponseService {
 
     public List<ResponseEntity> findByInstanceIdAndGroupId(Long checklistId, Long groupId) {
         try {
-            return repository.findByInstanceIdAndGroupIdOrderByOptionNumberAsc(checklistId, groupId);
+            return repository.findByInstanceIdAndItemGroupIdOrderByOptionNumberAsc(checklistId, groupId);
         } catch (Exception e) {
             LOGGER.error("Unexpected error while retrieving responses for checklistId={} and groupId={}", checklistId, groupId, e);
             throw new UnexpectedException();
@@ -32,7 +32,7 @@ public final class ItemResponseService {
 
     public ResponseEntity findByInstanceIdAndGroupIdAndOptionNumber(Long checklistId, Long groupId, Long optionNumber) {
         try {
-            return repository.findByInstanceIdAndGroupIdAndOptionNumber(checklistId, groupId, optionNumber).orElseThrow(() -> new DataNotFoundException());
+            return repository.findByInstanceIdAndItemGroupIdAndOptionNumber(checklistId, groupId, optionNumber).orElseThrow(() -> new DataNotFoundException());
         } catch (DataNotFoundException e) {
             LOGGER.error("Response not found for checklistId={} groupId={} optionNumber={}", checklistId, groupId, optionNumber, e);
             throw e;

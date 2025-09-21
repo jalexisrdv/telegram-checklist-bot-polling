@@ -1,5 +1,7 @@
 package com.jardvcode.bot.report.dto.report;
 
+import java.util.Objects;
+
 public final class ResponseDTO {
 
     private String group;
@@ -29,4 +31,27 @@ public final class ResponseDTO {
     public String getObservation() {
         return observation;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ResponseDTO that = (ResponseDTO) o;
+        return Objects.equals(group, that.group) && Objects.equals(item, that.item) && Objects.equals(status, that.status) && Objects.equals(observation, that.observation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(group, item, status, observation);
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseDTO{" +
+                "group='" + group + '\'' +
+                ", item='" + item + '\'' +
+                ", status='" + status + '\'' +
+                ", observation='" + observation + '\'' +
+                '}';
+    }
+
 }

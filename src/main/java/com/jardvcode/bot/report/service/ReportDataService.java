@@ -33,7 +33,7 @@ public final class ReportDataService {
     public ReportDTO findByInstanceId(Long checklistId) {
         try {
             InstanceEntity instance = instanceRepository.findById(checklistId).orElseThrow(() -> new DataNotFoundException());
-            List<ResponseEntity> responseEntities = responseRepository.findByInstanceIdOrderByGroupId(checklistId);
+            List<ResponseEntity> responseEntities = responseRepository.findByInstanceIdOrderByItemGroupId(checklistId);
 
             HeaderDTO header = new HeaderDTO(
                     instance.getUnitNumber().toString(),
@@ -49,7 +49,7 @@ public final class ReportDataService {
 
             List<ResponseDTO> responses = responseEntities.stream().map((entity) -> {
                 return new ResponseDTO(
-                        entity.getGroup().getName().toUpperCase(),
+                        entity.getItem().getGroup().getName().toUpperCase(),
                         entity.getItem().getDescription().toUpperCase(),
                         Optional.ofNullable(entity.getStatus()).orElse("").toUpperCase(),
                         Optional.ofNullable(entity.getObservation()).orElse("").toUpperCase()

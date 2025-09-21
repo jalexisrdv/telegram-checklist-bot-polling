@@ -10,19 +10,12 @@ public final class ItemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Long groupId;
+    @OneToOne
+    @JoinColumn(name = "group_id")
+    private GroupEntity group;
 
     @Column
     private String description;
-
-    public static ItemEntity create(Long id, Long groupId, String description) {
-        ItemEntity entity = new ItemEntity();
-        entity.setId(id);
-        entity.setGroupId(groupId);
-        entity.setDescription(description);
-        return entity;
-    }
 
     public Long getId() {
         return id;
@@ -32,12 +25,12 @@ public final class ItemEntity {
         this.id = id;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public GroupEntity getGroup() {
+        return group;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setGroup(GroupEntity group) {
+        this.group = group;
     }
 
     public String getDescription() {

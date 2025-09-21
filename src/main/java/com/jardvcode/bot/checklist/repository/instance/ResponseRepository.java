@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ResponseRepository extends JpaRepository<ResponseEntity, Long> {
-    List<ResponseEntity> findByInstanceIdOrderByGroupId(Long instanceId);
-    List<ResponseEntity> findByInstanceIdAndGroupIdOrderByOptionNumberAsc(Long instanceId, Long groupId);
-    Optional<ResponseEntity> findByInstanceIdAndGroupIdAndOptionNumber(Long instanceId, Long groupId, Long userItemNumber);
+    List<ResponseEntity> findByInstanceIdOrderByItemGroupId(Long instanceId);
+    List<ResponseEntity> findByInstanceIdAndItemGroupIdOrderByOptionNumberAsc(Long instanceId, Long groupId);
+    Optional<ResponseEntity> findByInstanceIdAndItemGroupIdAndOptionNumber(Long instanceId, Long groupId, Long userItemNumber);
 }
