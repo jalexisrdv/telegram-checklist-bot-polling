@@ -42,6 +42,8 @@ public class UserLinkTokenService {
 
             userBotEntity.setUserId(userLinkTokenEntity.getUserId());
             userBotRepository.save(userBotEntity);
+        } catch(BotException e) {
+            throw e;
         } catch(Exception e) {
             LOGGER.error("Unexpected error processing token for providerUserId={}", providerUserId, e);
             throw new UnexpectedException();
