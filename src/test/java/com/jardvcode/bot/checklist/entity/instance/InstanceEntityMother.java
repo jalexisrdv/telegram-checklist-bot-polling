@@ -3,6 +3,7 @@ package com.jardvcode.bot.checklist.entity.instance;
 import com.jardvcode.bot.checklist.entity.template.ChecklistTemplateEntity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public final class InstanceEntityMother {
@@ -39,9 +40,12 @@ public final class InstanceEntityMother {
         instance.setUserId(1L);
         instance.setUnitNumber(243);
         instance.setOperatorName("PEDRO OCELOT");
+        instance.setMechanic("CATARINO");
         instance.setMileage("1299961");
         instance.setNextService("1,300,000 BASICO");
         instance.setOptionNumber(1L);
+        instance.setTimeIn(LocalTime.parse("09:00:00"));
+        instance.setTimeOut(LocalTime.parse("18:00:00"));
         instance.setDate(LocalDate.now());
         instance.setStatus("PENDIENTE");
 

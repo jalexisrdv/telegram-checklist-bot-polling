@@ -45,7 +45,7 @@ class SelectItemStateTest {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         Long userId = 1L;
         GroupDTO dto = GroupDTOMother.create();
-        ArrayList<ResponseEntity> items = ResponseEntityMother.withRandomStatus();
+        ArrayList<ResponseEntity> items = ResponseEntityMother.withSomeResponses();
 
         when(botContext.getSystemUserId()).thenReturn(userId);
         when(sessionDataService.findByUserId(userId, GroupDTO.class)).thenReturn(dto);
@@ -55,7 +55,7 @@ class SelectItemStateTest {
         verify(botContext, times(2)).sendText(captor.capture());
         List<String> values = captor.getAllValues();
         assertEquals(expectedHeaderMessage(), values.get(0));
-        assertEquals(expectedBodyMessageWithRandomStatus(), values.get(1));
+        assertEquals(expectedBodyMessageWithSomeResponses(), values.get(1));
         assertNull(decision.nextState());
     }
 
@@ -117,25 +117,25 @@ class SelectItemStateTest {
                 """, LocalDate.now().toString());
     }
 
-    private String expectedBodyMessageWithRandomStatus() {
+    private String expectedBodyMessageWithSomeResponses() {
         return """
-                ⏳ 1. REVISION DE FUGAS (ACEITE, AGUA, DIESEL)
+                ✅ 1. REVISION DE FUGAS (ACEITE, AGUA, DIESEL)
+                   OK OBSERVATION
+                
+                ⏳ 2. RESET INSITE
                 \s\s\s
                 
-                ✅ 2. RESET INSITE
-                   OK\s
+                ✅ 3. CAMBIO DE FILTROS (DIESEL)
+                   OK OBSERVATION
                 
-                ⏳ 3. CAMBIO DE FILTROS (DIESEL)
+                ⏳ 4. REVISAR TENSION DE BANDAS
                 \s\s\s
                 
-                ✅ 4. REVISAR TENSION DE BANDAS
-                   OK\s
+                ✅ 5. NIVEL DE REFRIGERANTE
+                   OK OBSERVATION
                 
-                ⏳ 5. NIVEL DE REFRIGERANTE
+                ⏳ 6. CAMBIAR FILTRO DE AIRE SEGUN INDICADOR DE PARTICULAS
                 \s\s\s
-                
-                ✅ 6. CAMBIAR FILTRO DE AIRE SEGUN INDICADOR DE PARTICULAS
-                   OK\s
                 
                 """;
     }

@@ -1,5 +1,7 @@
 package com.jardvcode.bot.report.dto.report;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,15 +9,15 @@ public final class HeaderDTOMother {
 
     public static HeaderDTO create() {
         return new HeaderDTO(
-                "273",
+                "243",
                 "Formato para servicios A y C (BASICO)",
                 "PEDRO OCELOT",
                 "CATARINO",
                 "1299961",
                 "1,300,000 BASICO",
-                "09:00:00",
-                "",
-                "10/09/2025"
+                LocalTime.parse("09:00:00").toString(),
+                LocalTime.parse("18:00:00").toString(),
+                LocalDate.now().toString()
         );
     }
 
@@ -28,8 +30,8 @@ public final class HeaderDTOMother {
         headerMap.put("mileage", "1299961");
         headerMap.put("nextService", "1,300,000 BASICO");
         headerMap.put("timeIn", "09:00:00");
-        headerMap.put("timeOut", "");
-        headerMap.put("date", "10/09/2025");
+        headerMap.put("timeOut", "18:00:00");
+        headerMap.put("date", LocalDate.now().toString());
         return headerMap;
     }
 
