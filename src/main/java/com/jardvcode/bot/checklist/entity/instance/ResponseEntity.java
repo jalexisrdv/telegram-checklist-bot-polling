@@ -1,40 +1,29 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
-import com.jardvcode.bot.checklist.entity.template.ItemEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "checklist_responses")
+@Table(name = "assignment_responses")
 public final class ResponseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "assignment_id")
     private Long instanceId;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
     private ItemEntity item;
 
-    @Column(name = "option_number")
-    private Long optionNumber;
-
-    @Column
+    @Column(name = "status")
     private String status;
 
-    @Column
+    @Column(name = "comment")
     private String observation;
 
-    public static ResponseEntity create(Long id, String status, String observation) {
-        ResponseEntity entity = new ResponseEntity();
-
-        entity.setId(id);
-        entity.setStatus(status);
-        entity.setObservation(observation);
-
-        return entity;
+    public Integer optionNumber() {
+        return item.getOptionNumber();
     }
 
     public Long getId() {
@@ -61,14 +50,6 @@ public final class ResponseEntity {
         this.item = item;
     }
 
-    public Long getOptionNumber() {
-        return optionNumber;
-    }
-
-    public void setOptionNumber(Long optionNumber) {
-        this.optionNumber = optionNumber;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -84,4 +65,5 @@ public final class ResponseEntity {
     public void setObservation(String observation) {
         this.observation = observation;
     }
+
 }

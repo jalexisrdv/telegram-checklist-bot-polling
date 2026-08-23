@@ -5,8 +5,8 @@ import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.dto.ChecklistDTOMother;
 import com.jardvcode.bot.checklist.dto.GroupDTO;
 import com.jardvcode.bot.checklist.dto.GroupDTOMother;
-import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntityMother;
 import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntity;
+import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntityMother;
 import com.jardvcode.bot.checklist.service.InstanceGroupService;
 import com.jardvcode.bot.checklist.service.InstanceService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
@@ -21,7 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -63,7 +63,7 @@ class SelectGroupStateTest {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         Long userId = 1L;
         ChecklistDTO dto = ChecklistDTOMother.create();
-        ArrayList<InstanceGroupEntity> groups = InstanceGroupEntityMother.withRandomStatus();
+        List<InstanceGroupEntity> groups = InstanceGroupEntityMother.withRandomStatus();
 
         when(botContext.getSystemUserId()).thenReturn(userId);
         when(sessionDataService.findByUserId(userId, ChecklistDTO.class)).thenReturn(dto);
@@ -73,20 +73,6 @@ class SelectGroupStateTest {
         verify(botContext).sendText(captor.capture());
         assertEquals(expectedMessageWithRandomStatus(), captor.getValue());
         assertNull(decision.nextState());
-    }
-
-    @Test
-    void shouldCompleteChecklistWhenAllResponsesReceived() throws Exception {
-        Long userId = 1L;
-        ChecklistDTO dto = ChecklistDTOMother.create();
-        ArrayList<InstanceGroupEntity> groups = InstanceGroupEntityMother.withCompletedStatus();
-
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, ChecklistDTO.class)).thenReturn(dto);
-        when(groupService.findByInstanceId(dto.instanceId())).thenReturn(groups);
-        state.onBotMessage(botContext);
-
-        verify(instanceService, times(1)).markAsCompleted(dto.instanceId());
     }
 
     @Test

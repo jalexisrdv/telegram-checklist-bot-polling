@@ -9,10 +9,10 @@ public final class ChecklistDTOMother {
     public static ChecklistDTO withInstance(InstanceEntity instance) {
         return new ChecklistDTO(
                 instance.getId(),
-                instance.getTemplate().getId(),
-                instance.getTemplate().getName(),
+                instance.getTemplateId(),
+                instance.getTemplateName(),
                 instance.getDate().toString(),
-                instance.getOperatorName(),
+                instance.getOperatorFullName(),
                 instance.getMileage(),
                 instance.getNextService()
         );

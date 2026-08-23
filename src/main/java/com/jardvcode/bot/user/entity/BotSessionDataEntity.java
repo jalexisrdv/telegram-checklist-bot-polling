@@ -1,6 +1,8 @@
 package com.jardvcode.bot.user.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "bot_session_data")
@@ -10,16 +12,17 @@ public final class BotSessionDataEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "bot_user_id")
     private Long userId;
 
-    @Column
+    @Column(name = "state")
     private String state;
 
-    @Column
+    @Column(name = "key")
     private String key;
 
-    @Column
+    @Column(name = "value", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String value;
 
     public static BotSessionDataEntity create(Long userId, String state, String key, String value) {

@@ -5,9 +5,7 @@ import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
 import com.jardvcode.bot.checklist.domain.Emoji;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.dto.GroupDTO;
-import com.jardvcode.bot.checklist.entity.template.GroupEntity;
 import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntity;
-import com.jardvcode.bot.checklist.service.InstanceService;
 import com.jardvcode.bot.checklist.service.InstanceGroupService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
@@ -22,12 +20,10 @@ public final class SelectGroupState implements State {
 
     private final BotSessionDataService sessionDataService;
     private final InstanceGroupService groupService;
-    private final InstanceService instanceService;
 
-    public SelectGroupState(InstanceGroupService groupService, BotSessionDataService sessionDataService, InstanceService instanceService) {
+    public SelectGroupState(InstanceGroupService groupService, BotSessionDataService sessionDataService) {
         this.groupService = groupService;
         this.sessionDataService = sessionDataService;
-        this.instanceService = instanceService;
     }
 
     @Override
@@ -57,25 +53,16 @@ public final class SelectGroupState implements State {
         ));
 
         List<InstanceGroupEntity> groups = groupService.findByInstanceId(checklistDTO.instanceId());
-        boolean checklistGroupsDone = true;
 
         for (InstanceGroupEntity group : groups) {
-            if(group.getStatus().equalsIgnoreCase(ChecklistStatusEmoji.PENDIENTE.name())) {
-                checklistGroupsDone = false;
-            }
-
             String statusEmoji = ChecklistStatusEmoji.fromStatus(group.getStatus());
 
             message.append(String.format(
                     "%s %d. %s%n",
                     statusEmoji,
                     group.getOptionNumber(),
-                    group.getGroup().getName()
+                    group.getName()
             ));
-        }
-
-        if(checklistGroupsDone) {
-            instanceService.markAsCompleted(checklistDTO.instanceId());
         }
 
         botContext.sendText(message.toString());
@@ -86,14 +73,14 @@ public final class SelectGroupState implements State {
     @Override
     public Decision onUserInput(BotContext botContext) throws Exception {
         ChecklistDTO checklistDTO = null;
-        GroupEntity group = null;
+        InstanceGroupEntity group = null;
 
         try {
             Long optionNumber = Long.parseLong(botContext.getMessage());
 
             checklistDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), ChecklistDTO.class);
 
-            group = groupService.findByInstanceIdAndOptionNumber(checklistDTO.instanceId(), optionNumber).getGroup();
+            group = groupService.findByInstanceIdAndOptionNumber(checklistDTO.instanceId(), optionNumber);
         } catch (Exception e) {
             botContext.sendText("Opción no valida");
 

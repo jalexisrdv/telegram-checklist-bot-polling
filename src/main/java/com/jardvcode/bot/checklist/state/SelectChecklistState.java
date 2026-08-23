@@ -47,8 +47,8 @@ public final class SelectChecklistState implements State {
                             "   - Fecha: %s%n%n",
                     statusEmoji,
                     instance.getOptionNumber(),
-                    instance.getTemplate().getName(),
-                    instance.getOperatorName(),
+                    instance.getTemplateName(),
+                    instance.getOperatorFullName(),
                     instance.getMileage(),
                     instance.getNextService(),
                     instance.getDate()
@@ -77,9 +77,9 @@ public final class SelectChecklistState implements State {
         }
 
         ChecklistDTO checklistDTO = new ChecklistDTO(
-                instance.getId(), instance.getTemplate().getId(),
-                instance.getTemplate().getName(), instance.getDate().toString(),
-                instance.getOperatorName(), instance.getMileage(), instance.getNextService()
+                instance.getId(), instance.getTemplateId(),
+                instance.getTemplateName(), instance.getDate().toString(),
+                instance.getOperatorFullName(), instance.getMileage(), instance.getNextService()
         );
 
         sessionDataService.save(botContext.getSystemUserId(), checklistDTO, getClass());

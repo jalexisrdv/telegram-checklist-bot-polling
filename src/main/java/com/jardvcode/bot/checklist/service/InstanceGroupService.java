@@ -1,6 +1,5 @@
 package com.jardvcode.bot.checklist.service;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
 import com.jardvcode.bot.checklist.entity.instance.InstanceGroupEntity;
 import com.jardvcode.bot.checklist.repository.instance.InstanceGroupRepository;
 import com.jardvcode.bot.shared.domain.exception.DataNotFoundException;
@@ -39,20 +38,6 @@ public final class InstanceGroupService {
             throw e;
         } catch (Exception e) {
             LOGGER.error("Unexpected error while retrieving group for checklistId={} optionNumber={}", checklistId, optionNumber, e);
-            throw new UnexpectedException();
-        }
-    }
-
-    public void markAsCompleted(Long checklistId, Long groupId) {
-        try {
-            InstanceGroupEntity entityFound = repository.findByInstanceIdAndOptionNumber(checklistId, groupId).orElseThrow();
-            entityFound.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
-            repository.save(entityFound);
-        } catch (DataNotFoundException e) {
-            LOGGER.error("Group not found for checklistId={} groupId={}", checklistId, groupId, e);
-            throw e;
-        } catch (Exception e) {
-            LOGGER.error("Unexpected error while persisting group for checklistId={} groupId={}", checklistId, groupId, e);
             throw new UnexpectedException();
         }
     }

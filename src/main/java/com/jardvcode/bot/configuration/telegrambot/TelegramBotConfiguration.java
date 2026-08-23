@@ -1,5 +1,6 @@
 package com.jardvcode.bot.configuration.telegrambot;
 
+import com.jardvcode.bot.checklist.domain.PlatformEnum;
 import com.jardvcode.bot.configuration.sender.MessageSender;
 import com.jardvcode.bot.configuration.sender.TelegramMessageSender;
 import com.jardvcode.bot.configuration.statemachine.StateMachine;
@@ -61,7 +62,7 @@ public final class TelegramBotConfiguration extends TelegramLongPollingBot {
 				
 				if (providerUserId == null || incomingMessage == null) return;
 				
-				BotContext botContext = new BotContext(providerUserId, incomingMessage, messageSender);
+				BotContext botContext = new BotContext(PlatformEnum.TELEGRAM.name(), providerUserId, incomingMessage, messageSender);
 				
 				try {
 					stateMachine.apply(botContext);

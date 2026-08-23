@@ -5,9 +5,8 @@ import com.jardvcode.bot.checklist.domain.Emoji;
 import com.jardvcode.bot.checklist.dto.ChecklistDTO;
 import com.jardvcode.bot.checklist.dto.GroupDTO;
 import com.jardvcode.bot.checklist.dto.ItemDTO;
-import com.jardvcode.bot.checklist.entity.template.ItemEntity;
+import com.jardvcode.bot.checklist.entity.instance.ItemEntity;
 import com.jardvcode.bot.checklist.entity.instance.ResponseEntity;
-import com.jardvcode.bot.checklist.service.InstanceGroupService;
 import com.jardvcode.bot.checklist.service.ItemResponseService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
@@ -22,12 +21,10 @@ public final class SelectItemState implements State {
 
     private final BotSessionDataService sessionDataService;
     private final ItemResponseService itemService;
-    private final InstanceGroupService groupService;
 
-    public SelectItemState(BotSessionDataService sessionDataService, ItemResponseService itemService, InstanceGroupService groupService) {
+    public SelectItemState(BotSessionDataService sessionDataService, ItemResponseService itemService) {
         this.sessionDataService = sessionDataService;
         this.itemService = itemService;
-        this.groupService = groupService;
     }
 
     @Override
@@ -36,7 +33,6 @@ public final class SelectItemState implements State {
         ChecklistDTO checklistDTO = groupDTO.checklistDTO();
 
         List<ResponseEntity> responses = itemService.findByInstanceIdAndGroupId(checklistDTO.instanceId(), groupDTO.id());
-        boolean groupItemsDone = true;
 
         StringBuilder message = new StringBuilder();
 
@@ -53,21 +49,16 @@ public final class SelectItemState implements State {
                 status = ChecklistStatusEmoji.COMPLETADO;
             } else {
                 status = ChecklistStatusEmoji.PENDIENTE;
-                groupItemsDone = false;
             }
 
             message.append(String.format(
                     "%s %d. %s%n" +
                     "   %s%n%n",
                     status.emoji(),
-                    response.getOptionNumber(),
-                    item.getDescription(),
+                    response.optionNumber(),
+                    item.getLabel(),
                     userResponse
             ));
-        }
-
-        if(groupItemsDone) {
-            groupService.markAsCompleted(checklistDTO.instanceId(), groupDTO.id());
         }
 
         StringBuilder header = new StringBuilder();
@@ -111,7 +102,7 @@ public final class SelectItemState implements State {
             return Decision.stay();
         }
 
-        ItemDTO itemDTO = new ItemDTO(response.getId(), response.getItem().getDescription());
+        ItemDTO itemDTO = new ItemDTO(response.getId(), response.getItem().getLabel());
 
         sessionDataService.save(botContext.getSystemUserId(), itemDTO, getClass());
 

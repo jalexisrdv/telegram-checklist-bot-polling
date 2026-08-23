@@ -8,7 +8,7 @@ public final class UserLinkTokenEntityMother {
         UserLinkTokenEntity entity = new UserLinkTokenEntity();
         entity.setToken("550e8400-e29b-41d4-a716-446655440000");
         entity.setExpiresAt(LocalDateTime.now().plusDays(1));
-        entity.setUsed(true);
+        entity.setUsedAt(LocalDateTime.now().plusDays(1));
         return entity;
     }
 
@@ -24,7 +24,7 @@ public final class UserLinkTokenEntityMother {
         entity.setUserId(1L);
         entity.setToken("550e8400-e29b-41d4-a716-446655440000");
         entity.setExpiresAt(LocalDateTime.now().plusDays(1));
-        entity.setUsed(false);
+        entity.setUsedAt(null);
         return entity;
     }
 

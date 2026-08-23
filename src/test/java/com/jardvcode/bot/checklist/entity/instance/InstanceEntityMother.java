@@ -1,7 +1,5 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
-import com.jardvcode.bot.checklist.entity.template.ChecklistTemplateEntity;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -30,20 +28,18 @@ public final class InstanceEntityMother {
     }
 
     public static InstanceEntity create() {
-        ChecklistTemplateEntity template = new ChecklistTemplateEntity();
-        template.setId(1L);
-        template.setName("Formato para servicios A y C (BASICO)");
-
         InstanceEntity instance = new InstanceEntity();
+
         instance.setId(1L);
-        instance.setTemplate(template);
         instance.setUserId(1L);
+        instance.setTemplateId(1L);
+        instance.setTemplateName("Formato para servicios A y C (BASICO)");
         instance.setUnitNumber(243);
-        instance.setOperatorName("PEDRO OCELOT");
-        instance.setMechanic("CATARINO");
+        instance.setOperatorFullName("PEDRO OCELOT");
+        instance.setMechanicFullName("CATARINO");
         instance.setMileage("1299961");
         instance.setNextService("1,300,000 BASICO");
-        instance.setOptionNumber(1L);
+        instance.setOptionNumber(1);
         instance.setTimeIn(LocalTime.parse("09:00:00"));
         instance.setTimeOut(LocalTime.parse("18:00:00"));
         instance.setDate(LocalDate.now());

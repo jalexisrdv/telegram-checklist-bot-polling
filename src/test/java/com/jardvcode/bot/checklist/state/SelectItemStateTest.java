@@ -60,20 +60,6 @@ class SelectItemStateTest {
     }
 
     @Test
-    void shouldCompleteGroupWhenAllResponsesReceived() throws Exception {
-        Long userId = 1L;
-        GroupDTO dto = GroupDTOMother.create();
-        ArrayList<ResponseEntity> items = ResponseEntityMother.withCompletedStatus();
-
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, GroupDTO.class)).thenReturn(dto);
-        when(itemService.findByInstanceIdAndGroupId(dto.checklistDTO().instanceId(), dto.id())).thenReturn(items);
-        state.onBotMessage(botContext);
-
-        verify(groupService, times(1)).markAsCompleted(dto.checklistDTO().instanceId(), dto.id());
-    }
-
-    @Test
     void shouldSendInvalidOptionMessageWhenOptionDoesNotExist() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         GroupDTO dto = GroupDTOMother.create();

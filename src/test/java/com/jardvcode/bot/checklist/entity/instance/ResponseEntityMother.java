@@ -1,6 +1,5 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
-import com.jardvcode.bot.checklist.entity.template.ItemEntity;
 import com.jardvcode.bot.checklist.entity.template.ItemEntityMother;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public final class ResponseEntityMother {
             String status = ESTATUSES[randomIndex];
             String observation = OBSERVATIONS[randomIndex];
 
-            instanceItems.add(withItem(item, optionNumber, status, observation));
+            instanceItems.add(withItem(item, status, observation));
         }
 
         return instanceItems;
@@ -39,7 +38,7 @@ public final class ResponseEntityMother {
         for (int i = 0; i < items.size(); i++) {
             ItemEntity item = items.get(i);
             Long optionNumber = Long.valueOf(i + 1);
-            instanceItems.add(withItem(item, optionNumber, "OK", "OBSERVATION"));
+            instanceItems.add(withItem(item, "OK", "OBSERVATION"));
         }
 
         return instanceItems;
@@ -51,29 +50,27 @@ public final class ResponseEntityMother {
 
         for (int i = 0; i < items.size(); i++) {
             ItemEntity item = items.get(i);
-            Long optionNumber = Long.valueOf(i + 1);
 
             int result = i % 2;
             String status = result == 0 ? "OK" : null;
             String observation = result == 0 ? "OBSERVATION" : null;
 
-            instanceItems.add(withItem(item, optionNumber, status, observation));
+            instanceItems.add(withItem(item, status, observation));
         }
 
         return instanceItems;
     }
 
     public static ResponseEntity withPendingItem() {
-        return withItem(ItemEntityMother.motorItem(), 1L, "", "");
+        return withItem(ItemEntityMother.motorItem(), "", "");
     }
 
-    private static ResponseEntity withItem(ItemEntity item, Long optionNumber, String status, String observation) {
+    private static ResponseEntity withItem(ItemEntity item, String status, String observation) {
         ResponseEntity responseEntity = new ResponseEntity();
 
         responseEntity.setId(1L);
         responseEntity.setInstanceId(1L);
         responseEntity.setItem(item);
-        responseEntity.setOptionNumber(optionNumber);
         responseEntity.setStatus(status);
         responseEntity.setObservation(observation);
 

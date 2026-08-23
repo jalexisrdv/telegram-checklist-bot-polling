@@ -1,39 +1,36 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
-import com.jardvcode.bot.checklist.entity.template.ChecklistTemplateEntity;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Immutable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "checklist_instances")
+@Immutable
+@Table(name = "checklist_assignments_view")
 public final class InstanceEntity {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "template_id")
-    private ChecklistTemplateEntity template;
-
-    @Column(name = "user_id")
+    @Column(name = "mechanic_user_id")
     private Long userId;
 
-    @Column(name = "option_number")
-    private Long optionNumber;
+    @Column(name = "template_id")
+    private Long templateId;
+
+    @Column(name = "template_name")
+    private String templateName;
 
     @Column(name = "unit_number")
     private Integer unitNumber;
 
-    @Column(name = "operator_name")
-    private String operatorName;
+    @Column(name = "operator_full_name")
+    private String operatorFullName;
 
-    @Column(name = "mechanic")
-    private String mechanic;
+    @Column(name = "mechanic_full_name")
+    private String mechanicFullName;
 
     @Column(name = "mileage")
     private String mileage;
@@ -53,12 +50,8 @@ public final class InstanceEntity {
     @Column(name = "status")
     private String status;
 
-    public static InstanceEntity withCompletedStatus(Long instanceId) {
-        InstanceEntity entity = new InstanceEntity();
-        entity.setId(instanceId);
-        entity.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
-        return entity;
-    }
+    @Column(name = "option_number")
+    private Integer optionNumber;
 
     public Long getId() {
         return id;
@@ -66,14 +59,6 @@ public final class InstanceEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ChecklistTemplateEntity getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(ChecklistTemplateEntity template) {
-        this.template = template;
     }
 
     public Long getUserId() {
@@ -84,12 +69,20 @@ public final class InstanceEntity {
         this.userId = userId;
     }
 
-    public Long getOptionNumber() {
-        return optionNumber;
+    public Long getTemplateId() {
+        return templateId;
     }
 
-    public void setOptionNumber(Long optionNumber) {
-        this.optionNumber = optionNumber;
+    public void setTemplateId(Long templateId) {
+        this.templateId = templateId;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
     }
 
     public Integer getUnitNumber() {
@@ -100,20 +93,20 @@ public final class InstanceEntity {
         this.unitNumber = unitNumber;
     }
 
-    public String getOperatorName() {
-        return operatorName;
+    public String getOperatorFullName() {
+        return operatorFullName;
     }
 
-    public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
+    public void setOperatorFullName(String operatorFullName) {
+        this.operatorFullName = operatorFullName;
     }
 
-    public String getMechanic() {
-        return mechanic;
+    public String getMechanicFullName() {
+        return mechanicFullName;
     }
 
-    public void setMechanic(String mechanic) {
-        this.mechanic = mechanic;
+    public void setMechanicFullName(String mechanicFullName) {
+        this.mechanicFullName = mechanicFullName;
     }
 
     public String getMileage() {
@@ -162,6 +155,14 @@ public final class InstanceEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getOptionNumber() {
+        return optionNumber;
+    }
+
+    public void setOptionNumber(Integer optionNumber) {
+        this.optionNumber = optionNumber;
     }
 
 }

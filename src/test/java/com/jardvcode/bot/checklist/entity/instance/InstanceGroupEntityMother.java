@@ -1,56 +1,83 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
 import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
-import com.jardvcode.bot.checklist.entity.template.GroupEntity;
-import com.jardvcode.bot.checklist.entity.template.GroupEntityMother;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class InstanceGroupEntityMother {
 
-    public static ArrayList<InstanceGroupEntity> withCompletedStatus() {
-        ArrayList<InstanceGroupEntity> instanceGroups = new ArrayList<>();
-        List<GroupEntity> groups = GroupEntityMother.values();
+    public static List<InstanceGroupEntity> withCompletedStatus() {
+        List<InstanceGroupEntity> sections = values();
 
-        for (int i = 0; i < groups.size(); i++) {
-            GroupEntity group = groups.get(i);
-            Long optionNumber = Long.valueOf(i + 1);
-            String status = ChecklistStatusEmoji.COMPLETADO.name();
-            instanceGroups.add(withGroup(group, optionNumber, status));
+        for (InstanceGroupEntity section: sections) {
+            section.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
         }
 
-        return instanceGroups;
+        return sections;
     }
 
-    public static ArrayList<InstanceGroupEntity> withRandomStatus() {
-        ArrayList<InstanceGroupEntity> instanceGroups = new ArrayList<>();
-        List<GroupEntity> groups = GroupEntityMother.values();
+    public static List<InstanceGroupEntity> withRandomStatus() {
+        List<InstanceGroupEntity> sections = values();
 
-        for (int i = 0; i < groups.size(); i++) {
-            GroupEntity group = groups.get(i);
-            Long optionNumber = Long.valueOf(i + 1);
-            String status = optionNumber % 2 == 0 ? ChecklistStatusEmoji.PENDIENTE.name() : ChecklistStatusEmoji.COMPLETADO.name();
-            instanceGroups.add(withGroup(group, optionNumber, status));
+        for (InstanceGroupEntity section: sections) {
+            String status = section.getOptionNumber() % 2 == 0 ? ChecklistStatusEmoji.PENDIENTE.name() : ChecklistStatusEmoji.COMPLETADO.name();
+            section.setStatus(status);
         }
 
-        return instanceGroups;
+        return sections;
     }
 
     public static InstanceGroupEntity withPendingGroup() {
-        return withGroup(GroupEntityMother.create(), 1L, ChecklistStatusEmoji.PENDIENTE.name());
+        InstanceGroupEntity section = new InstanceGroupEntity();
+
+        section.setId(1L);
+        section.setInstanceId(1L);
+        section.setGroupId(1L);
+        section.setName("SISTEMA DE DIRECCION");
+        section.setOptionNumber(1);
+        section.setStatus(ChecklistStatusEmoji.PENDIENTE.name());
+
+        return section;
     }
 
-    private static InstanceGroupEntity withGroup(GroupEntity group, Long optionNumber, String status) {
-        InstanceGroupEntity instanceGroup = new InstanceGroupEntity();
+    public static List<InstanceGroupEntity> values() {
+        List<InstanceGroupEntity> sections = new ArrayList<>();
 
-        instanceGroup.setId(1L);
-        instanceGroup.setInstanceId(1L);
-        instanceGroup.setGroup(group);
-        instanceGroup.setOptionNumber(optionNumber);
-        instanceGroup.setStatus(status);
+        sections.add(create(1L, "SISTEMA DE DIRECCION", 1));
+        sections.add(create(2L, "SUSPENCION DELANTERA", 2));
+        sections.add(create(3L, "MOTOR", 3));
+        sections.add(create(4L, "EMBRAGUE", 4));
+        sections.add(create(5L, "TRANSMISION", 5));
+        sections.add(create(6L, "DIFERENCIALES", 6));
+        sections.add(create(7L, "QUINTARUEDA", 7));
+        sections.add(create(8L, "SISTEMA ELECTRICO/ELECTRONICO", 8));
+        sections.add(create(9L, "SISTEMA DE RODAMIENTO", 9));
+        sections.add(create(10L, "SISTEMA DE FRENOS", 10));
+        sections.add(create(11L, "EQUIPO DE SEGURIDAD", 11));
+        sections.add(create(12L, "LIMPIEZA Y LUBRICACION", 12));
 
-        return instanceGroup;
+        return sections;
+    }
+
+    public static InstanceGroupEntity create() {
+        InstanceGroupEntity section = new InstanceGroupEntity();
+
+        section.setId(1L);
+        section.setName("SISTEMA DE DIRECCION");
+        section.setOptionNumber(1);
+
+        return section;
+    }
+
+    public static InstanceGroupEntity create(Long id, String name, Integer optionNumber) {
+        InstanceGroupEntity section = new InstanceGroupEntity();
+
+        section.setId(id);
+        section.setName(name);
+        section.setOptionNumber(optionNumber);
+
+        return section;
     }
 
 }

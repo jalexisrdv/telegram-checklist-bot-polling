@@ -48,7 +48,7 @@ class InputTokenStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(botContext, times(1)).sendText(expectedErrorMessage);
-        assertEquals(StateUtil.uniqueName(InputTokenState.class), decision.nextState());
+        assertEquals(Decision.state(InputTokenState.class), decision.nextState());
     }
 
     @Test

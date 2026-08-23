@@ -5,12 +5,14 @@ import com.jardvcode.bot.configuration.sender.MessageSender;
 public final class BotContext {
 	
 	private Long systemUserId;
+	private final String platform;
 	private final String providerUserId;
 	private final String message;
 	private final MessageSender sender;
 	
-	public BotContext(String providerUserId, String message, MessageSender sender) {
-		this.providerUserId = providerUserId;
+	public BotContext(String platform, String providerUserId, String message, MessageSender sender) {
+        this.platform = platform;
+        this.providerUserId = providerUserId;
 		this.message = message;
 		this.sender = sender;
 	}
@@ -29,6 +31,10 @@ public final class BotContext {
 
 	public void setSystemUserId(Long systemUserId) {
 		this.systemUserId = systemUserId;
+	}
+
+	public String getPlatform() {
+		return platform;
 	}
 
 	public String getProviderUserId() {

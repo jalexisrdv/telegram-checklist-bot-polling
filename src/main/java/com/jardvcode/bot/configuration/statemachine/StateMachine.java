@@ -30,14 +30,14 @@ public final class StateMachine {
 		String providerUserId = botContext.getProviderUserId();
 		String message = botContext.getMessage();
 
-		BotUserEntity user = repository.findByProviderUserId(providerUserId).orElse(null);
+		BotUserEntity user = repository.findWithRolesAndPermissionsByProviderUserId(providerUserId).orElse(null);
 
 		if(user == null) {
 			String initialState = StateUtil.uniqueName(InputTokenState.class);
 
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
-			user = BotUserEntity.create(providerUserId, initialState);
+			user = BotUserEntity.create(botContext.getPlatform(), providerUserId, initialState);
 			repository.save(user);
 
 			return;

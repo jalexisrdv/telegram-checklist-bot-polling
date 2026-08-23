@@ -43,18 +43,4 @@ public final class InstanceService {
         }
     }
 
-    public void markAsCompleted(Long checklistId) {
-        try {
-            InstanceEntity entityFound = repository.findById(checklistId).orElseThrow(() -> new DataNotFoundException());
-            entityFound.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
-            repository.save(entityFound);
-        } catch (DataNotFoundException e) {
-            LOGGER.error("Checklist not found for id={}", checklistId, e);
-            throw e;
-        } catch (Exception e) {
-            LOGGER.error("Unexpected error while persisting checklist for id={}", checklistId, e);
-            throw new UnexpectedException();
-        }
-    }
-
 }

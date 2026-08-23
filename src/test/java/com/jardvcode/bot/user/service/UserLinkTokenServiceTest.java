@@ -96,7 +96,7 @@ class UserLinkTokenServiceTest {
         userLinkTokenEntity = userLinkTokenEntityCaptor.getValue();
         botUserEntity = botUserEntityCaptor.getValue();
 
-        assertEquals(true, userLinkTokenEntity.getUsed());
+        assertNotNull(userLinkTokenEntity.getUsedAt());
         assertEquals(userLinkTokenEntity.getUserId(), botUserEntity.getUserId());
     }
 

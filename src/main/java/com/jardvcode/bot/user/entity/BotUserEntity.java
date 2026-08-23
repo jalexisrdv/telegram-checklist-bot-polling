@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "user_bot_states")
+@Table(name = "bot_users")
 public class BotUserEntity {
 
     @Id
@@ -17,31 +17,46 @@ public class BotUserEntity {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "platform")
+    private String platform;
+
     @Column(name = "provider_user_id")
     private String providerUserId;
 
     @Column(name = "current_state")
     private String currentState;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_permissions",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<PermissionEntity> permissions = new HashSet<>();
+    private Set<RoleEntity> roles = new HashSet<>();
 
-    public static BotUserEntity create(String providerUserId, String currentState) {
+    public static BotUserEntity create(String platform, String providerUserId, String currentState) {
         BotUserEntity entity = new BotUserEntity();
-        entity.setProviderUserId(providerUserId);
-        entity.setCurrentState(currentState);
+
+        entity.platform = platform;
+        entity.providerUserId = providerUserId;
+        entity.currentState = currentState;
+
         return entity;
     }
 
     public Set<String> permissions() {
-        return permissions.stream()
+        return roles.stream()
+                .flatMap(role -> role.getPermissions().stream())
                 .map(PermissionEntity::getCode)
                 .collect(Collectors.toSet());
+    }
+
+    public void linkToErpUser(Long userId) {
+        this.userId = userId;
+    }
+
+    public boolean isErpUserLinked() {
+        return userId != null;
     }
 
     public Long getId() {
@@ -60,6 +75,14 @@ public class BotUserEntity {
         this.userId = userId;
     }
 
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
     public String getProviderUserId() {
         return providerUserId;
     }
@@ -76,12 +99,12 @@ public class BotUserEntity {
         this.currentState = currentState;
     }
 
-    public Set<PermissionEntity> getPermissions() {
-        return permissions;
+    public Set<RoleEntity> getRoles() {
+        return roles;
     }
 
-    public void setPermissions(Set<PermissionEntity> permissions) {
-        this.permissions = permissions;
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
     }
 
 }

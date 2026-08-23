@@ -1,13 +1,15 @@
 package com.jardvcode.bot.checklist.repository.instance;
 
 import com.jardvcode.bot.checklist.entity.instance.ResponseEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ResponseRepository extends JpaRepository<ResponseEntity, Long> {
-    List<ResponseEntity> findByInstanceIdOrderByItemGroupId(Long instanceId);
-    List<ResponseEntity> findByInstanceIdAndItemGroupIdOrderByOptionNumberAsc(Long instanceId, Long groupId);
-    Optional<ResponseEntity> findByInstanceIdAndItemGroupIdAndOptionNumber(Long instanceId, Long groupId, Long userItemNumber);
+public interface ResponseRepository extends JpaRepository<ResponseEntity, Long>, JpaSpecificationExecutor {
+
+    List<ResponseEntity> findByInstanceIdAndItemGroupIdOrderByItemOptionNumberAsc(Long assignmentId, Long sectionId);
+
+    Optional<ResponseEntity> findByInstanceIdAndItemGroupIdAndItemOptionNumber(Long assignmentId, Long sectionId, Long optionNumber);
+
 }

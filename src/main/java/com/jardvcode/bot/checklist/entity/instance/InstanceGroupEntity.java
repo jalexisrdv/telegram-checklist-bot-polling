@@ -1,44 +1,58 @@
 package com.jardvcode.bot.checklist.entity.instance;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
-import com.jardvcode.bot.checklist.entity.template.GroupEntity;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Immutable;
+
+import java.util.UUID;
 
 @Entity
-@Table(name = "checklist_instance_groups")
+@Immutable
+@Table(name = "assignment_sections_view")
 public final class InstanceGroupEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "uuid")
+    private UUID uuid;
+
+    @Column(name = "section_id")
+    private Long groupId;
+
+    @Column(name = "assignment_id")
     private Long instanceId;
 
-    @OneToOne
-    @JoinColumn(name = "group_id")
-    private GroupEntity group;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "option_number")
-    private Long optionNumber;
+    private Integer optionNumber;
 
-    @Column
+    @Column(name = "status")
     private String status;
 
-    public static InstanceGroupEntity withCompletedStatus(Long instanceId, Long groupId) {
-        InstanceGroupEntity entity = new InstanceGroupEntity();
-        entity.setInstanceId(instanceId);
-        entity.setOptionNumber(groupId);
-        entity.setStatus(ChecklistStatusEmoji.COMPLETADO.name());
-        return entity;
+    public String getStatus() {
+        return status;
     }
 
-    public Long getId() {
-        return id;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Integer getOptionNumber() {
+        return optionNumber;
+    }
+
+    public void setOptionNumber(Integer optionNumber) {
+        this.optionNumber = optionNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getInstanceId() {
@@ -49,28 +63,28 @@ public final class InstanceGroupEntity {
         this.instanceId = instanceId;
     }
 
-    public GroupEntity getGroup() {
-        return group;
+    public Long getGroupId() {
+        return groupId;
     }
 
-    public void setGroup(GroupEntity group) {
-        this.group = group;
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
-    public Long getOptionNumber() {
-        return optionNumber;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setOptionNumber(Long optionNumber) {
-        this.optionNumber = optionNumber;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
-    public String getStatus() {
-        return status;
+    public Long getId() {
+        return id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

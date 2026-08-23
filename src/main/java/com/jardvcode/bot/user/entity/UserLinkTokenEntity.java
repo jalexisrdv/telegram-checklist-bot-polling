@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_link_tokens")
+@Table(name = "bot_activation_tokens")
 public class UserLinkTokenEntity {
 
     @Id
@@ -21,8 +21,16 @@ public class UserLinkTokenEntity {
     @Column(name = "expires_at")
     private LocalDateTime expiresAt;
 
-    @Column(name = "used")
-    private Boolean used = false;
+    @Column(name = "used_at")
+    private LocalDateTime usedAt;
+
+    public void markAsUsed() {
+        usedAt = LocalDateTime.now();
+    }
+
+    public boolean isValidToken() {
+        return usedAt == null || expiresAt.isBefore(LocalDateTime.now());
+    }
 
     public Long getId() {
         return id;
@@ -56,11 +64,12 @@ public class UserLinkTokenEntity {
         this.expiresAt = expiresAt;
     }
 
-    public Boolean getUsed() {
-        return used;
+    public LocalDateTime getUsedAt() {
+        return usedAt;
     }
 
-    public void setUsed(Boolean used) {
-        this.used = used;
+    public void setUsedAt(LocalDateTime usedAt) {
+        this.usedAt = usedAt;
     }
+
 }
