@@ -1,10 +1,10 @@
 package com.jardvcode.bot.configuration.statemachine;
 
 import com.jardvcode.bot.checklist.domain.BotCommand;
-import com.jardvcode.bot.user.state.InputTokenState;
+import com.jardvcode.bot.user.state.LinkBotToErpUserState;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.user.entity.BotUserEntity;
-import com.jardvcode.bot.user.repository.UserBotStateRepository;
+import com.jardvcode.bot.user.repository.BotUserStateRepository;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
 import com.jardvcode.bot.shared.domain.state.StateUtil;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public final class StateMachine {
 
-	private final UserBotStateRepository repository;
+	private final BotUserStateRepository repository;
 	private final StateRegistry stateRegistry;
 	private final CommandRegistry commandRegistry;
 	private final BotSessionDataService botSessionDataService;
 
-	public StateMachine(UserBotStateRepository repository, StateRegistry stateRegistry, CommandRegistry commandRegistry, BotSessionDataService botSessionDataService) {
+	public StateMachine(BotUserStateRepository repository, StateRegistry stateRegistry, CommandRegistry commandRegistry, BotSessionDataService botSessionDataService) {
 		this.repository = repository;
 		this.stateRegistry = stateRegistry;
 		this.commandRegistry = commandRegistry;
@@ -33,7 +33,7 @@ public final class StateMachine {
 		BotUserEntity botUser = repository.findWithRolesAndPermissionsByProviderUserId(providerUserId).orElse(null);
 
 		if(botUser == null) {
-			String initialState = StateUtil.uniqueName(InputTokenState.class);
+			String initialState = StateUtil.uniqueName(LinkBotToErpUserState.class);
 
 			stateRegistry.find(initialState).onBotMessage(botContext);
 

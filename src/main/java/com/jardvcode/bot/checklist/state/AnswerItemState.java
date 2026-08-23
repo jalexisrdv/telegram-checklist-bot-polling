@@ -1,7 +1,7 @@
 package com.jardvcode.bot.checklist.state;
 
 import com.jardvcode.bot.checklist.dto.ItemDTO;
-import com.jardvcode.bot.checklist.service.ItemResponseService;
+import com.jardvcode.bot.checklist.service.ResponseService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 public final class AnswerItemState implements State {
 
     private final BotSessionDataService sessionDataService;
-    private final ItemResponseService responseService;
+    private final ResponseService responseService;
 
-    public AnswerItemState(BotSessionDataService sessionDataService, ItemResponseService responseService) {
+    public AnswerItemState(BotSessionDataService sessionDataService, ResponseService responseService) {
         this.sessionDataService = sessionDataService;
         this.responseService = responseService;
     }

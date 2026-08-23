@@ -1,8 +1,8 @@
 package com.jardvcode.bot.configuration.statemachine;
 
 import com.jardvcode.bot.checklist.domain.BotCommand;
-import com.jardvcode.bot.checklist.state.SelectChecklistState;
-import com.jardvcode.bot.checklist.state.SelectGroupState;
+import com.jardvcode.bot.checklist.state.SelectAssignmentState;
+import com.jardvcode.bot.checklist.state.SelectSectionState;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.State;
 import com.jardvcode.bot.shared.domain.state.StateUtil;
@@ -39,8 +39,8 @@ public final class CommandRegistry {
     private HashMap<String, Command> load() {
         HashMap<String, Command> commands = new HashMap<>();
 
-        commands.put(BotCommand.ASSIGNMENTS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectChecklistState.class));
-        commands.put(BotCommand.SECTIONS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectGroupState.class));
+        commands.put(BotCommand.ASSIGNMENTS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectAssignmentState.class));
+        commands.put(BotCommand.SECTIONS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectSectionState.class));
 
         return commands;
     }

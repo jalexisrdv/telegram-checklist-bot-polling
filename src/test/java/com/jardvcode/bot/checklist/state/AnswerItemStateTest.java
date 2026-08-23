@@ -2,7 +2,7 @@ package com.jardvcode.bot.checklist.state;
 
 import com.jardvcode.bot.checklist.dto.ItemDTO;
 import com.jardvcode.bot.checklist.dto.ItemDTOMother;
-import com.jardvcode.bot.checklist.service.ItemResponseService;
+import com.jardvcode.bot.checklist.service.ResponseService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.user.service.BotSessionDataService;
@@ -26,7 +26,7 @@ class AnswerItemStateTest {
     private BotSessionDataService sessionDataService;
 
     @Mock
-    private ItemResponseService responseService;
+    private ResponseService responseService;
 
     @InjectMocks
     private AnswerItemState state;

@@ -1,13 +1,13 @@
 package com.jardvcode.bot.checklist.state;
 
-import com.jardvcode.bot.checklist.domain.ChecklistStatusEmoji;
+import com.jardvcode.bot.checklist.domain.AssignmentStatusEmoji;
 import com.jardvcode.bot.checklist.domain.Emoji;
-import com.jardvcode.bot.checklist.dto.ChecklistDTO;
-import com.jardvcode.bot.checklist.dto.GroupDTO;
+import com.jardvcode.bot.checklist.dto.AssignmentDTO;
+import com.jardvcode.bot.checklist.dto.SectionDTO;
 import com.jardvcode.bot.checklist.dto.ItemDTO;
-import com.jardvcode.bot.checklist.entity.instance.ItemEntity;
-import com.jardvcode.bot.checklist.entity.instance.ResponseEntity;
-import com.jardvcode.bot.checklist.service.ItemResponseService;
+import com.jardvcode.bot.checklist.entity.ItemViewEntity;
+import com.jardvcode.bot.checklist.entity.ResponseEntity;
+import com.jardvcode.bot.checklist.service.ResponseService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
@@ -20,35 +20,35 @@ import java.util.List;
 public final class SelectItemState implements State {
 
     private final BotSessionDataService sessionDataService;
-    private final ItemResponseService responseService;
+    private final ResponseService responseService;
 
-    public SelectItemState(BotSessionDataService sessionDataService, ItemResponseService itemService) {
+    public SelectItemState(BotSessionDataService sessionDataService, ResponseService itemService) {
         this.sessionDataService = sessionDataService;
         this.responseService = itemService;
     }
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        GroupDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), GroupDTO.class);
-        ChecklistDTO assignmentDTO = sectionDTO.assignmentDTO();
+        SectionDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), SectionDTO.class);
+        AssignmentDTO assignmentDTO = sectionDTO.assignmentDTO();
 
         List<ResponseEntity> responses = responseService.findByAssignmentIdAndSectionId(assignmentDTO.assignmentId(), sectionDTO.id());
 
         StringBuilder message = new StringBuilder();
 
         for (ResponseEntity response : responses) {
-            ItemEntity item = response.getItem();
+            ItemViewEntity item = response.getItem();
 
             String statusValue = response.getStatus();
             String userResponse = "";
 
-            ChecklistStatusEmoji status;
+            AssignmentStatusEmoji status;
 
             if (statusValue != null) {
                 userResponse = statusValue.toUpperCase() + " " + response.getComment();
-                status = ChecklistStatusEmoji.COMPLETADO;
+                status = AssignmentStatusEmoji.COMPLETADO;
             } else {
-                status = ChecklistStatusEmoji.PENDIENTE;
+                status = AssignmentStatusEmoji.PENDIENTE;
             }
 
             message.append(String.format(
@@ -92,8 +92,8 @@ public final class SelectItemState implements State {
         try {
             Long optionNumber = Long.valueOf(botContext.getMessage());
 
-            GroupDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), GroupDTO.class);
-            ChecklistDTO assignmentDTO = sectionDTO.assignmentDTO();
+            SectionDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), SectionDTO.class);
+            AssignmentDTO assignmentDTO = sectionDTO.assignmentDTO();
 
             response = responseService.findByAssignmentIdAndSectionIdAndOptionNumber(assignmentDTO.assignmentId(), sectionDTO.id(), optionNumber);
         } catch(Exception e) {
