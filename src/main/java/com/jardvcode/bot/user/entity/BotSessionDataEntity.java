@@ -1,5 +1,6 @@
 package com.jardvcode.bot.user.entity;
 
+import com.jardvcode.bot.shared.domain.state.State;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -25,11 +26,11 @@ public final class BotSessionDataEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     private String value;
 
-    public static BotSessionDataEntity create(Long userId, String state, String key, String value) {
+    public static BotSessionDataEntity create(Long userId, Class<? extends State> state, String key, String value) {
         BotSessionDataEntity entity = new BotSessionDataEntity();
 
         entity.setBotUserId(userId);
-        entity.setState(state);
+        entity.setState(state.getCanonicalName());
         entity.setKey(key);
         entity.setValue(value);
 

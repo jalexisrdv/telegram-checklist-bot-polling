@@ -89,7 +89,7 @@ class SelectItemStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(sessionDataService, times(1)).save(mechanicUserId, itemDTO, SelectItemState.class);
-        assertEquals(Decision.state(AnswerItemState.class), decision.nextState());
+        assertEquals(AnswerItemState.class, decision.nextState());
     }
 
     private String expectedHeaderMessage() {

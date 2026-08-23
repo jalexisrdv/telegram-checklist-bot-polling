@@ -105,7 +105,7 @@ class SelectSectionStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(sessionDataService, times(1)).save(mechanicUserId, sectionDTO, SelectSectionState.class);
-        assertEquals(Decision.state(SelectItemState.class), decision.nextState());
+        assertEquals(SelectItemState.class, decision.nextState());
     }
 
     private String expectedMessageWithRandomStatus() {

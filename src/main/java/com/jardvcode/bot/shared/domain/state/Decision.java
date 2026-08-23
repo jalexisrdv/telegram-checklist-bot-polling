@@ -8,12 +8,8 @@ public final class Decision {
 		this.state = state;
 	}
 
-	public String nextState() {
-		return StateUtil.uniqueName(state);
-	}
-
-	public static String state(Class<? extends State> state) {
-		return StateUtil.uniqueName(state);
+	public Class<? extends State> nextState() {
+		return state;
 	}
 
 	public static Decision stay() {

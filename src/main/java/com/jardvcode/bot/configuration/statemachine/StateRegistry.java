@@ -9,7 +9,7 @@ import java.util.Map;
 @Component
 public final class StateRegistry {
 	
-	private final HashMap<String, State> states = new HashMap<>();
+	private final HashMap<Class<? extends State>, State> states = new HashMap<>();
 	
 	public StateRegistry(Map<String, State> implementedStates) {
 		load(implementedStates);
@@ -17,11 +17,11 @@ public final class StateRegistry {
 	
 	private void load(Map<String, State> implementedStates) {
 		implementedStates.values().forEach((state) -> {
-			states.put(state.uniqueName(), state); 
+			states.put(state.getClass(), state);
 		});
 	}
 	
-	public State find(String state) {
+	public State find(Class<? extends State> state) {
 		return states.get(state);
 	}
 

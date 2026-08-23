@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jardvcode.bot.shared.domain.exception.DataNotFoundException;
 import com.jardvcode.bot.shared.domain.exception.UnexpectedException;
 import com.jardvcode.bot.shared.domain.state.State;
-import com.jardvcode.bot.shared.domain.state.StateUtil;
 import com.jardvcode.bot.shared.util.JsonUtils;
 import com.jardvcode.bot.user.entity.BotSessionDataEntity;
 import com.jardvcode.bot.user.repository.BotSessionDataRepository;
@@ -51,7 +50,7 @@ public class BotSessionDataService {
         try {
             BotSessionDataEntity entity = BotSessionDataEntity.create(
                     botUserId,
-                    StateUtil.uniqueName(state),
+                    state,
                     key,
                     JsonUtils.encode(dto)
             );

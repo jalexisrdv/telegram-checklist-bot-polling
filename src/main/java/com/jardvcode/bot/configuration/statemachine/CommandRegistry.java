@@ -5,7 +5,6 @@ import com.jardvcode.bot.checklist.state.SelectAssignmentState;
 import com.jardvcode.bot.checklist.state.SelectSectionState;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.State;
-import com.jardvcode.bot.shared.domain.state.StateUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -32,7 +31,7 @@ public final class CommandRegistry {
         return true;
     }
 
-    public String find(String command) {
+    public Class<? extends State> find(String command) {
         return commands.get(command).initialState();
     }
 
@@ -45,9 +44,9 @@ public final class CommandRegistry {
         return commands;
     }
 
-    private record Command(String permission, String initialState) {
+    private record Command(String permission, Class<? extends State> initialState) {
         public static Command create(String permission, Class<? extends State> state) {
-            return new Command(permission, StateUtil.uniqueName(state));
+            return new Command(permission, state);
         }
     }
 

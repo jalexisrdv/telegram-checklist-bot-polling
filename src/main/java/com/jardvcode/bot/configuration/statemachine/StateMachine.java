@@ -7,7 +7,6 @@ import com.jardvcode.bot.user.entity.BotUserEntity;
 import com.jardvcode.bot.user.repository.BotUserStateRepository;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
-import com.jardvcode.bot.shared.domain.state.StateUtil;
 import com.jardvcode.bot.user.service.BotSessionDataService;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public final class StateMachine {
 		BotUserEntity botUser = repository.findWithRolesAndPermissionsByProviderUserId(providerUserId).orElse(null);
 
 		if(botUser == null) {
-			String initialState = StateUtil.uniqueName(LinkBotToErpUserState.class);
+			Class<? extends State> initialState = LinkBotToErpUserState.class;
 
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
@@ -50,16 +49,16 @@ public final class StateMachine {
 		}
 
 		if(botUser.getUserId() != null && message.contains("/") && commandRegistry.canExecute(message, botUser.permissions())) {
-			String initialState = commandRegistry.find(message);
+			Class<? extends State> initialState = commandRegistry.find(message);
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
-			botUser.setCurrentState(initialState);
+			botUser.updateCurrentState(initialState);
 			repository.save(botUser);
 			
 			return;
 		}
 
-		String currentState = botUser.getCurrentState();
+		Class<? extends State> currentState = botUser.currentStateClass();
 
 		if(currentState == null) {
 			return;
@@ -72,7 +71,7 @@ public final class StateMachine {
 		}
 		
 		Decision newDecision = currentStateFound.onUserInput(botContext);
-		String nextState =  newDecision.nextState();
+		Class<? extends State> nextState =  newDecision.nextState();
 				
 		if(nextState == null) {
 			return;
@@ -80,7 +79,7 @@ public final class StateMachine {
 		
 		stateRegistry.find(nextState).onBotMessage(botContext);
 
-		botUser.setCurrentState(nextState);
-		repository.updateCurrentStateByProviderUserId(botUser.getProviderUserId(), nextState);
+		botUser.updateCurrentState(nextState);
+		repository.updateCurrentStateByProviderUserId(botUser.getProviderUserId(), botUser.getCurrentState());
 	}
 }

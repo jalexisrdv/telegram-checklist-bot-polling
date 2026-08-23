@@ -1,5 +1,6 @@
 package com.jardvcode.bot.user.entity;
 
+import com.jardvcode.bot.shared.domain.state.State;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -34,14 +35,27 @@ public class BotUserEntity {
     )
     private Set<RoleEntity> roles = new HashSet<>();
 
-    public static BotUserEntity create(String platform, String providerUserId, String currentState) {
+    public static BotUserEntity create(String platform, String providerUserId, Class<? extends State> currentState) {
         BotUserEntity entity = new BotUserEntity();
 
         entity.platform = platform;
         entity.providerUserId = providerUserId;
-        entity.currentState = currentState;
+        entity.currentState = currentState.getCanonicalName();
 
         return entity;
+    }
+
+    public void updateCurrentState(Class<? extends State> state) {
+        this.currentState = state.getCanonicalName();
+    }
+
+    public Class<? extends State> currentStateClass() {
+        try {
+            return Class.forName(currentState)
+                    .asSubclass(State.class);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException("State class not found: " + currentState, e);
+        }
     }
 
     public Set<String> permissions() {
@@ -95,7 +109,7 @@ public class BotUserEntity {
         return currentState;
     }
 
-    public void setCurrentState(String currentState) {
+    public void updateCurrentState(String currentState) {
         this.currentState = currentState;
     }
 

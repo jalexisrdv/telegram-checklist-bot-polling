@@ -56,7 +56,7 @@ class AnswerItemStateTest {
 
         verify(botContext, times(1)).sendText(captor.capture());
         assertEquals(expectedInvalidFormatMessage(), captor.getValue());
-        assertEquals(Decision.state(AnswerItemState.class), decision.nextState());
+        assertEquals(AnswerItemState.class, decision.nextState());
     }
 
     @Test
@@ -73,7 +73,7 @@ class AnswerItemStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(responseService, times(1)).save(dto.id(), status, comment);
-        assertEquals(Decision.state(SelectItemState.class), decision.nextState());
+        assertEquals(SelectItemState.class, decision.nextState());
     }
 
     private String expectedInvalidFormatMessage() {

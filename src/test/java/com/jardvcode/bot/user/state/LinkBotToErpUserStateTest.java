@@ -3,7 +3,6 @@ package com.jardvcode.bot.user.state;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.BotException;
 import com.jardvcode.bot.shared.domain.state.Decision;
-import com.jardvcode.bot.shared.domain.state.StateUtil;
 import com.jardvcode.bot.user.service.BotErpUserLinkService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +47,7 @@ class LinkBotToErpUserStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(botContext, times(1)).sendText(expectedErrorMessage);
-        assertEquals(Decision.state(LinkBotToErpUserState.class), decision.nextState());
+        assertEquals(LinkBotToErpUserState.class, decision.nextState());
     }
 
     @Test
@@ -58,7 +57,7 @@ class LinkBotToErpUserStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(service, times(1)).linkBotToErpUser(any(), any());
-        assertEquals(StateUtil.uniqueName(WelcomeState.class), decision.nextState());
+        assertEquals(WelcomeState.class, decision.nextState());
     }
 
 }

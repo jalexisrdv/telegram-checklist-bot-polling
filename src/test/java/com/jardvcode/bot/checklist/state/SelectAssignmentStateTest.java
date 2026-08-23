@@ -94,7 +94,7 @@ class SelectAssignmentStateTest {
         Decision decision = state.onUserInput(botContext);
 
         verify(sessionDataService, times(1)).save(mechanicUserId, dto, SelectAssignmentState.class);
-        assertEquals(Decision.state(SelectSectionState.class), decision.nextState());
+        assertEquals(SelectSectionState.class, decision.nextState());
     }
 
     private String getExpectedMessage() {
