@@ -36,7 +36,7 @@ public final class StateMachine {
 
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
-			botUser = BotUserEntity.create(botContext.getPlatform(), providerUserId, initialState);
+			botUser = BotUserEntity.createWithoutErpUser(botContext.getPlatform(), providerUserId, initialState);
 			repository.save(botUser);
 
 			return;
@@ -44,11 +44,11 @@ public final class StateMachine {
 
 		botContext.setSystemUserId(botUser.getUserId());
 
-		if(botUser.getUserId() != null && message.contains(BotCommand.ASSIGNMENTS.value())) {
+		if(botUser.isErpUserLinked() && message.contains(BotCommand.ASSIGNMENTS.value())) {
 			botSessionDataService.deleteByBotUserId(botUser.getUserId());
 		}
 
-		if(botUser.getUserId() != null && message.contains("/") && commandRegistry.canExecute(message, botUser.permissions())) {
+		if(botUser.isErpUserLinked() && message.contains("/") && commandRegistry.canExecute(message, botUser.permissions())) {
 			Class<? extends State> initialState = commandRegistry.find(message);
 			stateRegistry.find(initialState).onBotMessage(botContext);
 

@@ -35,7 +35,7 @@ public class BotUserEntity {
     )
     private Set<RoleEntity> roles = new HashSet<>();
 
-    public static BotUserEntity create(String platform, String providerUserId, Class<? extends State> currentState) {
+    public static BotUserEntity createWithoutErpUser(String platform, String providerUserId, Class<? extends State> currentState) {
         BotUserEntity entity = new BotUserEntity();
 
         entity.platform = platform;
