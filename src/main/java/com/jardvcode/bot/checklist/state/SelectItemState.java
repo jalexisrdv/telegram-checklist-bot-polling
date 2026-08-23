@@ -20,19 +20,19 @@ import java.util.List;
 public final class SelectItemState implements State {
 
     private final BotSessionDataService sessionDataService;
-    private final ItemResponseService itemService;
+    private final ItemResponseService responseService;
 
     public SelectItemState(BotSessionDataService sessionDataService, ItemResponseService itemService) {
         this.sessionDataService = sessionDataService;
-        this.itemService = itemService;
+        this.responseService = itemService;
     }
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        GroupDTO groupDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), GroupDTO.class);
-        ChecklistDTO checklistDTO = groupDTO.checklistDTO();
+        GroupDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), GroupDTO.class);
+        ChecklistDTO assignmentDTO = sectionDTO.assignmentDTO();
 
-        List<ResponseEntity> responses = itemService.findByInstanceIdAndGroupId(checklistDTO.instanceId(), groupDTO.id());
+        List<ResponseEntity> responses = responseService.findByAssignmentIdAndSectionId(assignmentDTO.assignmentId(), sectionDTO.id());
 
         StringBuilder message = new StringBuilder();
 
@@ -45,7 +45,7 @@ public final class SelectItemState implements State {
             ChecklistStatusEmoji status;
 
             if (statusValue != null) {
-                userResponse = statusValue.toUpperCase() + " " + response.getObservation();
+                userResponse = statusValue.toUpperCase() + " " + response.getComment();
                 status = ChecklistStatusEmoji.COMPLETADO;
             } else {
                 status = ChecklistStatusEmoji.PENDIENTE;
@@ -69,13 +69,13 @@ public final class SelectItemState implements State {
                 "%s Grupo: %s%n" +
                 "%s Envía el número del punto de inspección que deseas responder:%n%n",
                 Emoji.CHECKLIST,
-                checklistDTO.name(),
+                assignmentDTO.name(),
                 Emoji.PERSON,
-                checklistDTO.operatorName(),
+                assignmentDTO.operatorName(),
                 Emoji.DATE,
-                checklistDTO.date(),
+                assignmentDTO.date(),
                 Emoji.GROUP,
-                groupDTO.name(),
+                sectionDTO.name(),
                 Emoji.INSPECT
         ));
 
@@ -92,10 +92,10 @@ public final class SelectItemState implements State {
         try {
             Long optionNumber = Long.valueOf(botContext.getMessage());
 
-            GroupDTO groupDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), GroupDTO.class);
-            ChecklistDTO checklistDTO = groupDTO.checklistDTO();
+            GroupDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), GroupDTO.class);
+            ChecklistDTO assignmentDTO = sectionDTO.assignmentDTO();
 
-            response = itemService.findByInstanceIdAndGroupIdAndOptionNumber(checklistDTO.instanceId(), groupDTO.id(), optionNumber);
+            response = responseService.findByAssignmentIdAndSectionIdAndOptionNumber(assignmentDTO.assignmentId(), sectionDTO.id(), optionNumber);
         } catch(Exception e) {
             botContext.sendText("Opción no valida");
 

@@ -36,7 +36,7 @@ class SelectGroupStateTest {
     private BotSessionDataService sessionDataService;
 
     @Mock
-    private InstanceGroupService groupService;
+    private InstanceGroupService sectionService;
 
     @Mock
     private InstanceService instanceService;
@@ -47,27 +47,27 @@ class SelectGroupStateTest {
     @Test
     void shouldNotSendGroupsMessageWhenNoChecklistSelected() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
 
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, ChecklistDTO.class)).thenThrow(DataNotFoundException.class);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(sessionDataService.findByBotUserId(mechanicUserId, ChecklistDTO.class)).thenThrow(DataNotFoundException.class);
         Decision decision = state.onBotMessage(botContext);
 
         verify(botContext).sendText(captor.capture());
-        assertEquals("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.CHECKLISTS.value() + " para ver las listas disponibles.", captor.getValue());
+        assertEquals("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.ASSIGNMENTS.value() + " para ver las listas disponibles.", captor.getValue());
         assertNull(decision.nextState());
     }
 
     @Test
     void shouldSendGroupsMessageWhenChecklistSelected() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
         ChecklistDTO dto = ChecklistDTOMother.create();
-        List<InstanceGroupEntity> groups = InstanceGroupEntityMother.withRandomStatus();
+        List<InstanceGroupEntity> sections = InstanceGroupEntityMother.withRandomStatus();
 
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, ChecklistDTO.class)).thenReturn(dto);
-        when(groupService.findByInstanceId(dto.instanceId())).thenReturn(groups);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(sessionDataService.findByBotUserId(mechanicUserId, ChecklistDTO.class)).thenReturn(dto);
+        when(sectionService.findByAssignmentId(dto.assignmentId())).thenReturn(sections);
         Decision decision = state.onBotMessage(botContext);
 
         verify(botContext).sendText(captor.capture());
@@ -81,7 +81,7 @@ class SelectGroupStateTest {
         ChecklistDTO dto = ChecklistDTOMother.create();
         Long optionNumber = 1L;
 
-        when(groupService.findByInstanceIdAndOptionNumber(dto.instanceId(), optionNumber)).thenThrow();
+        when(sectionService.findByAssignmentIdAndOptionNumber(dto.assignmentId(), optionNumber)).thenThrow();
         Decision decision = state.onUserInput(botContext);
 
         verify(botContext).sendText(captor.capture());
@@ -92,19 +92,19 @@ class SelectGroupStateTest {
     @Test
     void shouldPersistGroupAndMoveToNextStateWhenOptionIsValid() throws Exception {
         String message = "1";
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
         Long optionNumber = 1L;
-        ChecklistDTO checklistDTO = ChecklistDTOMother.create();
-        InstanceGroupEntity group = InstanceGroupEntityMother.withPendingGroup();
-        GroupDTO groupDTO = GroupDTOMother.create();
+        ChecklistDTO assignmentDTO = ChecklistDTOMother.create();
+        InstanceGroupEntity section = InstanceGroupEntityMother.withPendingGroup();
+        GroupDTO sectionDTO = GroupDTOMother.create();
 
         when(botContext.getMessage()).thenReturn(message);
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, ChecklistDTO.class)).thenReturn(checklistDTO);
-        when(groupService.findByInstanceIdAndOptionNumber(checklistDTO.instanceId(), optionNumber)).thenReturn(group);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(sessionDataService.findByBotUserId(mechanicUserId, ChecklistDTO.class)).thenReturn(assignmentDTO);
+        when(sectionService.findByAssignmentIdAndOptionNumber(assignmentDTO.assignmentId(), optionNumber)).thenReturn(section);
         Decision decision = state.onUserInput(botContext);
 
-        verify(sessionDataService, times(1)).save(userId, groupDTO, SelectGroupState.class);
+        verify(sessionDataService, times(1)).save(mechanicUserId, sectionDTO, SelectGroupState.class);
         assertEquals(Decision.state(SelectItemState.class), decision.nextState());
     }
 

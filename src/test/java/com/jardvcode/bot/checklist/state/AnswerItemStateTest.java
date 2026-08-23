@@ -34,15 +34,15 @@ class AnswerItemStateTest {
     @Test
     void shouldSendStatusMessageWhenItemSelected() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
         ItemDTO dto = ItemDTOMother.create();
 
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, ItemDTO.class)).thenReturn(dto);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(sessionDataService.findByBotUserId(mechanicUserId, ItemDTO.class)).thenReturn(dto);
         Decision decision = state.onBotMessage(botContext);
 
         verify(botContext, times(1)).sendText(captor.capture());
-        assertEquals("Envía el estatus de " + dto.description() + ": ", captor.getValue());
+        assertEquals("Envía el estatus de " + dto.label() + ": ", captor.getValue());
         assertNull(decision.nextState());
     }
 
@@ -62,17 +62,17 @@ class AnswerItemStateTest {
     @Test
     void shouldPersistStatusWhenInputIsCorrect() throws Exception {
         String message = "ok en condiciones";
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
         ItemDTO dto = ItemDTOMother.create();
         String status = "ok";
-        String observations = "en condiciones";
+        String comment = "en condiciones";
 
         when(botContext.getMessage()).thenReturn(message);
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, ItemDTO.class)).thenReturn(dto);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(sessionDataService.findByBotUserId(mechanicUserId, ItemDTO.class)).thenReturn(dto);
         Decision decision = state.onUserInput(botContext);
 
-        verify(responseService, times(1)).save(dto.id(), status, observations);
+        verify(responseService, times(1)).save(dto.id(), status, comment);
         assertEquals(Decision.state(SelectItemState.class), decision.nextState());
     }
 

@@ -2,9 +2,8 @@ package com.jardvcode.bot.checklist.domain;
 
 public enum BotCommand {
 
-    CHECKLISTS("/listas"),
-    GROUPS("/grupos"),
-    REPORTES("/reportes");
+    ASSIGNMENTS("/listas"),
+    SECTIONS("/grupos");
 
     private String value;
 

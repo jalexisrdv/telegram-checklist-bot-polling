@@ -6,15 +6,15 @@ import java.time.LocalDate;
 
 public final class ChecklistDTOMother {
 
-    public static ChecklistDTO withInstance(InstanceEntity instance) {
+    public static ChecklistDTO withInstance(InstanceEntity assignment) {
         return new ChecklistDTO(
-                instance.getId(),
-                instance.getTemplateId(),
-                instance.getTemplateName(),
-                instance.getDate().toString(),
-                instance.getOperatorFullName(),
-                instance.getMileage(),
-                instance.getNextService()
+                assignment.getId(),
+                assignment.getTemplateId(),
+                assignment.getTemplateName(),
+                assignment.getDate().toString(),
+                assignment.getOperatorFullName(),
+                assignment.getMileage(),
+                assignment.getNextService()
         );
     }
 

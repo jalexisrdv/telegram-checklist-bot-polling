@@ -39,8 +39,8 @@ public final class CommandRegistry {
     private HashMap<String, Command> load() {
         HashMap<String, Command> commands = new HashMap<>();
 
-        commands.put(BotCommand.CHECKLISTS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectChecklistState.class));
-        commands.put(BotCommand.GROUPS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectGroupState.class));
+        commands.put(BotCommand.ASSIGNMENTS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectChecklistState.class));
+        commands.put(BotCommand.SECTIONS.value(), Command.create("CHECKLIST_ASSIGNMENTS_BOT", SelectGroupState.class));
 
         return commands;
     }

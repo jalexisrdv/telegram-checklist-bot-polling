@@ -32,8 +32,8 @@ public final class InstanceGroupEntityMother {
         InstanceGroupEntity section = new InstanceGroupEntity();
 
         section.setId(1L);
-        section.setInstanceId(1L);
-        section.setGroupId(1L);
+        section.setAssignmentId(1L);
+        section.setSectionId(1L);
         section.setName("SISTEMA DE DIRECCION");
         section.setOptionNumber(1);
         section.setStatus(ChecklistStatusEmoji.PENDIENTE.name());

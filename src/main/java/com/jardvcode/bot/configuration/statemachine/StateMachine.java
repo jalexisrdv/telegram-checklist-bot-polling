@@ -30,48 +30,48 @@ public final class StateMachine {
 		String providerUserId = botContext.getProviderUserId();
 		String message = botContext.getMessage();
 
-		BotUserEntity user = repository.findWithRolesAndPermissionsByProviderUserId(providerUserId).orElse(null);
+		BotUserEntity botUser = repository.findWithRolesAndPermissionsByProviderUserId(providerUserId).orElse(null);
 
-		if(user == null) {
+		if(botUser == null) {
 			String initialState = StateUtil.uniqueName(InputTokenState.class);
 
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
-			user = BotUserEntity.create(botContext.getPlatform(), providerUserId, initialState);
-			repository.save(user);
+			botUser = BotUserEntity.create(botContext.getPlatform(), providerUserId, initialState);
+			repository.save(botUser);
 
 			return;
 		}
 
-		botContext.setSystemUserId(user.getUserId());
+		botContext.setSystemUserId(botUser.getUserId());
 
-		if(user.getUserId() != null && message.contains(BotCommand.CHECKLISTS.value())) {
-			botSessionDataService.deleteByUserId(user.getUserId());
+		if(botUser.getUserId() != null && message.contains(BotCommand.ASSIGNMENTS.value())) {
+			botSessionDataService.deleteByBotUserId(botUser.getUserId());
 		}
 
-		if(user.getUserId() != null && message.contains("/") && commandRegistry.canExecute(message, user.permissions())) {
+		if(botUser.getUserId() != null && message.contains("/") && commandRegistry.canExecute(message, botUser.permissions())) {
 			String initialState = commandRegistry.find(message);
 			stateRegistry.find(initialState).onBotMessage(botContext);
 
-			user.setCurrentState(initialState);
-			repository.save(user);
+			botUser.setCurrentState(initialState);
+			repository.save(botUser);
 			
 			return;
 		}
 
-		String currentState = user.getCurrentState();
+		String currentState = botUser.getCurrentState();
 
 		if(currentState == null) {
 			return;
 		}
 
-		State state = stateRegistry.find(currentState);
+		State currentStateFound = stateRegistry.find(currentState);
 
-		if(state == null) {
+		if(currentStateFound == null) {
 			return;
 		}
 		
-		Decision newDecision = state.onUserInput(botContext);
+		Decision newDecision = currentStateFound.onUserInput(botContext);
 		String nextState =  newDecision.nextState();
 				
 		if(nextState == null) {
@@ -80,7 +80,7 @@ public final class StateMachine {
 		
 		stateRegistry.find(nextState).onBotMessage(botContext);
 
-		user.setCurrentState(nextState);
-		repository.updateCurrentStateByProviderUserId(user.getProviderUserId(), nextState);
+		botUser.setCurrentState(nextState);
+		repository.updateCurrentStateByProviderUserId(botUser.getProviderUserId(), nextState);
 	}
 }

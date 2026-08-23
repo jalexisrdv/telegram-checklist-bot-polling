@@ -15,7 +15,7 @@ public final class InstanceEntity {
     private Long id;
 
     @Column(name = "mechanic_user_id")
-    private Long userId;
+    private Long mechanicUserId;
 
     @Column(name = "template_id")
     private Long templateId;
@@ -61,12 +61,12 @@ public final class InstanceEntity {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getMechanicUserId() {
+        return mechanicUserId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setMechanicUserId(Long mechanicUserId) {
+        this.mechanicUserId = mechanicUserId;
     }
 
     public Long getTemplateId() {

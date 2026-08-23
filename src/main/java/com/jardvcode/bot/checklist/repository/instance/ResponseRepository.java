@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface ResponseRepository extends JpaRepository<ResponseEntity, Long>, JpaSpecificationExecutor {
 
-    List<ResponseEntity> findByInstanceIdAndItemGroupIdOrderByItemOptionNumberAsc(Long assignmentId, Long sectionId);
+    List<ResponseEntity> findByAssignmentIdAndItemSectionIdOrderByItemOptionNumberAsc(Long assignmentId, Long sectionId);
 
-    Optional<ResponseEntity> findByInstanceIdAndItemGroupIdAndItemOptionNumber(Long assignmentId, Long sectionId, Long optionNumber);
+    Optional<ResponseEntity> findByAssignmentIdAndItemSectionIdAndItemOptionNumber(Long assignmentId, Long sectionId, Long optionNumber);
 
 }

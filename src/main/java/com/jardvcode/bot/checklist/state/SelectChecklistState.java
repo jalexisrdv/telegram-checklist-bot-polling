@@ -16,18 +16,18 @@ import java.util.List;
 public final class SelectChecklistState implements State {
 
     private final BotSessionDataService sessionDataService;
-    private final InstanceService instanceService;
+    private final InstanceService assignmentService;
 
-    public SelectChecklistState(BotSessionDataService sessionDataService, InstanceService instanceService) {
+    public SelectChecklistState(BotSessionDataService sessionDataService, InstanceService assignmentService) {
         this.sessionDataService = sessionDataService;
-        this.instanceService = instanceService;
+        this.assignmentService = assignmentService;
     }
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        List<InstanceEntity> instances = instanceService.findUnconfirmedByUserId(botContext.getSystemUserId());
+        List<InstanceEntity> assignments = assignmentService.findUnconfirmedByMechanicUserId(botContext.getSystemUserId());
 
-        if(instances.isEmpty()) {
+        if(assignments.isEmpty()) {
             botContext.sendText("¡Genial! No hay listas de inspección pendientes por responder.");
 
             return Decision.stay();
@@ -36,8 +36,8 @@ public final class SelectChecklistState implements State {
         StringBuilder message = new StringBuilder();
         message.append("Estas son tus listas de inspección pendientes, envía el número de la lista que deseas responder:\n\n");
 
-        for (InstanceEntity instance : instances) {
-            String statusEmoji = ChecklistStatusEmoji.fromStatus(instance.getStatus());
+        for (InstanceEntity assignment : assignments) {
+            String statusEmoji = ChecklistStatusEmoji.fromStatus(assignment.getStatus());
 
             message.append(String.format(
                     "%s %d. %s%n" +
@@ -46,12 +46,12 @@ public final class SelectChecklistState implements State {
                             "   - Próximo Servicio: %s%n" +
                             "   - Fecha: %s%n%n",
                     statusEmoji,
-                    instance.getOptionNumber(),
-                    instance.getTemplateName(),
-                    instance.getOperatorFullName(),
-                    instance.getMileage(),
-                    instance.getNextService(),
-                    instance.getDate()
+                    assignment.getOptionNumber(),
+                    assignment.getTemplateName(),
+                    assignment.getOperatorFullName(),
+                    assignment.getMileage(),
+                    assignment.getNextService(),
+                    assignment.getDate()
             ));
 
         }
@@ -63,26 +63,26 @@ public final class SelectChecklistState implements State {
 
     @Override
     public Decision onUserInput(BotContext botContext) throws Exception {
-        InstanceEntity instance = null;
+        InstanceEntity assignment = null;
 
         try {
             Long userId = botContext.getSystemUserId();
             Long optionNumber = Long.parseLong(botContext.getMessage());
 
-            instance = instanceService.findByUserIdAndOptionNumber(userId, optionNumber);
+            assignment = assignmentService.findByMechanicUserIdAndOptionNumber(userId, optionNumber);
         } catch (Exception e) {
             botContext.sendText("Opción no valida");
 
             return Decision.stay();
         }
 
-        ChecklistDTO checklistDTO = new ChecklistDTO(
-                instance.getId(), instance.getTemplateId(),
-                instance.getTemplateName(), instance.getDate().toString(),
-                instance.getOperatorFullName(), instance.getMileage(), instance.getNextService()
+        ChecklistDTO assignmentDTO = new ChecklistDTO(
+                assignment.getId(), assignment.getTemplateId(),
+                assignment.getTemplateName(), assignment.getDate().toString(),
+                assignment.getOperatorFullName(), assignment.getMileage(), assignment.getNextService()
         );
 
-        sessionDataService.save(botContext.getSystemUserId(), checklistDTO, getClass());
+        sessionDataService.save(botContext.getSystemUserId(), assignmentDTO, getClass());
 
         return Decision.moveTo(SelectGroupState.class);
     }

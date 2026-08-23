@@ -17,10 +17,10 @@ public final class InstanceGroupEntity {
     private UUID uuid;
 
     @Column(name = "section_id")
-    private Long groupId;
+    private Long sectionId;
 
     @Column(name = "assignment_id")
-    private Long instanceId;
+    private Long assignmentId;
 
     @Column(name = "name")
     private String name;
@@ -55,20 +55,20 @@ public final class InstanceGroupEntity {
         this.name = name;
     }
 
-    public Long getInstanceId() {
-        return instanceId;
+    public Long getAssignmentId() {
+        return assignmentId;
     }
 
-    public void setInstanceId(Long instanceId) {
-        this.instanceId = instanceId;
+    public void setAssignmentId(Long assignmentId) {
+        this.assignmentId = assignmentId;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public Long getSectionId() {
+        return sectionId;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
     }
 
     public UUID getUuid() {

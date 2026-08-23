@@ -24,20 +24,20 @@ import static org.mockito.Mockito.*;
 class UserLinkTokenServiceTest {
 
     @Mock
-    private UserLinkTokenRepository userLinkTokenRepository;
+    private UserLinkTokenRepository botActivationTokenRepository;
 
     @Mock
-    private UserBotStateRepository userBotRepository;
+    private UserBotStateRepository botUserRepository;
 
     @InjectMocks
     private UserLinkTokenService service;
 
     @Test
     void shouldThrowExceptionWhenTokenIsNotFound() {
-        when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.empty());
+        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.empty());
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkBotUserToSystemUser("token", "platformUserId");
+            service.linkBotToErpUser("token", "platformUserId");
         });
 
         assertEquals( "No se pudo encontrar el token de acceso.", exception.getMessage());
@@ -45,10 +45,10 @@ class UserLinkTokenServiceTest {
 
     @Test
     void shouldThrowExceptionWhenTokenIsUsed() {
-        when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withUsedToken()));
+        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withUsedToken()));
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkBotUserToSystemUser("token", "platformUserId");
+            service.linkBotToErpUser("token", "platformUserId");
         });
 
         assertEquals( "El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.", exception.getMessage());
@@ -56,10 +56,10 @@ class UserLinkTokenServiceTest {
 
     @Test
     void shouldThrowExceptionWhenTokenIsExpired() {
-        when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withExpiredToken()));
+        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withExpiredToken()));
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkBotUserToSystemUser("token", "platformUserId");
+            service.linkBotToErpUser("token", "platformUserId");
         });
 
         assertEquals( "El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.", exception.getMessage());
@@ -67,37 +67,37 @@ class UserLinkTokenServiceTest {
 
     @Test
     void shouldThrowExceptionWhenUserIsNotFound() {
-        when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withValidToken()));
-        when(userBotRepository.findByProviderUserId(any())).thenReturn(Optional.empty());
+        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(UserLinkTokenEntityMother.withValidToken()));
+        when(botUserRepository.findByProviderUserId(any())).thenReturn(Optional.empty());
 
         BotException exception = assertThrows(BotException.class, () -> {
-            service.linkBotUserToSystemUser("token", "platformUserId");
+            service.linkBotToErpUser("token", "platformUserId");
         });
 
         assertEquals( "Usuario no encontrado.", exception.getMessage());
     }
 
     @Test
-    void shouldLinkUserWhenTokenIsValid() {
-        UserLinkTokenEntity userLinkTokenEntity = UserLinkTokenEntityMother.withValidToken();
-        BotUserEntity botUserEntity = BotUserEntityMother.create();
+    void shouldlinkBotToErpUserWhenTokenIsValid() {
+        UserLinkTokenEntity botActivationToken = UserLinkTokenEntityMother.withValidToken();
+        BotUserEntity botUser = BotUserEntityMother.create();
 
-        ArgumentCaptor<UserLinkTokenEntity> userLinkTokenEntityCaptor = ArgumentCaptor.forClass(UserLinkTokenEntity.class);
-        ArgumentCaptor<BotUserEntity> botUserEntityCaptor = ArgumentCaptor.forClass(BotUserEntity.class);
+        ArgumentCaptor<UserLinkTokenEntity> botActivationTokenCaptor = ArgumentCaptor.forClass(UserLinkTokenEntity.class);
+        ArgumentCaptor<BotUserEntity> botUserCaptor = ArgumentCaptor.forClass(BotUserEntity.class);
 
-        when(userLinkTokenRepository.findByToken(any())).thenReturn(Optional.of(userLinkTokenEntity));
-        when(userBotRepository.findByProviderUserId(any())).thenReturn(Optional.of(botUserEntity));
+        when(botActivationTokenRepository.findByToken(any())).thenReturn(Optional.of(botActivationToken));
+        when(botUserRepository.findByProviderUserId(any())).thenReturn(Optional.of(botUser));
 
-        service.linkBotUserToSystemUser("token", "platformUserId");
+        service.linkBotToErpUser("token", "platformUserId");
 
-        verify(userLinkTokenRepository, times(1)).save(userLinkTokenEntityCaptor.capture());
-        verify(userBotRepository, times(1)).save(botUserEntityCaptor.capture());
+        verify(botActivationTokenRepository, times(1)).save(botActivationTokenCaptor.capture());
+        verify(botUserRepository, times(1)).save(botUserCaptor.capture());
 
-        userLinkTokenEntity = userLinkTokenEntityCaptor.getValue();
-        botUserEntity = botUserEntityCaptor.getValue();
+        botActivationToken = botActivationTokenCaptor.getValue();
+        botUser = botUserCaptor.getValue();
 
-        assertNotNull(userLinkTokenEntity.getUsedAt());
-        assertEquals(userLinkTokenEntity.getUserId(), botUserEntity.getUserId());
+        assertNotNull(botActivationToken.getUsedAt());
+        assertEquals(botActivationToken.getUserId(), botUser.getUserId());
     }
 
 }

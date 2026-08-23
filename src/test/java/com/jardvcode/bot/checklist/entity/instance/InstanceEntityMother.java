@@ -7,45 +7,45 @@ import java.util.ArrayList;
 public final class InstanceEntityMother {
 
     public static ArrayList<InstanceEntity> values() {
-        ArrayList<InstanceEntity> instances = new ArrayList<>();
+        ArrayList<InstanceEntity> assignments = new ArrayList<>();
 
-        instances.add(withPendingStatus());
-        instances.add(withCompletedStatus());
+        assignments.add(withPendingStatus());
+        assignments.add(withCompletedStatus());
 
-        return instances;
+        return assignments;
     }
 
     public static InstanceEntity withPendingStatus() {
-        InstanceEntity instance = create();
-        instance.setStatus("PENDIENTE");
-        return instance;
+        InstanceEntity assignment = create();
+        assignment.setStatus("PENDIENTE");
+        return assignment;
     }
 
     public static InstanceEntity withCompletedStatus() {
-        InstanceEntity instance = create();
-        instance.setStatus("COMPLETADO");
-        return instance;
+        InstanceEntity assignment = create();
+        assignment.setStatus("COMPLETADO");
+        return assignment;
     }
 
     public static InstanceEntity create() {
-        InstanceEntity instance = new InstanceEntity();
+        InstanceEntity assignment = new InstanceEntity();
 
-        instance.setId(1L);
-        instance.setUserId(1L);
-        instance.setTemplateId(1L);
-        instance.setTemplateName("Formato para servicios A y C (BASICO)");
-        instance.setUnitNumber(243);
-        instance.setOperatorFullName("PEDRO OCELOT");
-        instance.setMechanicFullName("CATARINO");
-        instance.setMileage("1299961");
-        instance.setNextService("1,300,000 BASICO");
-        instance.setOptionNumber(1);
-        instance.setTimeIn(LocalTime.parse("09:00:00"));
-        instance.setTimeOut(LocalTime.parse("18:00:00"));
-        instance.setDate(LocalDate.now());
-        instance.setStatus("PENDIENTE");
+        assignment.setId(1L);
+        assignment.setMechanicUserId(1L);
+        assignment.setTemplateId(1L);
+        assignment.setTemplateName("Formato para servicios A y C (BASICO)");
+        assignment.setUnitNumber(243);
+        assignment.setOperatorFullName("PEDRO OCELOT");
+        assignment.setMechanicFullName("CATARINO");
+        assignment.setMileage("1299961");
+        assignment.setNextService("1,300,000 BASICO");
+        assignment.setOptionNumber(1);
+        assignment.setTimeIn(LocalTime.parse("09:00:00"));
+        assignment.setTimeOut(LocalTime.parse("18:00:00"));
+        assignment.setDate(LocalDate.now());
+        assignment.setStatus("PENDIENTE");
 
-        return instance;
+        return assignment;
     }
 
 }

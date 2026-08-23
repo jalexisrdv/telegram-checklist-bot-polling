@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface InstanceGroupRepository extends JpaRepository<InstanceGroupEntity, Long>, JpaSpecificationExecutor {
 
-    List<InstanceGroupEntity> findByInstanceIdOrderByOptionNumberAsc(Long instanceId);
+    List<InstanceGroupEntity> findByAssignmentIdOrderByOptionNumberAsc(Long assignmentId);
 
-    Optional<InstanceGroupEntity> findByInstanceIdAndOptionNumber(Long instanceId, Long optionNumber);
+    Optional<InstanceGroupEntity> findByAssignmentIdAndOptionNumber(Long assignmentId, Long optionNumber);
 
 }

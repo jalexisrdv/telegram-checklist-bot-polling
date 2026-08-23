@@ -19,21 +19,21 @@ import java.util.List;
 public final class SelectGroupState implements State {
 
     private final BotSessionDataService sessionDataService;
-    private final InstanceGroupService groupService;
+    private final InstanceGroupService sectionService;
 
-    public SelectGroupState(InstanceGroupService groupService, BotSessionDataService sessionDataService) {
-        this.groupService = groupService;
+    public SelectGroupState(InstanceGroupService sectionService, BotSessionDataService sessionDataService) {
+        this.sectionService = sectionService;
         this.sessionDataService = sessionDataService;
     }
 
     @Override
     public Decision onBotMessage(BotContext botContext) throws Exception {
-        ChecklistDTO checklistDTO = null;
+        ChecklistDTO assignmentDTO = null;
 
         try {
-            checklistDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), ChecklistDTO.class);
+            assignmentDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), ChecklistDTO.class);
         } catch (Exception e) {
-            botContext.sendText("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.CHECKLISTS.value() + " para ver las listas disponibles.");
+            botContext.sendText("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.ASSIGNMENTS.value() + " para ver las listas disponibles.");
 
             return Decision.stay();
         }
@@ -46,22 +46,22 @@ public final class SelectGroupState implements State {
                 "   - Fecha: %s%n%n" +
                 "%s Envía el número del grupo para mostrar los puntos de inspección:%n%n",
                 Emoji.CHECKLIST,
-                checklistDTO.name(),
-                checklistDTO.operatorName(),
-                checklistDTO.date(),
+                assignmentDTO.name(),
+                assignmentDTO.operatorName(),
+                assignmentDTO.date(),
                 Emoji.GROUP
         ));
 
-        List<InstanceGroupEntity> groups = groupService.findByInstanceId(checklistDTO.instanceId());
+        List<InstanceGroupEntity> sections = sectionService.findByAssignmentId(assignmentDTO.assignmentId());
 
-        for (InstanceGroupEntity group : groups) {
-            String statusEmoji = ChecklistStatusEmoji.fromStatus(group.getStatus());
+        for (InstanceGroupEntity section : sections) {
+            String statusEmoji = ChecklistStatusEmoji.fromStatus(section.getStatus());
 
             message.append(String.format(
                     "%s %d. %s%n",
                     statusEmoji,
-                    group.getOptionNumber(),
-                    group.getName()
+                    section.getOptionNumber(),
+                    section.getName()
             ));
         }
 
@@ -72,24 +72,24 @@ public final class SelectGroupState implements State {
 
     @Override
     public Decision onUserInput(BotContext botContext) throws Exception {
-        ChecklistDTO checklistDTO = null;
-        InstanceGroupEntity group = null;
+        ChecklistDTO assignmentDTO = null;
+        InstanceGroupEntity section = null;
 
         try {
             Long optionNumber = Long.parseLong(botContext.getMessage());
 
-            checklistDTO = sessionDataService.findByUserId(botContext.getSystemUserId(), ChecklistDTO.class);
+            assignmentDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), ChecklistDTO.class);
 
-            group = groupService.findByInstanceIdAndOptionNumber(checklistDTO.instanceId(), optionNumber);
+            section = sectionService.findByAssignmentIdAndOptionNumber(assignmentDTO.assignmentId(), optionNumber);
         } catch (Exception e) {
             botContext.sendText("Opción no valida");
 
             return Decision.stay();
         }
 
-        GroupDTO groupDTO = new GroupDTO(group.getId(), group.getName(), checklistDTO);
+        GroupDTO sectionDTO = new GroupDTO(section.getId(), section.getName(), assignmentDTO);
 
-        sessionDataService.save(botContext.getSystemUserId(), groupDTO, getClass());
+        sessionDataService.save(botContext.getSystemUserId(), sectionDTO, getClass());
 
         return Decision.moveTo(SelectItemState.class);
     }

@@ -32,7 +32,7 @@ class SelectItemStateTest {
     private BotSessionDataService sessionDataService;
 
     @Mock
-    private ItemResponseService itemService;
+    private ItemResponseService responseService;
 
     @Mock
     private InstanceGroupService groupService;
@@ -43,13 +43,13 @@ class SelectItemStateTest {
     @Test
     void shouldSendItemsMessageWhenGroupSelected() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
         GroupDTO dto = GroupDTOMother.create();
-        ArrayList<ResponseEntity> items = ResponseEntityMother.withSomeResponses();
+        ArrayList<ResponseEntity> responses = ResponseEntityMother.withSomeResponses();
 
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, GroupDTO.class)).thenReturn(dto);
-        when(itemService.findByInstanceIdAndGroupId(dto.checklistDTO().instanceId(), dto.id())).thenReturn(items);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(sessionDataService.findByBotUserId(mechanicUserId, GroupDTO.class)).thenReturn(dto);
+        when(responseService.findByAssignmentIdAndSectionId(dto.assignmentDTO().assignmentId(), dto.id())).thenReturn(responses);
         Decision decision = state.onBotMessage(botContext);
 
         verify(botContext, times(2)).sendText(captor.capture());
@@ -65,7 +65,7 @@ class SelectItemStateTest {
         GroupDTO dto = GroupDTOMother.create();
         Long optionNumber = 1L;
 
-        when(itemService.findByInstanceIdAndGroupIdAndOptionNumber(dto.checklistDTO().instanceId(), dto.id(), optionNumber)).thenThrow();
+        when(responseService.findByAssignmentIdAndSectionIdAndOptionNumber(dto.assignmentDTO().assignmentId(), dto.id(), optionNumber)).thenThrow();
         Decision decision = state.onUserInput(botContext);
 
         verify(botContext).sendText(captor.capture());
@@ -76,19 +76,19 @@ class SelectItemStateTest {
     @Test
     void shouldPersistItemAndMoveToNextStateWhenOptionIsValid() throws Exception {
         String message = "1";
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
         Long optionNumber = 1L;
-        GroupDTO groupDTO = GroupDTOMother.create();
-        ResponseEntity item = ResponseEntityMother.withPendingItem();
+        GroupDTO sectionDTO = GroupDTOMother.create();
+        ResponseEntity response = ResponseEntityMother.withPendingItem();
         ItemDTO itemDTO = ItemDTOMother.create();
 
         when(botContext.getMessage()).thenReturn(message);
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(sessionDataService.findByUserId(userId, GroupDTO.class)).thenReturn(groupDTO);
-        when(itemService.findByInstanceIdAndGroupIdAndOptionNumber(groupDTO.checklistDTO().instanceId(), groupDTO.id(), optionNumber)).thenReturn(item);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(sessionDataService.findByBotUserId(mechanicUserId, GroupDTO.class)).thenReturn(sectionDTO);
+        when(responseService.findByAssignmentIdAndSectionIdAndOptionNumber(sectionDTO.assignmentDTO().assignmentId(), sectionDTO.id(), optionNumber)).thenReturn(response);
         Decision decision = state.onUserInput(botContext);
 
-        verify(sessionDataService, times(1)).save(userId, itemDTO, SelectItemState.class);
+        verify(sessionDataService, times(1)).save(mechanicUserId, itemDTO, SelectItemState.class);
         assertEquals(Decision.state(AnswerItemState.class), decision.nextState());
     }
 

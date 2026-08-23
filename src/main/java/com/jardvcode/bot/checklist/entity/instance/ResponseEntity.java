@@ -10,7 +10,7 @@ public final class ResponseEntity {
     private Long id;
 
     @Column(name = "assignment_id")
-    private Long instanceId;
+    private Long assignmentId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
@@ -20,7 +20,7 @@ public final class ResponseEntity {
     private String status;
 
     @Column(name = "comment")
-    private String observation;
+    private String comment;
 
     public Integer optionNumber() {
         return item.getOptionNumber();
@@ -34,12 +34,12 @@ public final class ResponseEntity {
         this.id = id;
     }
 
-    public Long getInstanceId() {
-        return instanceId;
+    public Long getAssignmentId() {
+        return assignmentId;
     }
 
-    public void setInstanceId(Long instanceId) {
-        this.instanceId = instanceId;
+    public void setAssignmentId(Long assignmentId) {
+        this.assignmentId = assignmentId;
     }
 
     public ItemEntity getItem() {
@@ -58,12 +58,12 @@ public final class ResponseEntity {
         this.status = status;
     }
 
-    public String getObservation() {
-        return observation;
+    public String getComment() {
+        return comment;
     }
 
-    public void setObservation(String observation) {
-        this.observation = observation;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
 }

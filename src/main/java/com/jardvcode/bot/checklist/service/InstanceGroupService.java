@@ -21,23 +21,23 @@ public final class InstanceGroupService {
         this.repository = repository;
     }
 
-    public List<InstanceGroupEntity> findByInstanceId(Long checklistId) {
+    public List<InstanceGroupEntity> findByAssignmentId(Long assignmentId) {
         try {
-            return repository.findByInstanceIdOrderByOptionNumberAsc(checklistId);
+            return repository.findByAssignmentIdOrderByOptionNumberAsc(assignmentId);
         } catch (Exception e) {
-            LOGGER.error("Unexpected error while retrieving group for checklistId={}", checklistId, e);
+            LOGGER.error("Unexpected error while retrieving section for assignmentId={}", assignmentId, e);
             throw new UnexpectedException();
         }
     }
 
-    public InstanceGroupEntity findByInstanceIdAndOptionNumber(Long checklistId, Long optionNumber) {
+    public InstanceGroupEntity findByAssignmentIdAndOptionNumber(Long assignmentId, Long optionNumber) {
         try {
-            return repository.findByInstanceIdAndOptionNumber(checklistId, optionNumber).orElseThrow();
+            return repository.findByAssignmentIdAndOptionNumber(assignmentId, optionNumber).orElseThrow();
         } catch (DataNotFoundException e) {
-            LOGGER.error("Group not found for checklistId={} optionNumber={}", checklistId, optionNumber, e);
+            LOGGER.error("Section not found for assignmentId={} optionNumber={}", assignmentId, optionNumber, e);
             throw e;
         } catch (Exception e) {
-            LOGGER.error("Unexpected error while retrieving group for checklistId={} optionNumber={}", checklistId, optionNumber, e);
+            LOGGER.error("Unexpected error while retrieving section for assignmentId={} optionNumber={}", assignmentId, optionNumber, e);
             throw new UnexpectedException();
         }
     }

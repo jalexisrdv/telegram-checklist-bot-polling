@@ -26,37 +26,37 @@ public class BotSessionDataService {
         this.repository = repository;
     }
 
-    public <T extends Record> T findByUserId(Long userId, Class<T> dto) {
+    public <T extends Record> T findByBotUserId(Long botUserId, Class<T> dto) {
         String key = dto.getSimpleName();
 
         try {
-            BotSessionDataEntity data = repository.findByUserIdAndKey(userId, key).orElseThrow(() -> new DataNotFoundException());
+            BotSessionDataEntity data = repository.findByBotUserIdAndKey(botUserId, key).orElseThrow(() -> new DataNotFoundException());
 
             return JsonUtils.decode(data.getValue(), dto);
         } catch (DataNotFoundException e) {
-            LOGGER.error("Session data not found for userId={} key={}", userId, key, e);
+            LOGGER.error("Session data not found for botUserId={} key={}", botUserId, key, e);
             throw e;
         } catch (JsonProcessingException e) {
-            LOGGER.error("Failed to deserialize session data for userId={} key={}", userId, key, e);
+            LOGGER.error("Failed to deserialize session data for botUserId={} key={}", botUserId, key, e);
             throw new UnexpectedException();
         } catch (Exception e) {
-            LOGGER.error("Unexpected error processing session data for userId={} key={}", userId, key, e);
+            LOGGER.error("Unexpected error processing session data for botUserId={} key={}", botUserId, key, e);
             throw new UnexpectedException();
         }
     }
 
-    public <T extends Record> void save(Long userId, T dto, Class<? extends State> state) {
+    public <T extends Record> void save(Long botUserId, T dto, Class<? extends State> state) {
         String key = dto.getClass().getSimpleName();
 
         try {
             BotSessionDataEntity entity = BotSessionDataEntity.create(
-                    userId,
+                    botUserId,
                     StateUtil.uniqueName(state),
                     key,
                     JsonUtils.encode(dto)
             );
 
-            Optional<BotSessionDataEntity> optional = repository.findByUserIdAndKey(userId, key);
+            Optional<BotSessionDataEntity> optional = repository.findByBotUserIdAndKey(botUserId, key);
 
             if(optional.isEmpty()) {
                 repository.save(entity);
@@ -68,17 +68,17 @@ public class BotSessionDataService {
 
             repository.save(entity);
         } catch (Exception e) {
-            LOGGER.error("Failed to save session data for userId={} key={}", userId, key, e);
+            LOGGER.error("Failed to save session data for botUserId={} key={}", botUserId, key, e);
             throw new UnexpectedException();
         }
     }
 
     @Transactional
-    public void deleteByUserId(Long userId) {
+    public void deleteByBotUserId(Long botUserId) {
         try {
-            repository.deleteByUserId(userId);
+            repository.deleteByBotUserId(botUserId);
         } catch (Exception e) {
-            LOGGER.error("Failed to delete session data for userId={}", userId, e);
+            LOGGER.error("Failed to delete session data for botUserId={}", botUserId, e);
             throw new UnexpectedException();
         }
     }

@@ -13,7 +13,7 @@ public final class BotSessionDataEntity {
     private Long id;
 
     @Column(name = "bot_user_id")
-    private Long userId;
+    private Long botUserId;
 
     @Column(name = "state")
     private String state;
@@ -28,7 +28,7 @@ public final class BotSessionDataEntity {
     public static BotSessionDataEntity create(Long userId, String state, String key, String value) {
         BotSessionDataEntity entity = new BotSessionDataEntity();
 
-        entity.setUserId(userId);
+        entity.setBotUserId(userId);
         entity.setState(state);
         entity.setKey(key);
         entity.setValue(value);
@@ -44,12 +44,12 @@ public final class BotSessionDataEntity {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getBotUserId() {
+        return botUserId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setBotUserId(Long botUserId) {
+        this.botUserId = botUserId;
     }
 
     public String getState() {

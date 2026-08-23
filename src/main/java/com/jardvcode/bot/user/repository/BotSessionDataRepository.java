@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface BotSessionDataRepository extends JpaRepository<BotSessionDataEntity, Long> {
-    Optional<BotSessionDataEntity> findByUserIdAndKey(Long userId, String key);
-    void deleteByUserId(Long userId);
+    Optional<BotSessionDataEntity> findByBotUserIdAndKey(Long userId, String key);
+    void deleteByBotUserId(Long userId);
 }

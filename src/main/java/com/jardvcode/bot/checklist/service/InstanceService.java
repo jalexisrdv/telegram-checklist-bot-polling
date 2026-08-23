@@ -22,23 +22,23 @@ public final class InstanceService {
         this.repository = repository;
     }
 
-    public List<InstanceEntity> findUnconfirmedByUserId(Long userId) {
+    public List<InstanceEntity> findUnconfirmedByMechanicUserId(Long mechanicUserId) {
         try {
-            return repository.findByUserIdAndStatusNotOrderByDateDesc(userId, ChecklistStatusEmoji.CONFIRMADO.name());
+            return repository.findByMechanicUserIdAndStatusNotOrderByDateDesc(mechanicUserId, ChecklistStatusEmoji.CONFIRMADO.name());
         } catch (Exception e) {
-            LOGGER.error("Unexpected error while retrieving checklists for userId={}", userId, e);
+            LOGGER.error("Unexpected error while retrieving assignments for mechanicUserId={}", mechanicUserId, e);
             throw new UnexpectedException();
         }
     }
 
-    public InstanceEntity findByUserIdAndOptionNumber(Long userId, Long optionNumber) {
+    public InstanceEntity findByMechanicUserIdAndOptionNumber(Long mechanicUserId, Long optionNumber) {
         try {
-            return repository.findByUserIdAndOptionNumber(userId, optionNumber).orElseThrow(() -> new DataNotFoundException());
+            return repository.findByMechanicUserIdAndOptionNumber(mechanicUserId, optionNumber).orElseThrow(() -> new DataNotFoundException());
         } catch (DataNotFoundException e) {
-            LOGGER.error("Checklist not found for userId={} optionNumber={}", userId, optionNumber, e);
+            LOGGER.error("Assignment not found for mechanicUserId={} optionNumber={}", mechanicUserId, optionNumber, e);
             throw e;
         } catch (Exception e) {
-            LOGGER.error("Unexpected error while retrieving checklist for userId={} optionNumber={}", userId, optionNumber, e);
+            LOGGER.error("Unexpected error while retrieving assignment for mechanicUserId={} optionNumber={}", mechanicUserId, optionNumber, e);
             throw new UnexpectedException();
         }
     }

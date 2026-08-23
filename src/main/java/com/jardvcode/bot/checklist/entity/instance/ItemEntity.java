@@ -23,7 +23,7 @@ public final class ItemEntity {
     private Long itemId;
 
     @Column(name = "section_id")
-    private Long groupId;
+    private Long sectionId;
 
     @Column(name = "label")
     private String label;
@@ -55,12 +55,12 @@ public final class ItemEntity {
         this.itemId = itemId;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public Long getSectionId() {
+        return sectionId;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
     }
 
     public String getLabel() {

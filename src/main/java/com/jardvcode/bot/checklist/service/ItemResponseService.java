@@ -21,36 +21,36 @@ public final class ItemResponseService {
         this.repository = repository;
     }
 
-    public List<ResponseEntity> findByInstanceIdAndGroupId(Long checklistId, Long groupId) {
+    public List<ResponseEntity> findByAssignmentIdAndSectionId(Long assignmentId, Long sectionId) {
         try {
-            return repository.findByInstanceIdAndItemGroupIdOrderByItemOptionNumberAsc(checklistId, groupId);
+            return repository.findByAssignmentIdAndItemSectionIdOrderByItemOptionNumberAsc(assignmentId, sectionId);
         } catch (Exception e) {
-            LOGGER.error("Unexpected error while retrieving responses for checklistId={} and groupId={}", checklistId, groupId, e);
+            LOGGER.error("Unexpected error while retrieving responses for assignmentId={} and sectionId={}", assignmentId, sectionId, e);
             throw new UnexpectedException();
         }
     }
 
-    public ResponseEntity findByInstanceIdAndGroupIdAndOptionNumber(Long checklistId, Long groupId, Long optionNumber) {
+    public ResponseEntity findByAssignmentIdAndSectionIdAndOptionNumber(Long assignmentId, Long sectionId, Long optionNumber) {
         try {
-            return repository.findByInstanceIdAndItemGroupIdAndItemOptionNumber(checklistId, groupId, optionNumber).orElseThrow(() -> new DataNotFoundException());
+            return repository.findByAssignmentIdAndItemSectionIdAndItemOptionNumber(assignmentId, sectionId, optionNumber).orElseThrow(() -> new DataNotFoundException());
         } catch (DataNotFoundException e) {
-            LOGGER.error("Response not found for checklistId={} groupId={} optionNumber={}", checklistId, groupId, optionNumber, e);
+            LOGGER.error("Response not found for assignmentId={} sectionId={} optionNumber={}", assignmentId, sectionId, optionNumber, e);
             throw e;
         } catch (Exception e) {
-            LOGGER.error("Unexpected error while retrieving response for checklistId={} groupId={} optionNumber={}", checklistId, groupId, optionNumber, e);
+            LOGGER.error("Unexpected error while retrieving response for assignmentId={} sectionId={} optionNumber={}", assignmentId, sectionId, optionNumber, e);
             throw new UnexpectedException();
         }
     }
 
-    public void save(Long id, String status, String observation) {
+    public void save(Long id, String status, String comment) {
         try {
-            ResponseEntity entityFound = repository.findById(id).orElseThrow(() -> new DataNotFoundException());
+            ResponseEntity responseFound = repository.findById(id).orElseThrow(() -> new DataNotFoundException());
 
-            entityFound.setId(id);
-            entityFound.setStatus(status);
-            entityFound.setObservation(observation);
+            responseFound.setId(id);
+            responseFound.setStatus(status);
+            responseFound.setComment(comment);
 
-            repository.save(entityFound);
+            repository.save(responseFound);
         } catch (DataNotFoundException e) {
             LOGGER.error("Response not found for id={}", id, e);
             throw e;

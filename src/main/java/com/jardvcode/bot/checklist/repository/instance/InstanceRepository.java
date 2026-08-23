@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface InstanceRepository extends JpaRepository<InstanceEntity, Long>, JpaSpecificationExecutor {
 
-    List<InstanceEntity> findByUserIdAndStatusNotOrderByDateDesc(Long userId, String status);
+    List<InstanceEntity> findByMechanicUserIdAndStatusNotOrderByDateDesc(Long mechanicUserId, String status);
 
-    Optional<InstanceEntity> findByUserIdAndOptionNumber(Long userId, Long optionNumber);
+    Optional<InstanceEntity> findByMechanicUserIdAndOptionNumber(Long mechanicUserId, Long optionNumber);
 
 }

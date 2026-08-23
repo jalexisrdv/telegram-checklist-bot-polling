@@ -11,8 +11,8 @@ public final class ResponseEntityMother {
     private final static String[] ESTATUSES = {"F", "OK", "R"};
     private final static String[] OBSERVATIONS = {"OBSERVATION 1", "OBSERVATION 2", "OBSERVATION 3"};
 
-    public static ArrayList<ResponseEntity> checklistResponses() {
-        ArrayList<ResponseEntity> instanceItems = new ArrayList<>();
+    public static ArrayList<ResponseEntity> responses() {
+        ArrayList<ResponseEntity> responses = new ArrayList<>();
         List<ItemEntity> items = ItemEntityMother.checklistItems();
 
         Random random = new Random();
@@ -23,29 +23,29 @@ public final class ResponseEntityMother {
 
             int randomIndex = random.nextInt(ESTATUSES.length);
             String status = ESTATUSES[randomIndex];
-            String observation = OBSERVATIONS[randomIndex];
+            String comment = OBSERVATIONS[randomIndex];
 
-            instanceItems.add(withItem(item, status, observation));
+            responses.add(withItem(item, status, comment));
         }
 
-        return instanceItems;
+        return responses;
     }
 
     public static ArrayList<ResponseEntity> withCompletedStatus() {
-        ArrayList<ResponseEntity> instanceItems = new ArrayList<>();
+        ArrayList<ResponseEntity> responses = new ArrayList<>();
         List<ItemEntity> items = ItemEntityMother.motorItems();
 
         for (int i = 0; i < items.size(); i++) {
             ItemEntity item = items.get(i);
             Long optionNumber = Long.valueOf(i + 1);
-            instanceItems.add(withItem(item, "OK", "OBSERVATION"));
+            responses.add(withItem(item, "OK", "OBSERVATION"));
         }
 
-        return instanceItems;
+        return responses;
     }
 
     public static ArrayList<ResponseEntity> withSomeResponses() {
-        ArrayList<ResponseEntity> instanceItems = new ArrayList<>();
+        ArrayList<ResponseEntity> responses = new ArrayList<>();
         List<ItemEntity> items = ItemEntityMother.motorItems();
 
         for (int i = 0; i < items.size(); i++) {
@@ -53,28 +53,28 @@ public final class ResponseEntityMother {
 
             int result = i % 2;
             String status = result == 0 ? "OK" : null;
-            String observation = result == 0 ? "OBSERVATION" : null;
+            String commit = result == 0 ? "OBSERVATION" : null;
 
-            instanceItems.add(withItem(item, status, observation));
+            responses.add(withItem(item, status, commit));
         }
 
-        return instanceItems;
+        return responses;
     }
 
     public static ResponseEntity withPendingItem() {
         return withItem(ItemEntityMother.motorItem(), "", "");
     }
 
-    private static ResponseEntity withItem(ItemEntity item, String status, String observation) {
-        ResponseEntity responseEntity = new ResponseEntity();
+    private static ResponseEntity withItem(ItemEntity item, String status, String commit) {
+        ResponseEntity response = new ResponseEntity();
 
-        responseEntity.setId(1L);
-        responseEntity.setInstanceId(1L);
-        responseEntity.setItem(item);
-        responseEntity.setStatus(status);
-        responseEntity.setObservation(observation);
+        response.setId(1L);
+        response.setAssignmentId(1L);
+        response.setItem(item);
+        response.setStatus(status);
+        response.setComment(commit);
 
-        return responseEntity;
+        return response;
     }
 
 }

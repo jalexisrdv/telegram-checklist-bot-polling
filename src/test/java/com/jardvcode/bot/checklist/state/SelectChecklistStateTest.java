@@ -32,7 +32,7 @@ class SelectChecklistStateTest {
     private BotSessionDataService sessionDataService;
 
     @Mock
-    private InstanceService instanceService;
+    private InstanceService assignmentService;
 
     @InjectMocks
     private SelectChecklistState state;
@@ -40,10 +40,10 @@ class SelectChecklistStateTest {
     @Test
     void shouldNotSendPendingChecklistMessageIfNoChecklistAssigned() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
 
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(instanceService.findUnconfirmedByUserId(userId)).thenReturn(List.of());
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(assignmentService.findUnconfirmedByMechanicUserId(mechanicUserId)).thenReturn(List.of());
         Decision decision = state.onBotMessage(botContext);
 
         verify(botContext).sendText(captor.capture());
@@ -54,11 +54,11 @@ class SelectChecklistStateTest {
     @Test
     void shouldSendPendingChecklistMessageIfChecklistAssigned() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long userId = 1L;
-        ArrayList<InstanceEntity> instances = InstanceEntityMother.values();
+        Long mechanicUserId = 1L;
+        ArrayList<InstanceEntity> assignments = InstanceEntityMother.values();
 
-        when(botContext.getSystemUserId()).thenReturn(userId);
-        when(instanceService.findUnconfirmedByUserId(userId)).thenReturn(instances);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
+        when(assignmentService.findUnconfirmedByMechanicUserId(mechanicUserId)).thenReturn(assignments);
         Decision decision = state.onBotMessage(botContext);
 
         verify(botContext).sendText(captor.capture());
@@ -69,10 +69,10 @@ class SelectChecklistStateTest {
     @Test
     void shouldSendInvalidOptionMessageIfOptionDoesNotExist() throws Exception {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
         Long optionNumber = 1L;
 
-        when(instanceService.findByUserIdAndOptionNumber(userId, optionNumber)).thenThrow();
+        when(assignmentService.findByMechanicUserIdAndOptionNumber(mechanicUserId, optionNumber)).thenThrow();
         Decision decision = state.onUserInput(botContext);
 
         verify(botContext).sendText(captor.capture());
@@ -83,17 +83,17 @@ class SelectChecklistStateTest {
     @Test
     void shouldPersistChecklistAndMoveToNextStateWhenOptionIsValid() throws Exception {
         String message = "1";
-        Long userId = 1L;
+        Long mechanicUserId = 1L;
         Long optionNumber = 1L;
-        InstanceEntity instance = InstanceEntityMother.withPendingStatus();
-        ChecklistDTO dto = ChecklistDTOMother.withInstance(instance);
+        InstanceEntity assignment = InstanceEntityMother.withPendingStatus();
+        ChecklistDTO dto = ChecklistDTOMother.withInstance(assignment);
 
-        when(botContext.getSystemUserId()).thenReturn(userId);
+        when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(botContext.getMessage()).thenReturn(message);
-        when(instanceService.findByUserIdAndOptionNumber(userId, optionNumber)).thenReturn(instance);
+        when(assignmentService.findByMechanicUserIdAndOptionNumber(mechanicUserId, optionNumber)).thenReturn(assignment);
         Decision decision = state.onUserInput(botContext);
 
-        verify(sessionDataService, times(1)).save(userId, dto, SelectChecklistState.class);
+        verify(sessionDataService, times(1)).save(mechanicUserId, dto, SelectChecklistState.class);
         assertEquals(Decision.state(SelectGroupState.class), decision.nextState());
     }
 

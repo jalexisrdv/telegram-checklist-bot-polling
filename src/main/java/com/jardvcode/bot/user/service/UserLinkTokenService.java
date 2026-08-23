@@ -16,30 +16,30 @@ public class UserLinkTokenService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserLinkTokenService.class);
 
-    private final UserLinkTokenRepository userLinkTokenRepository;
-    private final UserBotStateRepository userBotRepository;
+    private final UserLinkTokenRepository botActivationTokenRepository;
+    private final UserBotStateRepository botUserRepository;
 
     public UserLinkTokenService(UserLinkTokenRepository userLinkTokenRepository, UserBotStateRepository userBotRepository) {
-        this.userLinkTokenRepository = userLinkTokenRepository;
-        this.userBotRepository = userBotRepository;
+        this.botActivationTokenRepository = userLinkTokenRepository;
+        this.botUserRepository = userBotRepository;
     }
 
     @Transactional
-    public void linkBotUserToSystemUser(String token, String providerUserId) {
+    public void linkBotToErpUser(String token, String providerUserId) {
         try {
-            UserLinkTokenEntity userLinkTokenEntity = userLinkTokenRepository.findByToken(token).orElseThrow(() -> new BotException("No se pudo encontrar el token de acceso."));
+            UserLinkTokenEntity botActivationToken = botActivationTokenRepository.findByToken(token).orElseThrow(() -> new BotException("No se pudo encontrar el token de acceso."));
 
-            if (!userLinkTokenEntity.isValidToken()) {
+            if (!botActivationToken.isValidToken()) {
                 throw new BotException("El token ingresado no es válido o ya expiró. Solicita uno nuevo si es necesario.");
             }
 
-            BotUserEntity userBotEntity = userBotRepository.findByProviderUserId(providerUserId).orElseThrow(() -> new BotException("Usuario no encontrado."));
+            BotUserEntity botUser = botUserRepository.findByProviderUserId(providerUserId).orElseThrow(() -> new BotException("Usuario no encontrado."));
 
-            userLinkTokenEntity.markAsUsed();
-            userLinkTokenRepository.save(userLinkTokenEntity);
+            botActivationToken.markAsUsed();
+            botActivationTokenRepository.save(botActivationToken);
 
-            userBotEntity.linkToErpUser(userLinkTokenEntity.getUserId());
-            userBotRepository.save(userBotEntity);
+            botUser.linkToErpUser(botActivationToken.getUserId());
+            botUserRepository.save(botUser);
         } catch(BotException e) {
             throw e;
         } catch(Exception e) {
