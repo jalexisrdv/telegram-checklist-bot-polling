@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jardvcode</groupId>
-	<artifactId>telegram-checklist-bot-polling</artifactId>
+	<artifactId>telegram-checklist-bot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>telegram-checklist-bot-polling</name>
+	<name>telegram-checklist-bot</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
