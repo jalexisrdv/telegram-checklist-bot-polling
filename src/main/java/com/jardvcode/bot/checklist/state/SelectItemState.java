@@ -102,7 +102,7 @@ public final class SelectItemState implements State {
             return Decision.stay();
         }
 
-        ItemDTO itemDTO = new ItemDTO(response.getId(), response.getItem().getLabel());
+        ItemDTO itemDTO = new ItemDTO(response.getId(), response.getItem().getLabel(), response.getAssignmentId());
 
         sessionDataService.save(botContext.getSystemUserId(), itemDTO, getClass());
 

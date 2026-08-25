@@ -14,7 +14,7 @@ SELECT
     date,
     status,
     CASE
-        WHEN status <> 'COMPLETADO' THEN
+        WHEN status <> 'CONFIRMADO' THEN
             ROW_NUMBER() OVER (
                 PARTITION BY mechanic_user_id
                 ORDER BY id
@@ -30,16 +30,7 @@ SELECT
     sections.assignment_id,
     sections.name,
     sections.position AS option_number,
-    CASE
-        WHEN COUNT(items.id) = COUNT(
-            CASE
-                WHEN responses.status IS NOT NULL AND responses.status <> ''
-                THEN 1
-            END
-        )
-        THEN 'COMPLETADO'
-        ELSE 'PENDIENTE'
-    END AS status
+    sections.status
 FROM
 	assignment_sections sections
 	INNER JOIN assignment_items items ON items.section_id = sections.id
@@ -50,7 +41,8 @@ GROUP BY
     sections.section_id,
     sections.assignment_id,
     sections.name,
-    sections.position
+    sections.position,
+    sections.status
 ;
 
 CREATE OR REPLACE VIEW assignment_items_view AS

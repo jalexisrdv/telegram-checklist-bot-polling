@@ -17,7 +17,7 @@ public enum AssignmentStatusEmoji {
     }
 
     public static String fromStatus(String status) {
-        if (status == null) return "";
+        if (status == null) return PENDIENTE.emoji;
         try {
             return AssignmentStatusEmoji.valueOf(status.toUpperCase()).emoji();
         } catch (IllegalArgumentException e) {

@@ -43,4 +43,13 @@ public final class AssignmentService {
         }
     }
 
+    public void updateStatus(Long assignmentId) {
+        try {
+            repository.updateStatus(assignmentId);
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while updating status for assignmentId={}", assignmentId, e);
+            throw new UnexpectedException();
+        }
+    }
+
 }

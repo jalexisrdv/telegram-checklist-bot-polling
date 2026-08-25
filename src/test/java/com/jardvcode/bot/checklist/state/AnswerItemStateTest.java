@@ -2,7 +2,9 @@ package com.jardvcode.bot.checklist.state;
 
 import com.jardvcode.bot.checklist.dto.ItemDTO;
 import com.jardvcode.bot.checklist.dto.ItemDTOMother;
+import com.jardvcode.bot.checklist.service.AssignmentService;
 import com.jardvcode.bot.checklist.service.ResponseService;
+import com.jardvcode.bot.checklist.service.SectionService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.user.service.BotSessionDataService;
@@ -24,6 +26,12 @@ class AnswerItemStateTest {
 
     @Mock
     private BotSessionDataService sessionDataService;
+
+    @Mock
+    private AssignmentService assignmentService;
+
+    @Mock
+    private SectionService sectionService;
 
     @Mock
     private ResponseService responseService;
@@ -72,6 +80,8 @@ class AnswerItemStateTest {
         when(sessionDataService.findByBotUserId(mechanicUserId, ItemDTO.class)).thenReturn(dto);
         Decision decision = state.onUserInput(botContext);
 
+        verify(assignmentService, times(1)).updateStatus(dto.assignmentId());
+        verify(sectionService, times(1)).updateStatus(dto.assignmentId());
         verify(responseService, times(1)).save(dto.id(), status, comment);
         assertEquals(SelectItemState.class, decision.nextState());
     }

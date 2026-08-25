@@ -1,4 +1,4 @@
 package com.jardvcode.bot.checklist.dto;
 
-public record ItemDTO(Long id, String label) {
+public record ItemDTO(Long id, String label, Long assignmentId) {
 }
