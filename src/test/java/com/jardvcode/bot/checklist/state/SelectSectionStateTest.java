@@ -110,24 +110,20 @@ class SelectSectionStateTest {
 
     private String expectedMessageWithRandomStatus() {
         return String.format("""
-                📋 Formato para servicios A y C (BASICO)
-                   - Operador: PEDRO OCELOT
-                   - Fecha: %s
+                📂 Secciones
                 
-                📂 Envía el número del grupo para mostrar los puntos de inspección:
-                
-                ✅ 1. SISTEMA DE DIRECCION
-                ⏳ 2. SUSPENCION DELANTERA
-                ✅ 3. MOTOR
-                ⏳ 4. EMBRAGUE
-                ✅ 5. TRANSMISION
-                ⏳ 6. DIFERENCIALES
-                ✅ 7. QUINTARUEDA
-                ⏳ 8. SISTEMA ELECTRICO/ELECTRONICO
-                ✅ 9. SISTEMA DE RODAMIENTO
-                ⏳ 10. SISTEMA DE FRENOS
-                ✅ 11. EQUIPO DE SEGURIDAD
-                ⏳ 12. LIMPIEZA Y LUBRICACION
+                ✅ 1. Sistema de dirección
+                ⏳ 2. Suspensión delantera
+                ✅ 3. Motor
+                ⏳ 4. Embrague
+                ✅ 5. Transmisión
+                ⏳ 6. Diferenciales
+                ✅ 7. Quintarueda
+                ⏳ 8. Sistema eléctrico/electrónico
+                ✅ 9. Sistema de rodamiento
+                ⏳ 10. Sistema de frenos
+                ✅ 11. Equipo de seguridad
+                ⏳ 12. Limpieza y lubricación
                 """, LocalDate.now().toString());
     }
 

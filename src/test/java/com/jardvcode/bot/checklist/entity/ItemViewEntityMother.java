@@ -6,21 +6,21 @@ import java.util.List;
 public final class ItemViewEntityMother {
 
     public static ItemViewEntity motorItem() {
-        SectionViewEntity section = createSection(3L, "MOTOR");
-        return createItem(1L, section, "REVISION DE FUGAS (ACEITE, AGUA, DIESEL)", 1);
+        SectionViewEntity section = createSection(3L, "Motor");
+        return createItem(1L, section, "Revisión de fugas (aceite, agua, diésel)", 1);
     }
 
     public static List<ItemViewEntity> motorItems() {
         List<ItemViewEntity> items = new ArrayList<>();
 
-        SectionViewEntity section = createSection(3L, "MOTOR");
+        SectionViewEntity section = createSection(3L, "Motor");
 
-        items.add(createItem(1L, section, "REVISION DE FUGAS (ACEITE, AGUA, DIESEL)", 1));
-        items.add(createItem(1L, section, "RESET INSITE", 2));
-        items.add(createItem(1L, section, "CAMBIO DE FILTROS (DIESEL)", 3));
-        items.add(createItem(1L, section, "REVISAR TENSION DE BANDAS", 4));
-        items.add(createItem(1L, section, "NIVEL DE REFRIGERANTE", 5));
-        items.add(createItem(1L, section, "CAMBIAR FILTRO DE AIRE SEGUN INDICADOR DE PARTICULAS", 6));
+        items.add(createItem(1L, section, "Revisión de fugas (aceite, agua, diésel)", 1));
+        items.add(createItem(1L, section, "Reset Insite", 2));
+        items.add(createItem(1L, section, "Cambio de filtros (diésel)", 3));
+        items.add(createItem(1L, section, "Revisar tensión de bandas", 4));
+        items.add(createItem(1L, section, "Nivel de refrigerante", 5));
+        items.add(createItem(1L, section, "Cambiar filtro de aire según indicador de partículas", 6));
 
         return items;
     }
@@ -28,60 +28,60 @@ public final class ItemViewEntityMother {
     public static List<ItemViewEntity> checklistItems() {
         List<ItemViewEntity> items = new ArrayList<>();
 
-        SectionViewEntity systemDirection = createSection(1L, "SISTEMA DE DIRECCION");
-        items.add(createItem(1L, systemDirection, "REVISAR NIVEL DE ACEITE", 1));
+        SectionViewEntity systemDirection = createSection(1L, "Sistema de dirección");
+        items.add(createItem(1L, systemDirection, "Revisar nivel de aceite", 1));
 
-        SectionViewEntity frontSuspension = createSection(2L, "SUSPENCION DELANTERA");
-        items.add(createItem(2L, frontSuspension, "REVISAR ABRAZADERAS", 1));
+        SectionViewEntity frontSuspension = createSection(2L, "Suspensión delantera");
+        items.add(createItem(2L, frontSuspension, "Revisar abrazaderas", 1));
 
-        SectionViewEntity motor = createSection(3L, "MOTOR");
-        items.add(createItem(3L, motor, "REVISION DE FUGAS (ACEITE, AGUA, DIESEL)", 1));
-        items.add(createItem(4L, motor, "RESET INSITE", 2));
-        items.add(createItem(5L, motor, "CAMBIO DE FILTROS (DIESEL)", 3));
-        items.add(createItem(6L, motor, "REVISAR TENSION DE BANDAS", 4));
-        items.add(createItem(7L, motor, "NIVEL DE REFRIGERANTE", 5));
-        items.add(createItem(8L, motor, "CAMBIAR FILTRO DE AIRE SEGUN INDICADOR DE PARTICULAS", 6));
+        SectionViewEntity motor = createSection(3L, "Motor");
+        items.add(createItem(3L, motor, "Revisión de fugas (aceite, agua, diésel)", 1));
+        items.add(createItem(4L, motor, "Reset Insite", 2));
+        items.add(createItem(5L, motor, "Cambio de filtros (diésel)", 3));
+        items.add(createItem(6L, motor, "Revisar tensión de bandas", 4));
+        items.add(createItem(7L, motor, "Nivel de refrigerante", 5));
+        items.add(createItem(8L, motor, "Cambiar filtro de aire según indicador de partículas", 6));
 
-        SectionViewEntity clutch = createSection(4L, "EMBRAGUE");
-        items.add(createItem(9L, clutch, "AJUSTE O CALIBRAR", 1));
-        items.add(createItem(10L, clutch, "REVISION LIQUIDO", 2));
+        SectionViewEntity clutch = createSection(4L, "Embrague");
+        items.add(createItem(9L, clutch, "Ajuste o calibrar", 1));
+        items.add(createItem(10L, clutch, "Revisión líquido", 2));
 
-        SectionViewEntity transmission = createSection(5L, "TRANSMISION");
-        items.add(createItem(11L, transmission, "REVISAR NIVEL DE ACEITE", 1));
-        items.add(createItem(12L, transmission, "REVISAR FUGAS DE ACEITE", 2));
-        items.add(createItem(13L, transmission, "REVISAR FUGAS DE AIRE", 3));
+        SectionViewEntity transmission = createSection(5L, "Transmisión");
+        items.add(createItem(11L, transmission, "Revisar nivel de aceite", 1));
+        items.add(createItem(12L, transmission, "Revisar fugas de aceite", 2));
+        items.add(createItem(13L, transmission, "Revisar fugas de aire", 3));
 
-        SectionViewEntity differentials = createSection(6L, "DIFERENCIALES");
-        items.add(createItem(14L, differentials, "REVISAR NIVEL DE ACEITE", 1));
-        items.add(createItem(15L, differentials, "REVISAR FUGAS DE ACEITE", 2));
+        SectionViewEntity differentials = createSection(6L, "Diferenciales");
+        items.add(createItem(14L, differentials, "Revisar nivel de aceite", 1));
+        items.add(createItem(15L, differentials, "Revisar fugas de aceite", 2));
 
-        SectionViewEntity fifthWheel = createSection(7L, "QUINTARUEDA");
-        items.add(createItem(16L, fifthWheel, "LIMPIEZA GENERAL", 1));
-        items.add(createItem(17L, fifthWheel, "LUBRICACION", 2));
+        SectionViewEntity fifthWheel = createSection(7L, "Quintarueda");
+        items.add(createItem(16L, fifthWheel, "Limpieza general", 1));
+        items.add(createItem(17L, fifthWheel, "Lubricación", 2));
 
-        SectionViewEntity electricSystem = createSection(8L, "SISTEMA ELECTRICO/ELECTRONICO");
-        items.add(createItem(18L, electricSystem, "CHECAR BATERIAS Y TERMINALES", 1));
-        items.add(createItem(19L, electricSystem, "CHECAR ARNESES Y CABLES (SUELTOS)", 2));
-        items.add(createItem(20L, electricSystem, "REVISAR LUCES", 3));
-        items.add(createItem(21L, electricSystem, "REV ALARMA DE REVERSA", 4));
-        items.add(createItem(22L, electricSystem, "REVISAR CODIGOS DE FALLA DE MOTOR EN TABLERO DE INSTRUMENTOS", 5));
+        SectionViewEntity electricSystem = createSection(8L, "Sistema eléctrico/electrónico");
+        items.add(createItem(18L, electricSystem, "Checar baterías y terminales", 1));
+        items.add(createItem(19L, electricSystem, "Checar arneses y cables (sueltos)", 2));
+        items.add(createItem(20L, electricSystem, "Revisar luces", 3));
+        items.add(createItem(21L, electricSystem, "Rev. alarma de reversa", 4));
+        items.add(createItem(22L, electricSystem, "Revisar códigos de falla de motor en tablero de instrumentos", 5));
 
-        SectionViewEntity bearings = createSection(9L, "SISTEMA DE RODAMIENTO");
-        items.add(createItem(23L, bearings, "REVISAR PRESION (100LBS)", 1));
-        items.add(createItem(24L, bearings, "REVISAR MARCAJE", 2));
+        SectionViewEntity bearings = createSection(9L, "Sistema de rodamiento");
+        items.add(createItem(23L, bearings, "Revisar presión (100 lbs)", 1));
+        items.add(createItem(24L, bearings, "Revisar marcaje", 2));
 
-        SectionViewEntity brakes = createSection(10L, "SISTEMA DE FRENOS");
-        items.add(createItem(25L, brakes, "REVISAR FUGAS DE AIRE", 1));
-        items.add(createItem(26L, brakes, "PURGAR TANQUES DE AIRE", 2));
-        items.add(createItem(27L, brakes, "CALIBRAR FRENOS", 3));
+        SectionViewEntity brakes = createSection(10L, "Sistema de frenos");
+        items.add(createItem(25L, brakes, "Revisar fugas de aire", 1));
+        items.add(createItem(26L, brakes, "Purgar tanques de aire", 2));
+        items.add(createItem(27L, brakes, "Calibrar frenos", 3));
 
-        SectionViewEntity safety = createSection(11L, "EQUIPO DE SEGURIDAD");
-        items.add(createItem(28L, safety, "REVISAR CINTURONES DE SEGURIDAD", 1));
-        items.add(createItem(29L, safety, "REVISAR PORTA EXTINTOR", 2));
+        SectionViewEntity safety = createSection(11L, "Equipo de seguridad");
+        items.add(createItem(28L, safety, "Revisar cinturones de seguridad", 1));
+        items.add(createItem(29L, safety, "Revisar porta extintor", 2));
 
-        SectionViewEntity cleaning = createSection(12L, "LIMPIEZA Y LUBRICACION");
-        items.add(createItem(30L, cleaning, "LAVADO DE MOTOR Y CARROCERIA", 1));
-        items.add(createItem(31L, cleaning, "ENGRASADO GENERAL", 2));
+        SectionViewEntity cleaning = createSection(12L, "Limpieza y lubricación");
+        items.add(createItem(30L, cleaning, "Lavado de motor y carrocería", 1));
+        items.add(createItem(31L, cleaning, "Engrasado general", 2));
 
         return items;
     }

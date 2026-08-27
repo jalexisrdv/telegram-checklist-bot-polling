@@ -12,6 +12,7 @@ import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
 import com.jardvcode.bot.user.service.BotSessionDataService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +37,11 @@ public final class SelectItemState implements State {
 
         StringBuilder message = new StringBuilder();
 
+        message.append(String.format(
+                "%s %s%n%n",
+                Emoji.GROUP, StringUtils.capitalize(sectionDTO.name().toLowerCase())
+        ));
+
         for (ResponseEntity response : responses) {
             ItemViewEntity item = response.getItem();
 
@@ -54,32 +60,11 @@ public final class SelectItemState implements State {
             message.append(String.format(
                     "%s %d. %s%n" +
                     "   %s%n%n",
-                    status.emoji(),
-                    response.optionNumber(),
-                    item.getLabel(),
+                    status.emoji(), response.optionNumber(), StringUtils.capitalize(item.getLabel().toLowerCase()),
                     userResponse
             ));
         }
 
-        StringBuilder header = new StringBuilder();
-        header.append(String.format(
-                "%s %s%n" +
-                "%s Operador: %s%n" +
-                "%s Fecha: %s%n" +
-                "%s Grupo: %s%n" +
-                "%s Envía el número del punto de inspección que deseas responder:%n%n",
-                Emoji.CHECKLIST,
-                assignmentDTO.name(),
-                Emoji.PERSON,
-                assignmentDTO.operatorName(),
-                Emoji.DATE,
-                assignmentDTO.date(),
-                Emoji.GROUP,
-                sectionDTO.name(),
-                Emoji.INSPECT
-        ));
-
-        botContext.sendText(header.toString());
         botContext.sendText(message.toString());
 
         return Decision.stay();

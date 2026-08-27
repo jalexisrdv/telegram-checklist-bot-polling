@@ -11,6 +11,7 @@ import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
 import com.jardvcode.bot.user.service.BotSessionDataService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,14 +42,7 @@ public final class SelectSectionState implements State {
         StringBuilder message = new StringBuilder();
 
         message.append(String.format(
-                "%s %s%n" +
-                "   - Operador: %s%n" +
-                "   - Fecha: %s%n%n" +
-                "%s Envía el número del grupo para mostrar los puntos de inspección:%n%n",
-                Emoji.CHECKLIST,
-                assignmentDTO.name(),
-                assignmentDTO.operatorName(),
-                assignmentDTO.date(),
+                "%s Secciones%n%n",
                 Emoji.GROUP
         ));
 
@@ -61,7 +55,7 @@ public final class SelectSectionState implements State {
                     "%s %d. %s%n",
                     statusEmoji,
                     section.getOptionNumber(),
-                    section.getName()
+                    StringUtils.capitalize(section.getName().toLowerCase())
             ));
         }
 

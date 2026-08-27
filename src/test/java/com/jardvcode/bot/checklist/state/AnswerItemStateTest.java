@@ -50,7 +50,7 @@ class AnswerItemStateTest {
         Decision decision = state.onBotMessage(botContext);
 
         verify(botContext, times(1)).sendText(captor.capture());
-        assertEquals("Envía el estatus de " + dto.label() + ": ", captor.getValue());
+        assertEquals("Envía el estatus de " + dto.label().toLowerCase(), captor.getValue());
         assertNull(decision.nextState());
     }
 
@@ -88,7 +88,7 @@ class AnswerItemStateTest {
 
     private String expectedInvalidFormatMessage() {
         return """
-                Formato no válido. Responda únicamente con \"F\" (fallas), \"OK\" (en condiciones) o \"R\" (se reparó). Opcionalmente, agregue un espacio seguido de sus observaciones. Ejemplo: F MIS OBSERVACIONES
+                Formato no válido. Responda únicamente con \"F\" (fallas), \"OK\" (en condiciones) o \"R\" (se reparó). Opcionalmente, agregue un espacio seguido de su comentario. Ejemplo: F comentario
                 """;
     }
 

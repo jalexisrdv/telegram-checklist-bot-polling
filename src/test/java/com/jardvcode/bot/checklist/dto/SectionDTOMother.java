@@ -5,7 +5,7 @@ public final class SectionDTOMother {
     public static SectionDTO create() {
         return new SectionDTO(
                 1L,
-                "SISTEMA DE DIRECCION",
+                "Sistema de dirección",
                 AssignmentDTOMother.create()
         );
     }

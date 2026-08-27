@@ -36,7 +36,7 @@ public final class ResponseEntityMother {
         for (int i = 0; i < items.size(); i++) {
             ItemViewEntity item = items.get(i);
             Long optionNumber = Long.valueOf(i + 1);
-            responses.add(withItem(item, "OK", "OBSERVATION"));
+            responses.add(withItem(item, "OK", "comentario"));
         }
 
         return responses;
@@ -51,7 +51,7 @@ public final class ResponseEntityMother {
 
             int result = i % 2;
             String status = result == 0 ? "OK" : null;
-            String commit = result == 0 ? "OBSERVATION" : null;
+            String commit = result == 0 ? "comentario" : null;
 
             responses.add(withItem(item, status, commit));
         }

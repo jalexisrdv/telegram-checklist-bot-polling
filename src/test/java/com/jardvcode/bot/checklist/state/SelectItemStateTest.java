@@ -52,10 +52,9 @@ class SelectItemStateTest {
         when(responseService.findByAssignmentIdAndSectionId(dto.assignmentDTO().assignmentId(), dto.id())).thenReturn(responses);
         Decision decision = state.onBotMessage(botContext);
 
-        verify(botContext, times(2)).sendText(captor.capture());
+        verify(botContext, times(1)).sendText(captor.capture());
         List<String> values = captor.getAllValues();
-        assertEquals(expectedHeaderMessage(), values.get(0));
-        assertEquals(expectedBodyMessageWithSomeResponses(), values.get(1));
+        assertEquals(expectedBodyMessageWithSomeResponses(), values.get(0));
         assertNull(decision.nextState());
     }
 
@@ -92,35 +91,26 @@ class SelectItemStateTest {
         assertEquals(AnswerItemState.class, decision.nextState());
     }
 
-    private String expectedHeaderMessage() {
-        return String.format("""
-                📋 Formato para servicios A y C (BASICO)
-                👤 Operador: PEDRO OCELOT
-                📅 Fecha: %s
-                📂 Grupo: SISTEMA DE DIRECCION
-                🔍 Envía el número del punto de inspección que deseas responder:
-                
-                """, LocalDate.now().toString());
-    }
-
     private String expectedBodyMessageWithSomeResponses() {
         return """
-                ✅ 1. REVISION DE FUGAS (ACEITE, AGUA, DIESEL)
-                   OK OBSERVATION
+                📂 Sistema de dirección
                 
-                ⏳ 2. RESET INSITE
+                ✅ 1. Revisión de fugas (aceite, agua, diésel)
+                   OK comentario
+                
+                ⏳ 2. Reset insite
                 \s\s\s
                 
-                ✅ 3. CAMBIO DE FILTROS (DIESEL)
-                   OK OBSERVATION
+                ✅ 3. Cambio de filtros (diésel)
+                   OK comentario
                 
-                ⏳ 4. REVISAR TENSION DE BANDAS
+                ⏳ 4. Revisar tensión de bandas
                 \s\s\s
                 
-                ✅ 5. NIVEL DE REFRIGERANTE
-                   OK OBSERVATION
+                ✅ 5. Nivel de refrigerante
+                   OK comentario
                 
-                ⏳ 6. CAMBIAR FILTRO DE AIRE SEGUN INDICADOR DE PARTICULAS
+                ⏳ 6. Cambiar filtro de aire según indicador de partículas
                 \s\s\s
                 
                 """;

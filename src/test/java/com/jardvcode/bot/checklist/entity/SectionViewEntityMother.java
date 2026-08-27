@@ -34,7 +34,7 @@ public final class SectionViewEntityMother {
         section.setId(1L);
         section.setAssignmentId(1L);
         section.setSectionId(1L);
-        section.setName("SISTEMA DE DIRECCION");
+        section.setName("Sistema de dirección");
         section.setOptionNumber(1);
         section.setStatus(AssignmentStatusEmoji.PENDIENTE.name());
 
@@ -44,18 +44,18 @@ public final class SectionViewEntityMother {
     public static List<SectionViewEntity> values() {
         List<SectionViewEntity> sections = new ArrayList<>();
 
-        sections.add(create(1L, "SISTEMA DE DIRECCION", 1));
-        sections.add(create(2L, "SUSPENCION DELANTERA", 2));
-        sections.add(create(3L, "MOTOR", 3));
-        sections.add(create(4L, "EMBRAGUE", 4));
-        sections.add(create(5L, "TRANSMISION", 5));
-        sections.add(create(6L, "DIFERENCIALES", 6));
-        sections.add(create(7L, "QUINTARUEDA", 7));
-        sections.add(create(8L, "SISTEMA ELECTRICO/ELECTRONICO", 8));
-        sections.add(create(9L, "SISTEMA DE RODAMIENTO", 9));
-        sections.add(create(10L, "SISTEMA DE FRENOS", 10));
-        sections.add(create(11L, "EQUIPO DE SEGURIDAD", 11));
-        sections.add(create(12L, "LIMPIEZA Y LUBRICACION", 12));
+        sections.add(create(1L, "Sistema de dirección", 1));
+        sections.add(create(2L, "Suspensión delantera", 2));
+        sections.add(create(3L, "Motor", 3));
+        sections.add(create(4L, "Embrague", 4));
+        sections.add(create(5L, "Transmisión", 5));
+        sections.add(create(6L, "Diferenciales", 6));
+        sections.add(create(7L, "Quintarueda", 7));
+        sections.add(create(8L, "Sistema eléctrico/electrónico", 8));
+        sections.add(create(9L, "Sistema de rodamiento", 9));
+        sections.add(create(10L, "Sistema de frenos", 10));
+        sections.add(create(11L, "Equipo de seguridad", 11));
+        sections.add(create(12L, "Limpieza y lubricación", 12));
 
         return sections;
     }
@@ -64,7 +64,7 @@ public final class SectionViewEntityMother {
         SectionViewEntity section = new SectionViewEntity();
 
         section.setId(1L);
-        section.setName("SISTEMA DE DIRECCION");
+        section.setName("Sistema de dirección");
         section.setOptionNumber(1);
 
         return section;

@@ -33,7 +33,7 @@ public final class AnswerItemState implements State {
     public Decision onBotMessage(BotContext botContext) throws Exception {
         ItemDTO itemDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), ItemDTO.class);
 
-        botContext.sendText("Envía el estatus de " + itemDTO.label() + ": ");
+        botContext.sendText("Envía el estatus de " + itemDTO.label().toLowerCase());
 
         return Decision.stay();
     }
@@ -47,7 +47,7 @@ public final class AnswerItemState implements State {
 
         if (!matcher.matches()) {
             String message = """
-                    Formato no válido. Responda únicamente con \"F\" (fallas), \"OK\" (en condiciones) o \"R\" (se reparó). Opcionalmente, agregue un espacio seguido de sus observaciones. Ejemplo: F MIS OBSERVACIONES
+                    Formato no válido. Responda únicamente con \"F\" (fallas), \"OK\" (en condiciones) o \"R\" (se reparó). Opcionalmente, agregue un espacio seguido de su comentario. Ejemplo: F comentario
                     """;
             botContext.sendText(message);
 
@@ -55,11 +55,11 @@ public final class AnswerItemState implements State {
         }
 
         String status = matcher.group(1).trim();
-        String observation = Optional.ofNullable(matcher.group(2)).orElse("").trim();
+        String comment = Optional.ofNullable(matcher.group(2)).orElse("").trim();
 
         ItemDTO itemDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), ItemDTO.class);
 
-        responseService.save(itemDTO.id(), status, observation);
+        responseService.save(itemDTO.id(), status, comment);
 
         assignmentService.updateStatus(itemDTO.assignmentId());
         sectionService.updateStatus(itemDTO.assignmentId());
