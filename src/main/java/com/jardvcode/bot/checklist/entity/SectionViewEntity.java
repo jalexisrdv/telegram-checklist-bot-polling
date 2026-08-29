@@ -3,6 +3,8 @@ package com.jardvcode.bot.checklist.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +32,14 @@ public final class SectionViewEntity {
 
     @Column(name = "status")
     private String status;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id")
+    private Set<ItemViewEntity> items = new HashSet<>();
+
+    public int totalItems() {
+        return items.size();
+    }
 
     public String getStatus() {
         return status;
@@ -85,6 +95,14 @@ public final class SectionViewEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Set<ItemViewEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<ItemViewEntity> items) {
+        this.items = items;
     }
 
 }

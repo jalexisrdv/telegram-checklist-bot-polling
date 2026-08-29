@@ -2,10 +2,7 @@ package com.jardvcode.bot.checklist.repository;
 
 import com.jardvcode.bot.checklist.entity.AssignmentViewEntity;
 import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +12,9 @@ public interface AssignmentRepository extends JpaRepository<AssignmentViewEntity
     List<AssignmentViewEntity> findByMechanicUserIdAndStatusNotOrderByDateDesc(Long mechanicUserId, String status);
 
     Optional<AssignmentViewEntity> findByMechanicUserIdAndOptionNumber(Long mechanicUserId, Long optionNumber);
+
+    @EntityGraph(attributePaths = {"sections", "sections.items", "sections.items.response"})
+    Optional<AssignmentViewEntity> findWithSectionsAndItemsAndResponseById(Long id);
 
     @Modifying
     @Transactional

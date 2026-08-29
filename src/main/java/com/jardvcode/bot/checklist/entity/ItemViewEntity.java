@@ -1,9 +1,6 @@
 package com.jardvcode.bot.checklist.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable;
 
 import java.util.UUID;
@@ -30,6 +27,13 @@ public final class ItemViewEntity {
 
     @Column(name = "option_number")
     private Integer optionNumber;
+
+    @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)
+    private ResponseEntity response;
+
+    public boolean hasResponse() {
+        return response.getStatus() != null;
+    }
 
     public Long getId() {
         return id;
@@ -77,6 +81,14 @@ public final class ItemViewEntity {
 
     public void setOptionNumber(Integer optionNumber) {
         this.optionNumber = optionNumber;
+    }
+
+    public ResponseEntity getResponse() {
+        return response;
+    }
+
+    public void setResponse(ResponseEntity response) {
+        this.response = response;
     }
 
 }

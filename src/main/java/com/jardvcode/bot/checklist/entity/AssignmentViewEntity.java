@@ -5,6 +5,8 @@ import org.hibernate.annotations.Immutable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Immutable
@@ -52,6 +54,10 @@ public final class AssignmentViewEntity {
 
     @Column(name = "option_number")
     private Integer optionNumber;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignment_id")
+    private Set<SectionViewEntity> sections = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -163,6 +169,14 @@ public final class AssignmentViewEntity {
 
     public void setOptionNumber(Integer optionNumber) {
         this.optionNumber = optionNumber;
+    }
+
+    public Set<SectionViewEntity> getSections() {
+        return sections;
+    }
+
+    public void setSections(Set<SectionViewEntity> sections) {
+        this.sections = sections;
     }
 
 }
