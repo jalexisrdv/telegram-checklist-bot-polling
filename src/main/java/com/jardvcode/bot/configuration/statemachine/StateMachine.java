@@ -42,6 +42,7 @@ public final class StateMachine {
 			return;
 		}
 
+		botContext.setPreviousState(botUser.previousStateClass());
 		botContext.setSystemUserId(botUser.getUserId());
 
 		if(botUser.isErpUserLinked() && message.contains(BotCommand.ASSIGNMENTS.value())) {
@@ -80,6 +81,6 @@ public final class StateMachine {
 		stateRegistry.find(nextState).onBotMessage(botContext);
 
 		botUser.updateCurrentState(nextState);
-		repository.updateCurrentStateByProviderUserId(botUser.getProviderUserId(), botUser.getCurrentState());
+		repository.save(botUser);
 	}
 }

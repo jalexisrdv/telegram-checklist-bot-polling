@@ -24,6 +24,7 @@ CREATE TABLE bot_users (
     platform VARCHAR(250),
     provider_user_id VARCHAR(500),
     current_state VARCHAR(1000),
+    previous_state VARCHAR(1000),
 
     CONSTRAINT fk_bot_users_users
                 FOREIGN KEY (user_id)

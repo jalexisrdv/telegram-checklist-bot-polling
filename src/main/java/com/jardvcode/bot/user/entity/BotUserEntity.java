@@ -24,6 +24,9 @@ public class BotUserEntity {
     @Column(name = "provider_user_id")
     private String providerUserId;
 
+    @Column(name = "previous_state")
+    private String previousState;
+
     @Column(name = "current_state")
     private String currentState;
 
@@ -45,8 +48,22 @@ public class BotUserEntity {
         return entity;
     }
 
-    public void updateCurrentState(Class<? extends State> state) {
-        this.currentState = state.getCanonicalName();
+    public void updateCurrentState(Class<? extends State> newState) {
+        this.previousState = this.currentState;
+        this.currentState = newState.getCanonicalName();
+    }
+
+    public Class<? extends State> previousStateClass() {
+        if(previousState == null) {
+            return null;
+        }
+
+        try {
+            return Class.forName(previousState)
+                    .asSubclass(State.class);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException("State class not found: " + previousState, e);
+        }
     }
 
     public Class<? extends State> currentStateClass() {

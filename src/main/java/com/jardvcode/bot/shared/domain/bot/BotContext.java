@@ -1,6 +1,9 @@
 package com.jardvcode.bot.shared.domain.bot;
 
 import com.jardvcode.bot.configuration.sender.MessageSender;
+import com.jardvcode.bot.shared.domain.state.State;
+
+import java.util.List;
 
 public final class BotContext {
 	
@@ -8,6 +11,7 @@ public final class BotContext {
 	private final String platform;
 	private final String providerUserId;
 	private final String message;
+	private Class<? extends State> previousState;
 	private final MessageSender sender;
 	
 	public BotContext(String platform, String providerUserId, String message, MessageSender sender) {
@@ -23,6 +27,10 @@ public final class BotContext {
 
 	public void sendDocument(byte[] file, String fileName) throws Exception {
 		sender.sendDocument(providerUserId, file, fileName);
+	}
+
+	public void sendActionMessage(String message, List<MessageAction> actions) throws Exception {
+		sender.sendActionMessage(providerUserId, message, actions);
 	}
 
 	public Long getSystemUserId() {
@@ -43,6 +51,14 @@ public final class BotContext {
 
 	public String getMessage() {
 		return message;
+	}
+
+	public Class<? extends State> getPreviousState() {
+		return previousState;
+	}
+
+	public void setPreviousState(Class<? extends State> previousState) {
+		this.previousState = previousState;
 	}
 
 }

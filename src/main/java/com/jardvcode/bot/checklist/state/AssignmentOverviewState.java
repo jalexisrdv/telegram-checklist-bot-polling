@@ -5,6 +5,7 @@ import com.jardvcode.bot.checklist.domain.Emoji;
 import com.jardvcode.bot.checklist.domain.overview.AssignmentOverview;
 import com.jardvcode.bot.checklist.dto.AssignmentDTO;
 import com.jardvcode.bot.checklist.service.AssignmentOverviewService;
+import com.jardvcode.bot.shared.domain.bot.MessageAction;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.shared.domain.state.State;
@@ -12,6 +13,8 @@ import com.jardvcode.bot.user.service.BotSessionDataService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,14 +76,17 @@ public final class AssignmentOverviewState implements State {
                     .collect(Collectors.joining("\n"))
         );
 
-        botContext.sendText(message);
+        List<MessageAction> actions = new ArrayList<>();
+        actions.add(new MessageAction("Continuar", "continue"));
+
+        botContext.sendActionMessage(message, actions);
 
         return Decision.stay();
     }
 
     @Override
     public Decision onUserInput(BotContext botContext) throws Exception {
-        return Decision.stay();
+        return Decision.moveTo(botContext.getPreviousState());
     }
 
 }

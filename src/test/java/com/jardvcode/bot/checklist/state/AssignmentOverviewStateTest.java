@@ -6,6 +6,7 @@ import com.jardvcode.bot.checklist.domain.overview.AssignmentOverview;
 import com.jardvcode.bot.checklist.dto.AssignmentDTO;
 import com.jardvcode.bot.checklist.dto.AssignmentDTOMother;
 import com.jardvcode.bot.checklist.service.AssignmentOverviewService;
+import com.jardvcode.bot.shared.domain.bot.MessageAction;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.DataNotFoundException;
 import com.jardvcode.bot.shared.domain.state.Decision;
@@ -16,6 +17,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -53,10 +56,13 @@ public final class AssignmentOverviewStateTest {
 
     @Test
     void shouldSendAssignmentOverviewWhenChecklistSelected() throws Exception {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> messageCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<List> actionCaptor = ArgumentCaptor.forClass(List.class);
+
         Long mechanicUserId = 1L;
         AssignmentDTO dto = AssignmentDTOMother.create();
         AssignmentOverview assignmentOverview = AssignmentOverviewMother.create();
+        MessageAction expectedAction= new MessageAction("Continuar", "continue");
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(sessionDataService.findByBotUserId(mechanicUserId, AssignmentDTO.class)).thenReturn(dto);
@@ -64,8 +70,9 @@ public final class AssignmentOverviewStateTest {
 
         Decision decision = state.onBotMessage(botContext);
 
-        verify(botContext).sendText(captor.capture());
-        assertEquals(expectedMessage(), captor.getValue());
+        verify(botContext).sendActionMessage(messageCaptor.capture(), actionCaptor.capture());
+        assertEquals(expectedMessage(), messageCaptor.getValue());
+        assertEquals(expectedAction, actionCaptor.getValue().get(0));
         assertNull(decision.nextState());
     }
 
