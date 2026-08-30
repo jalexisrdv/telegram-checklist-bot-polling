@@ -14,6 +14,7 @@ public final class BotActivationTokenEntityMother {
 
     public static BotActivationTokenEntity withExpiredToken() {
         BotActivationTokenEntity entity = new BotActivationTokenEntity();
+        entity.setUsedAt(null);
         entity.setToken("550e8400-e29b-41d4-a716-446655440000");
         entity.setExpiresAt(LocalDateTime.now().minusDays(2));
         return entity;

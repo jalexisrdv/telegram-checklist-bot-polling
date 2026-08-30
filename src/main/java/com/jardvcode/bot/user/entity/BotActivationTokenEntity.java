@@ -29,7 +29,7 @@ public class BotActivationTokenEntity {
     }
 
     public boolean isValidToken() {
-        return usedAt == null || expiresAt.isBefore(LocalDateTime.now());
+        return usedAt == null && expiresAt.isAfter(LocalDateTime.now());
     }
 
     public Long getId() {
