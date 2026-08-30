@@ -49,6 +49,10 @@ public class BotUserEntity {
     }
 
     public void updateCurrentState(Class<? extends State> newState) {
+        if (newState.getCanonicalName().equals(currentState)) {
+            return;
+        }
+
         this.previousState = this.currentState;
         this.currentState = newState.getCanonicalName();
     }
