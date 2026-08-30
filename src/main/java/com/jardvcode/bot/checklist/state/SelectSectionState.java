@@ -1,7 +1,6 @@
 package com.jardvcode.bot.checklist.state;
 
 import com.jardvcode.bot.checklist.domain.BotCommand;
-import com.jardvcode.bot.checklist.domain.AssignmentStatusEmoji;
 import com.jardvcode.bot.checklist.domain.Emoji;
 import com.jardvcode.bot.checklist.dto.AssignmentDTO;
 import com.jardvcode.bot.checklist.dto.SectionDTO;
@@ -49,11 +48,9 @@ public final class SelectSectionState implements State {
         List<SectionViewEntity> sections = sectionService.findByAssignmentId(assignmentDTO.assignmentId());
 
         for (SectionViewEntity section : sections) {
-            String statusEmoji = AssignmentStatusEmoji.fromStatus(section.getStatus());
-
             message.append(String.format(
                     "%s %d. %s%n",
-                    statusEmoji,
+                    section.getStatus().emoji(),
                     section.getOptionNumber(),
                     StringUtils.capitalize(section.getName().toLowerCase())
             ));

@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.entity;
 
-import com.jardvcode.bot.checklist.domain.AssignmentStatusEmoji;
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public final class SectionViewEntityMother {
         List<SectionViewEntity> sections = values();
 
         for (SectionViewEntity section: sections) {
-            section.setStatus(AssignmentStatusEmoji.COMPLETADO.name());
+            section.setStatus(StatusEnum.COMPLETED);
         }
 
         return sections;
@@ -21,7 +21,7 @@ public final class SectionViewEntityMother {
         List<SectionViewEntity> sections = values();
 
         for (SectionViewEntity section: sections) {
-            String status = section.getOptionNumber() % 2 == 0 ? AssignmentStatusEmoji.PENDIENTE.name() : AssignmentStatusEmoji.COMPLETADO.name();
+            StatusEnum status = section.getOptionNumber() % 2 == 0 ? StatusEnum.PENDING : StatusEnum.COMPLETED;
             section.setStatus(status);
         }
 
@@ -36,7 +36,7 @@ public final class SectionViewEntityMother {
         section.setSectionId(1L);
         section.setName("Sistema de dirección");
         section.setOptionNumber(1);
-        section.setStatus(AssignmentStatusEmoji.PENDIENTE.name());
+        section.setStatus(StatusEnum.PENDING);
 
         return section;
     }

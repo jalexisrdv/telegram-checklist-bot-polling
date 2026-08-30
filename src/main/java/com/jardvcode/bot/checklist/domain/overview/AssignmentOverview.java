@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.domain.overview;
 
-import com.jardvcode.bot.checklist.domain.AssignmentStatusEmoji;
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -69,12 +69,12 @@ public class AssignmentOverview {
         return progress.percentage();
     }
 
-    public AssignmentStatusEmoji status() {
+    public StatusEnum status() {
         if (progress.getCompleted() == progress.getTotal()) {
-            return AssignmentStatusEmoji.COMPLETADO;
+            return StatusEnum.COMPLETED;
         }
 
-        return AssignmentStatusEmoji.PENDIENTE;
+        return StatusEnum.PENDING;
     }
 
 }

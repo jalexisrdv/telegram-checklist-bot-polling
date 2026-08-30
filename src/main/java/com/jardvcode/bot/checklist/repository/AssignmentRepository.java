@@ -1,5 +1,6 @@
 package com.jardvcode.bot.checklist.repository;
 
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 import com.jardvcode.bot.checklist.entity.AssignmentViewEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.*;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 public interface AssignmentRepository extends JpaRepository<AssignmentViewEntity, Long>, JpaSpecificationExecutor {
 
-    List<AssignmentViewEntity> findByMechanicUserIdAndStatusNotOrderByDateDesc(Long mechanicUserId, String status);
+    List<AssignmentViewEntity> findByMechanicUserIdAndStatusNotOrderByDateDesc(Long mechanicUserId, StatusEnum status);
 
     Optional<AssignmentViewEntity> findByMechanicUserIdAndOptionNumber(Long mechanicUserId, Long optionNumber);
 
@@ -22,7 +23,7 @@ public interface AssignmentRepository extends JpaRepository<AssignmentViewEntity
             UPDATE
                 checklist_assignments assignment
             SET
-                status = 'COMPLETADO'
+                status = :status
             WHERE
                 assignment.id = :assignmentId
                 AND NOT EXISTS (
@@ -34,6 +35,6 @@ public interface AssignmentRepository extends JpaRepository<AssignmentViewEntity
                         response.assignment_id = assignment.id AND response.status IS NULL
                 )
             """)
-    void updateStatus(Long assignmentId);
+    void updateStatus(Long assignmentId, StatusEnum status);
 
 }

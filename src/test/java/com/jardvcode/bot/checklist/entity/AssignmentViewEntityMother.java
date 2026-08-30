@@ -1,5 +1,7 @@
 package com.jardvcode.bot.checklist.entity;
 
+import com.jardvcode.bot.checklist.domain.StatusEnum;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -17,13 +19,13 @@ public final class AssignmentViewEntityMother {
 
     public static AssignmentViewEntity withPendingStatus() {
         AssignmentViewEntity assignment = create();
-        assignment.setStatus("PENDIENTE");
+        assignment.setStatus(StatusEnum.PENDING);
         return assignment;
     }
 
     public static AssignmentViewEntity withCompletedStatus() {
         AssignmentViewEntity assignment = create();
-        assignment.setStatus("COMPLETADO");
+        assignment.setStatus(StatusEnum.COMPLETED);
         return assignment;
     }
 
@@ -43,7 +45,7 @@ public final class AssignmentViewEntityMother {
         assignment.setTimeIn(LocalTime.parse("09:00:00"));
         assignment.setTimeOut(LocalTime.parse("18:00:00"));
         assignment.setDate(LocalDate.now());
-        assignment.setStatus("PENDIENTE");
+        assignment.setStatus(StatusEnum.PENDING);
 
         return assignment;
     }

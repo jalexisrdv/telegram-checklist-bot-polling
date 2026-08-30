@@ -1,5 +1,6 @@
 package com.jardvcode.bot.checklist.service;
 
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 import com.jardvcode.bot.checklist.entity.SectionViewEntity;
 import com.jardvcode.bot.checklist.repository.SectionRepository;
 import com.jardvcode.bot.shared.domain.exception.DataNotFoundException;
@@ -44,7 +45,7 @@ public final class SectionService {
 
     public void updateStatus(Long assignmentId) {
         try {
-            repository.updateStatus(assignmentId);
+            repository.updateStatus(assignmentId, StatusEnum.COMPLETED);
         } catch (Exception e) {
             LOGGER.error("Unexpected error while updating status for assignmentId={}", assignmentId, e);
             throw new UnexpectedException();

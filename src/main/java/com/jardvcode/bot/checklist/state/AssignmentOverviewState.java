@@ -55,7 +55,7 @@ public final class AssignmentOverviewState implements State {
         %s
         """,
             Emoji.CHECKLIST, overview.getTemplateName(),
-            overview.status().emoji(), StringUtils.capitalize(overview.status().toString().toLowerCase()),
+            overview.status().emoji(), StringUtils.capitalize(overview.status().label().toLowerCase()),
             Emoji.PROGRESS_PERCENT, overview.getCompleted(), overview.getTotal(), overview.getPercentage(),
 
             Emoji.VEHICLE, overview.getUnit(),

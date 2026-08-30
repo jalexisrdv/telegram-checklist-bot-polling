@@ -1,5 +1,6 @@
 package com.jardvcode.bot.checklist.entity;
 
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable;
 
@@ -31,7 +32,8 @@ public final class SectionViewEntity {
     private Integer optionNumber;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
@@ -41,11 +43,11 @@ public final class SectionViewEntity {
         return items.size();
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

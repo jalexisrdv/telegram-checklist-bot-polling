@@ -1,5 +1,6 @@
 package com.jardvcode.bot.checklist.entity;
 
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +22,22 @@ public final class ResponseEntity {
 
     @Column(name = "comment")
     private String comment;
+
+    public StatusEnum status() {
+        if(status == null) {
+            return StatusEnum.PENDING;
+        }
+
+        return StatusEnum.COMPLETED;
+    }
+
+    public String value() {
+        if(status == null) {
+            return "";
+        }
+
+        return status + " " + comment;
+    }
 
     public Integer optionNumber() {
         return item.getOptionNumber();

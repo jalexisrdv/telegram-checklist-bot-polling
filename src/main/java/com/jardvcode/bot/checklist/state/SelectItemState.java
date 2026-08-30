@@ -1,11 +1,9 @@
 package com.jardvcode.bot.checklist.state;
 
-import com.jardvcode.bot.checklist.domain.AssignmentStatusEmoji;
 import com.jardvcode.bot.checklist.domain.Emoji;
 import com.jardvcode.bot.checklist.dto.AssignmentDTO;
 import com.jardvcode.bot.checklist.dto.SectionDTO;
 import com.jardvcode.bot.checklist.dto.ItemDTO;
-import com.jardvcode.bot.checklist.entity.ItemViewEntity;
 import com.jardvcode.bot.checklist.entity.ResponseEntity;
 import com.jardvcode.bot.checklist.service.ResponseService;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
@@ -43,25 +41,11 @@ public final class SelectItemState implements State {
         ));
 
         for (ResponseEntity response : responses) {
-            ItemViewEntity item = response.getItem();
-
-            String statusValue = response.getStatus();
-            String userResponse = "";
-
-            AssignmentStatusEmoji status;
-
-            if (statusValue != null) {
-                userResponse = statusValue.toUpperCase() + " " + response.getComment();
-                status = AssignmentStatusEmoji.COMPLETADO;
-            } else {
-                status = AssignmentStatusEmoji.PENDIENTE;
-            }
-
             message.append(String.format(
                     "%s %d. %s%n" +
                     "   %s%n%n",
-                    status.emoji(), response.optionNumber(), StringUtils.capitalize(item.getLabel().toLowerCase()),
-                    userResponse
+                    response.status().emoji(), response.optionNumber(), StringUtils.capitalize(response.getItem().getLabel().toLowerCase()),
+                    response.value()
             ));
         }
 

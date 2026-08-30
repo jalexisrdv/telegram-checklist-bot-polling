@@ -1,5 +1,6 @@
 package com.jardvcode.bot.checklist.repository;
 
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 import com.jardvcode.bot.checklist.entity.SectionViewEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,7 +23,7 @@ public interface SectionRepository extends JpaRepository<SectionViewEntity, Long
             UPDATE
                 assignment_sections sections
             SET
-                status = 'COMPLETADO'
+                status = :status
             WHERE
                 sections.assignment_id = :assignmentId
                 AND NOT EXISTS (
@@ -37,6 +38,6 @@ public interface SectionRepository extends JpaRepository<SectionViewEntity, Long
                         AND responses.status IS NULL
                 )
             """)
-    void updateStatus(Long assignmentId);
+    void updateStatus(Long assignmentId, StatusEnum status);
 
 }

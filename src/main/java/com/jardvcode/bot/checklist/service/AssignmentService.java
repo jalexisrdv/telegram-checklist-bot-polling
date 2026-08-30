@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.service;
 
-import com.jardvcode.bot.checklist.domain.AssignmentStatusEmoji;
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 import com.jardvcode.bot.checklist.entity.AssignmentViewEntity;
 import com.jardvcode.bot.checklist.repository.AssignmentRepository;
 import com.jardvcode.bot.shared.domain.exception.DataNotFoundException;
@@ -24,7 +24,7 @@ public final class AssignmentService {
 
     public List<AssignmentViewEntity> findUnconfirmedByMechanicUserId(Long mechanicUserId) {
         try {
-            return repository.findByMechanicUserIdAndStatusNotOrderByDateDesc(mechanicUserId, AssignmentStatusEmoji.CONFIRMADO.name());
+            return repository.findByMechanicUserIdAndStatusNotOrderByDateDesc(mechanicUserId, StatusEnum.CONFIRMED);
         } catch (Exception e) {
             LOGGER.error("Unexpected error while retrieving assignments for mechanicUserId={}", mechanicUserId, e);
             throw new UnexpectedException();
@@ -45,7 +45,7 @@ public final class AssignmentService {
 
     public void updateStatus(Long assignmentId) {
         try {
-            repository.updateStatus(assignmentId);
+            repository.updateStatus(assignmentId, StatusEnum.COMPLETED);
         } catch (Exception e) {
             LOGGER.error("Unexpected error while updating status for assignmentId={}", assignmentId, e);
             throw new UnexpectedException();

@@ -1,5 +1,6 @@
 package com.jardvcode.bot.checklist.entity;
 
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable;
 
@@ -50,7 +51,8 @@ public final class AssignmentViewEntity {
     private LocalDate date;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 
     @Column(name = "option_number")
     private Integer optionNumber;
@@ -155,11 +157,11 @@ public final class AssignmentViewEntity {
         this.date = date;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

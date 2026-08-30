@@ -1,6 +1,5 @@
 package com.jardvcode.bot.checklist.state;
 
-import com.jardvcode.bot.checklist.domain.AssignmentStatusEmoji;
 import com.jardvcode.bot.checklist.dto.AssignmentDTO;
 import com.jardvcode.bot.checklist.entity.AssignmentViewEntity;
 import com.jardvcode.bot.checklist.service.AssignmentService;
@@ -37,15 +36,13 @@ public final class SelectAssignmentState implements State {
         message.append("Estas son tus listas de inspección pendientes, envía el número de la lista que deseas responder:\n\n");
 
         for (AssignmentViewEntity assignment : assignments) {
-            String statusEmoji = AssignmentStatusEmoji.fromStatus(assignment.getStatus());
-
             message.append(String.format(
                     "%s %d. %s%n" +
                             "   - Operador: %s%n" +
                             "   - Kilometraje: %s%n" +
                             "   - Próximo Servicio: %s%n" +
                             "   - Fecha: %s%n%n",
-                    statusEmoji,
+                    assignment.getStatus().emoji(),
                     assignment.getOptionNumber(),
                     assignment.getTemplateName(),
                     assignment.getOperatorFullName(),

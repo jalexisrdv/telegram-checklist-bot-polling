@@ -1,6 +1,6 @@
 package com.jardvcode.bot.checklist.domain.overview;
 
-import com.jardvcode.bot.checklist.domain.AssignmentStatusEmoji;
+import com.jardvcode.bot.checklist.domain.StatusEnum;
 
 public record SectionOverview(
         String name,
@@ -8,12 +8,12 @@ public record SectionOverview(
         int total
 ) {
 
-    public AssignmentStatusEmoji status() {
+    public StatusEnum status() {
         if (total > 0 && completed >= total) {
-            return AssignmentStatusEmoji.COMPLETADO;
+            return StatusEnum.COMPLETED;
         }
 
-        return AssignmentStatusEmoji.PENDIENTE;
+        return StatusEnum.PENDING;
     }
 
 }
