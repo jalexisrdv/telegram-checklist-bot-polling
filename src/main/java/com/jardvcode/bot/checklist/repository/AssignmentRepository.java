@@ -35,6 +35,6 @@ public interface AssignmentRepository extends JpaRepository<AssignmentViewEntity
                         response.assignment_id = assignment.id AND response.status IS NULL
                 )
             """)
-    void updateStatus(Long assignmentId, StatusEnum status);
+    void updateStatus(Long assignmentId, String status);
 
 }

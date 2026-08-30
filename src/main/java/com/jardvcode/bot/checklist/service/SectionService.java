@@ -45,7 +45,7 @@ public final class SectionService {
 
     public void updateStatus(Long assignmentId) {
         try {
-            repository.updateStatus(assignmentId, StatusEnum.COMPLETED);
+            repository.updateStatus(assignmentId, StatusEnum.COMPLETED.name());
         } catch (Exception e) {
             LOGGER.error("Unexpected error while updating status for assignmentId={}", assignmentId, e);
             throw new UnexpectedException();

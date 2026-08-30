@@ -38,6 +38,6 @@ public interface SectionRepository extends JpaRepository<SectionViewEntity, Long
                         AND responses.status IS NULL
                 )
             """)
-    void updateStatus(Long assignmentId, StatusEnum status);
+    void updateStatus(Long assignmentId, String status);
 
 }
