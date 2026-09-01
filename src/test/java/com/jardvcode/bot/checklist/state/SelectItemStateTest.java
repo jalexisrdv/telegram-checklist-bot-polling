@@ -15,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,12 +49,11 @@ class SelectItemStateTest {
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(sessionDataService.findByBotUserId(mechanicUserId, SectionDTO.class)).thenReturn(dto);
         when(responseService.findByAssignmentIdAndSectionId(dto.assignmentDTO().assignmentId(), dto.id())).thenReturn(responses);
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
         verify(botContext, times(1)).sendText(captor.capture());
         List<String> values = captor.getAllValues();
         assertEquals(expectedBodyMessageWithSomeResponses(), values.get(0));
-        assertNull(decision.nextState());
     }
 
     @Test

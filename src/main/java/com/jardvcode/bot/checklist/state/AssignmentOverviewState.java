@@ -29,7 +29,7 @@ public final class AssignmentOverviewState implements State {
     }
 
     @Override
-    public Decision onBotMessage(BotContext botContext) throws Exception {
+    public void onBotMessage(BotContext botContext) throws Exception {
         AssignmentDTO assignmentDTO = null;
 
         try {
@@ -37,7 +37,7 @@ public final class AssignmentOverviewState implements State {
         } catch (Exception e) {
             botContext.sendText("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.ASSIGNMENTS.value() + " para ver las listas disponibles.");
 
-            return Decision.stay();
+            return;
         }
 
         AssignmentOverview overview = service.getOverview(assignmentDTO.assignmentId());
@@ -80,8 +80,6 @@ public final class AssignmentOverviewState implements State {
         actions.add(new MessageAction("Continuar", "continue"));
 
         botContext.sendActionMessage(message, actions);
-
-        return Decision.stay();
     }
 
     @Override

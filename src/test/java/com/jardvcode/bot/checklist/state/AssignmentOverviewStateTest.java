@@ -9,7 +9,6 @@ import com.jardvcode.bot.checklist.service.AssignmentOverviewService;
 import com.jardvcode.bot.shared.domain.bot.MessageAction;
 import com.jardvcode.bot.shared.domain.bot.BotContext;
 import com.jardvcode.bot.shared.domain.exception.DataNotFoundException;
-import com.jardvcode.bot.shared.domain.state.Decision;
 import com.jardvcode.bot.user.service.BotSessionDataService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,9 +20,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public final class AssignmentOverviewStateTest {
@@ -47,11 +45,10 @@ public final class AssignmentOverviewStateTest {
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(sessionDataService.findByBotUserId(mechanicUserId, AssignmentDTO.class)).thenThrow(DataNotFoundException.class);
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
-        verify(botContext).sendText(captor.capture());
+        verify(botContext, times(1)).sendText(captor.capture());
         assertEquals("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.ASSIGNMENTS.value() + " para ver las listas disponibles.", captor.getValue());
-        assertNull(decision.nextState());
     }
 
     @Test
@@ -68,12 +65,11 @@ public final class AssignmentOverviewStateTest {
         when(sessionDataService.findByBotUserId(mechanicUserId, AssignmentDTO.class)).thenReturn(dto);
         when(service.getOverview(dto.assignmentId())).thenReturn(assignmentOverview);
 
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
-        verify(botContext).sendActionMessage(messageCaptor.capture(), actionCaptor.capture());
+        verify(botContext, times(1)).sendActionMessage(messageCaptor.capture(), actionCaptor.capture());
         assertEquals(expectedMessage(), messageCaptor.getValue());
         assertEquals(expectedAction, actionCaptor.getValue().get(0));
-        assertNull(decision.nextState());
     }
 
     private String expectedMessage() {

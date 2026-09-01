@@ -27,7 +27,7 @@ public final class SelectSectionState implements State {
     }
 
     @Override
-    public Decision onBotMessage(BotContext botContext) throws Exception {
+    public void onBotMessage(BotContext botContext) throws Exception {
         AssignmentDTO assignmentDTO = null;
 
         try {
@@ -35,7 +35,7 @@ public final class SelectSectionState implements State {
         } catch (Exception e) {
             botContext.sendText("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.ASSIGNMENTS.value() + " para ver las listas disponibles.");
 
-            return Decision.stay();
+            return;
         }
 
         StringBuilder message = new StringBuilder();
@@ -57,8 +57,6 @@ public final class SelectSectionState implements State {
         }
 
         botContext.sendText(message.toString());
-
-        return Decision.stay();
     }
 
     @Override

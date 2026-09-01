@@ -44,11 +44,10 @@ class SelectAssignmentStateTest {
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(assignmentService.findUnconfirmedByMechanicUserId(mechanicUserId)).thenReturn(List.of());
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
-        verify(botContext).sendText(captor.capture());
+        verify(botContext, times(1)).sendText(captor.capture());
         assertEquals("¡Genial! No hay listas de inspección pendientes por responder.", captor.getValue());
-        assertNull(decision.nextState());
     }
 
     @Test
@@ -59,11 +58,10 @@ class SelectAssignmentStateTest {
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(assignmentService.findUnconfirmedByMechanicUserId(mechanicUserId)).thenReturn(assignments);
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
-        verify(botContext).sendText(captor.capture());
+        verify(botContext, times(1)).sendText(captor.capture());
         assertEquals(getExpectedMessage(), captor.getValue());
-        assertNull(decision.nextState());
     }
 
     @Test

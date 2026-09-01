@@ -30,12 +30,10 @@ public final class AnswerItemState implements State {
     }
 
     @Override
-    public Decision onBotMessage(BotContext botContext) throws Exception {
+    public void onBotMessage(BotContext botContext) throws Exception {
         ItemDTO itemDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), ItemDTO.class);
 
         botContext.sendText("Envía el estatus de " + itemDTO.label().toLowerCase());
-
-        return Decision.stay();
     }
 
     @Override

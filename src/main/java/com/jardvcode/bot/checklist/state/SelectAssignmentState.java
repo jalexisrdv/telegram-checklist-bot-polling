@@ -23,13 +23,13 @@ public final class SelectAssignmentState implements State {
     }
 
     @Override
-    public Decision onBotMessage(BotContext botContext) throws Exception {
+    public void onBotMessage(BotContext botContext) throws Exception {
         List<AssignmentViewEntity> assignments = assignmentService.findUnconfirmedByMechanicUserId(botContext.getSystemUserId());
 
         if(assignments.isEmpty()) {
             botContext.sendText("¡Genial! No hay listas de inspección pendientes por responder.");
 
-            return Decision.stay();
+            return;
         }
 
         StringBuilder message = new StringBuilder();
@@ -54,8 +54,6 @@ public final class SelectAssignmentState implements State {
         }
 
         botContext.sendText(message.toString());
-
-        return Decision.stay();
     }
 
     @Override

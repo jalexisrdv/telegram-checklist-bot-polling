@@ -27,7 +27,7 @@ public final class SelectItemState implements State {
     }
 
     @Override
-    public Decision onBotMessage(BotContext botContext) throws Exception {
+    public void onBotMessage(BotContext botContext) throws Exception {
         SectionDTO sectionDTO = sessionDataService.findByBotUserId(botContext.getSystemUserId(), SectionDTO.class);
         AssignmentDTO assignmentDTO = sectionDTO.assignmentDTO();
 
@@ -50,8 +50,6 @@ public final class SelectItemState implements State {
         }
 
         botContext.sendText(message.toString());
-
-        return Decision.stay();
     }
 
     @Override

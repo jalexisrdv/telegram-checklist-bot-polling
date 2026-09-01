@@ -17,10 +17,8 @@ public final class LinkBotToErpUserState implements State {
     }
 
     @Override
-    public Decision onBotMessage(BotContext botContext) throws Exception {
+    public void onBotMessage(BotContext botContext) throws Exception {
         botContext.sendText("¡Hola! Para conectarte con tu cuenta, necesito que me envíes el token que recibiste.");
-
-        return Decision.stay();
     }
 
     @Override

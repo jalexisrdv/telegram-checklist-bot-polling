@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public final class WelcomeState implements State {
     @Override
-    public Decision onBotMessage(BotContext botContext) throws Exception {
+    public void onBotMessage(BotContext botContext) throws Exception {
         String message = """
                 ¡Hola! 👋\s
                 Bienvenido al bot de inspecciones. Todo lo que necesitas para tus inspecciones está aquí:\s
@@ -21,8 +21,6 @@ public final class WelcomeState implements State {
                 """;
 
         botContext.sendText(message);
-
-        return Decision.stay();
     }
 
     @Override

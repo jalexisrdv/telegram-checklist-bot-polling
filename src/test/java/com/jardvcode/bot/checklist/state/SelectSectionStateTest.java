@@ -51,11 +51,10 @@ class SelectSectionStateTest {
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(sessionDataService.findByBotUserId(mechanicUserId, AssignmentDTO.class)).thenThrow(DataNotFoundException.class);
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
-        verify(botContext).sendText(captor.capture());
+        verify(botContext, times(1)).sendText(captor.capture());
         assertEquals("Aún no has seleccionado una lista de inspección. Envía o pulsa " + BotCommand.ASSIGNMENTS.value() + " para ver las listas disponibles.", captor.getValue());
-        assertNull(decision.nextState());
     }
 
     @Test
@@ -68,11 +67,10 @@ class SelectSectionStateTest {
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(sessionDataService.findByBotUserId(mechanicUserId, AssignmentDTO.class)).thenReturn(dto);
         when(sectionService.findByAssignmentId(dto.assignmentId())).thenReturn(sections);
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
-        verify(botContext).sendText(captor.capture());
+        verify(botContext, times(1)).sendText(captor.capture());
         assertEquals(expectedMessageWithRandomStatus(), captor.getValue());
-        assertNull(decision.nextState());
     }
 
     @Test

@@ -31,10 +31,9 @@ class LinkBotToErpUserStateTest {
     void shouldSendTokenRequestMessageAndStayInState() throws Exception {
         ArgumentCaptor<String> messageCaptor = ArgumentCaptor.forClass(String.class);
 
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
-        verify(botContext).sendText(messageCaptor.capture());
-        assertNull(decision.nextState());
+        verify(botContext, times(1)).sendText(messageCaptor.capture());
         assertEquals("¡Hola! Para conectarte con tu cuenta, necesito que me envíes el token que recibiste.", messageCaptor.getValue());
     }
 

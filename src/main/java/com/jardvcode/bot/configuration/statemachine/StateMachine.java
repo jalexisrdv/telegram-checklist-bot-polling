@@ -72,7 +72,7 @@ public final class StateMachine {
 		}
 		
 		Decision newDecision = currentStateFound.onUserInput(botContext);
-		Class<? extends State> nextState =  newDecision.nextState();
+		Class<? extends State> nextState = newDecision.nextState();
 				
 		if(nextState == null) {
 			return;

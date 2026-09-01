@@ -47,11 +47,10 @@ class AnswerItemStateTest {
 
         when(botContext.getSystemUserId()).thenReturn(mechanicUserId);
         when(sessionDataService.findByBotUserId(mechanicUserId, ItemDTO.class)).thenReturn(dto);
-        Decision decision = state.onBotMessage(botContext);
+        state.onBotMessage(botContext);
 
         verify(botContext, times(1)).sendText(captor.capture());
         assertEquals("Envía el estatus de " + dto.label().toLowerCase(), captor.getValue());
-        assertNull(decision.nextState());
     }
 
     @Test
