@@ -46,9 +46,7 @@ public final class ResponseService {
         try {
             ResponseEntity responseFound = repository.findById(id).orElseThrow(() -> new DataNotFoundException());
 
-            responseFound.setId(id);
-            responseFound.setStatus(status);
-            responseFound.setComment(comment);
+            responseFound.update(status, comment);
 
             repository.save(responseFound);
         } catch (DataNotFoundException e) {

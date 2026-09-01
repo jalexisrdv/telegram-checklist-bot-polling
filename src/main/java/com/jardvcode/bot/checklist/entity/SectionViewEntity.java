@@ -43,6 +43,10 @@ public final class SectionViewEntity {
         return items.size();
     }
 
+    public int totalRespondedItems() {
+        return (int) items.stream().filter(item -> item.hasResponse()).count();
+    }
+
     public StatusEnum getStatus() {
         return status;
     }

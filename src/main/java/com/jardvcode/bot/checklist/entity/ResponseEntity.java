@@ -23,6 +23,11 @@ public final class ResponseEntity {
     @Column(name = "comment")
     private String comment;
 
+    public void update(String status, String comment) {
+        this.status = status.toUpperCase();
+        this.comment = comment;
+    }
+
     public StatusEnum status() {
         if(status == null) {
             return StatusEnum.PENDING;

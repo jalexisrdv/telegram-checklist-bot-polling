@@ -33,7 +33,7 @@ public final class AssignmentOverviewService {
 
             for (SectionViewEntity section: sections) {
                 int totalItems = section.totalItems();
-                int respondedItems = (int) section.getItems().stream().filter(item -> item.hasResponse()).count();
+                int respondedItems = section.totalRespondedItems();
 
                 SectionOverview sectionOverview = new SectionOverview(section.getName(), respondedItems, totalItems);
                 sectionOverviews.add(sectionOverview);
